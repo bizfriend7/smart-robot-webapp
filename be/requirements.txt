@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pymysql
+cryptography
+sqlalchemy ==2.0.27
+aiomysql ==0.2.0
+itsdangerous
+pydantic
+passlib
+pytest
