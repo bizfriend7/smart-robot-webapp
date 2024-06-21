@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexbox Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; /* X축 스크롤바를 숨깁니다. */
+        }
+        header {
+            background: #fff;
+            color: #333;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .details-span .clickable-detail {
+            cursor: pointer;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 30px;
+        }
+        .menu {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .menu > a {
+            color: #333;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+        }
+        .dropdown {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+        .dropdown a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown a:hover {
+            background: #e0e0e0;
+        }
+        .menu:hover .dropdown {
+            display: flex;
+        }
+        .login {
+            display: flex;
+            align-items: center;
+        }
+        .login button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .login button:hover {
+            background-color: #0056b3;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .Display {
+            display: flex;
+            height: 20vh;
+            padding: 20px;
+            background: #fff;
+            color: #333;
+            overflow: hidden;
+            border: 1px solid #ccc;
+            white-space: pre-wrap;
+        }
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            overflow-x: hidden;
+            position: relative;
+            transition: margin-left 0.3s; /* 추가: 부드러운 이동 효과 */
+        }
+        .sidebar-left, .sidebar-right {
+            background: #f9f9f9;
+            color: #333;
+            padding: 20px;
+            flex: 0 0 200px; /* 고정된 너비 */
+            position: absolute;
+            left: -200px; /* 초기 위치를 화면 밖으로 설정 */
+            top: 0;
+            height: 100%;
+            z-index: 2;
+            box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+            visibility: hidden;
+            transition: transform 0.3s ease, visibility 0s 0.3s;
+        }
+        .sidebar-left.open {
+            transform: translateX(200px); /* 열렸을 때 화면 안으로 이동 */
+            visibility: visible;
+            transition: transform 0.3s ease, visibility 0s;
+        }
+        .content-container {
+            background: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px 20px;
+            flex: 0 1 20%;
+            transition: margin-left 0.3s; /* 추가: 부드러운 이동 효과 */
+        }
+        .content {
+            background: #fff;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            transition: margin-left 0.3s;
+            overflow-x: hidden;
+        }
+        .content-title {
+            display: flex;
+            align-items: center;
+            padding: 0px 10px;
+        }
+        .title-text {
+            background-color: #17a2b8;
+            color: white;
+            padding: 6px 6px;
+            border-radius: 4px;
+            margin-right: auto;
+            margin-bottom: 0;
+        }
+        .content-title .content-button {
+            background-color: transparent;
+            border: none;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 5px 10px;
+        }
+        .content-title .content-button:hover {
+            background-color: #0d6efd;
+            color: white;
+            border-radius: 4px;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 5px;
+        }
+        .shifted {
+            margin-left: 200px; /* 사이드바 열렸을 때 콘텐츠를 오른쪽으로 밀기 */
+        }
+        .toggle-btn {
+            position: absolute;
+            left: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #333;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 3;
+            transition: left 0.3s;
+        }
+        .content div {
+            background: #fff;
+            padding: 0;
+            flex: 1 1 calc(50% - 20px);
+            box-sizing: border-box;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow-x: auto;
+            height: 40vh;
+            overflow-y: auto;
+        }
+        .table1-container {
+            max-height: 300px; /* 원하는 최대 높이 설정 */
+            max-width: 1000px;
+            overflow-y: auto; /* 수직 스크롤 추가 */
+            overflow-x: auto;
+        }
+        
+        table {
+            margin-top: 0;
+            width: 100%;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-collapse: separate;
+        }
+        .table1 th, .table1 td {
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+            padding: 0px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .table1 th:nth-child(1), .table1 td:nth-child(1) { min-width: 60px; }
+        .table1 th:nth-child(2), .table1 td:nth-child(2) { min-width: 90px; }
+        .table1 th:nth-child(3), .table1 td:nth-child(3) { min-width: 160px; }
+        .table1 th:nth-child(4), .table1 td:nth-child(4) { min-width: 90px; }
+        .table1 th:nth-child(5), .table1 td:nth-child(5) { min-width: 60px; }
+        .table1 th:nth-child(6), .table1 td:nth-child(6) { min-width: 80px; }
+        .table1 th:nth-child(7), .table1 td:nth-child(7) { min-width: 80px; }
+        .table1 th:nth-child(8), .table1 td:nth-child(8) { min-width: 60px; }
+        .table1 th:nth-child(9), .table1 td:nth-child(9) { min-width: 70px; }
+        .table1 th:nth-child(10), .table1 td:nth-child(10) { min-width: 130px; }
+
+        .table2-container {
+            max-height: 300px; /* 원하는 최대 높이 설정 */
+            max-width: 1000px;
+            overflow-y: auto; /* 수직 스크롤 추가 */
+            overflow-x: auto;
+        }
+        
+        .table2 th, .table2 td {
+            background-color: #d0d0d0;
+            border: 1px solid #bbb;
+            padding: 0px;
+            padding-top: 8px;
+            padding-bottom: 8px;
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .table2 th:nth-child(1), .table2 td:nth-child(1) { min-width: 60px; }
+        .table2 th:nth-child(2), .table2 td:nth-child(2) { min-width: 110px; }
+        .table2 th:nth-child(3), .table2 td:nth-child(3) { min-width: 130px; }
+        .table2 th:nth-child(4), .table2 td:nth-child(4) { min-width: 80px; }
+        .table2 th:nth-child(5), .table2 td:nth-child(5) { min-width: 80px; }
+        .table2 th:nth-child(6), .table2 td:nth-child(6) { min-width: 80px; }
+        .table2 th:nth-child(7), .table2 td:nth-child(7) { min-width: 80px; }
+        .table2 th:nth-child(8), .table2 td:nth-child(8) { min-width: 80px; }
+        .table2 th:nth-child(9), .table2 td:nth-child(9) { min-width: 80px; }
+        .table2 th:nth-child(10), .table2 td:nth-child(10) { min-width: 110px; }
+        .clickable {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
+        .clickable:hover {
+            color: #0056b3;
+        }
+        .content-input {
+            display: flex;
+            justify-content: space-between; /* 양 끝으로 정렬 */
+            align-items: center; /* 세로 가운데 정렬 */
+            margin-top: 10px;
+        }
+        .content-input .button-group {
+            display: flex;
+            gap: 5px; /* 버튼 간격 */
+        }
+        .content-input button {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .content-input button:hover {
+            background-color: #0056b3;
+        }
+        #addDisplayContentButton {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        #addDisplayContentButton:hover {
+            background-color: #0056b3;
+        }
+        .input-group {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: nowrap;
+        }
+        .input-group input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            flex: 1;
+            min-width: 0;
+            box-sizing: border-box;
+        }
+        .sidebar-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .sidebar-input-group input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .sidebar-input-group button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .sidebar-input-group button:hover {
+            background-color: #0056b3;
+        }
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            .sidebar-left, .sidebar-right {
+                max-width: 100%;
+                left: -100%;
+            }
+            .sidebar-left.open {
+                transform: translateX(100%);
+            }
+            .content-container {
+                flex: 0 1 20%;
+            }
+            .content div {
+                flex: 1 1 100%;
+            }
+            .content.shifted {
+                margin-left: 100%;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="img/logo.png" alt="Company Logo">
+            </div>
+            <div class="menu">
+                <!-- 메뉴 항목들 -->
+            </div>
+            <div class="login">
+                <button id="loginButton">로그인</button>
+                <button id="logoutButton" style="display:none;">로그아웃</button>
+            </div>
+        </header>
+        <div class="Display" id="display">
+            <h1>Canvas</h1>
+            <div id="displayContent"></div>
+        </div>
+        <div class="main-content" id="main-content">
+            <div class="content-container" id="content-container">
+                <div class="input-group">
+                    <input type="text" placeholder="매크로">
+                    <input type="text" placeholder="가공위치">
+                    <input type="text" id="inputA" placeholder="A 값 입력">
+                    <input type="text" id="inputB" placeholder="B 값 입력">
+                    <input type="text" id="inputC" placeholder="C 값 입력">
+                    <input type="text" id="inputD" placeholder="D 값 입력">
+                    <input type="text" id="inputE" placeholder="E 값 입력">
+                    <input type="text" id="inputF" placeholder="F 값 입력">
+                </div>
+                <div class="content-input">
+                    <span class="details-span" id="detailsSpan"></span>
+                    <div class="button-group">
+                        <button id="addButton">등록</button>
+                        <button id="deleteButton">삭제</button>
+                    </div>
+                </div>
+            </div>
+            <aside class="sidebar-left" id="sidebar-left">
+                <h2>호선-POR-SEQ</h2>
+                <div class="sidebar-input-group">
+                    <input type="text" id="sidebarInput1" placeholder="호선">
+                    <input type="text" id="sidebarInput2" placeholder="POR">
+                    <input type="text" id="sidebarInput3" placeholder="SEQ">
+                    <button id="sidebarButton">검색</button>
+                </div>
+            </aside>
+            <div class="toggle-btn" id="toggle-btn">☰</div>
+            <section class="content" id="content">
+                <div id="content1">
+                    <h5 class="content-title">
+                        <span class="title-text">도면정보 (Drawing Information)</span>
+                        <button class="content-button">등록</button>
+                        <button class="content-button">삭제</button>
+                    </h5>
+                    <div class="table1-container">
+                    <table class="table1">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>호선</th>
+                                <th>POR</th>
+                                <th>SEQ</th>
+                                <th>수량</th>
+                                <th>등록일자</th>
+                            </tr>
+                        </thead>
+                        <tbody id="content1Body">
+                            <!-- 데이터가 여기에 추가됩니다 -->
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div id="content2">
+                    <h5 class="content-title">
+                        <span class="title-text">매크로 정보 (Macro List)</span>
+                    </h5>
+                    <div class="table2-container">
+                    <table class="table2">
+                        <thead>
+                            <tr>
+                                <th>NO</th>
+                                <th>가공위치</th>
+                                <th>매크로</th>
+                                <th>파라미터</th>
+                                <th>저장위치</th>
+                            </tr>
+                        </thead>
+                        <tbody id="content2Body">
+                            <!-- 데이터가 여기에 추가됩니다 -->
+                        </tbody>
+                    </table>
+                </div>
+                </div>
+            </section>
+        </div>
+        <footer>
+            <p>&copy; 2024 Flexbox Layout. All rights reserved.</p>
+        </footer>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
