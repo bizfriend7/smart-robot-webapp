@@ -94,6 +94,42 @@
         .login button:hover {
             background-color: #0056b3;
         }
+        .macro-group {
+            
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .macro-button {
+            flex: 0 0 5%; /* 절반 크기 설정 */
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .text-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex: 1; /* 나머지 공간 차지 */
+        }
+
+        .text-box {
+            padding: 10px 15px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 5px;
+            flex: 1;
+            text-align: center;
+            min-width: 100px; /* 최소 너비 설정 */
+        }
         .container {
             display: flex;
             flex-direction: column;
@@ -275,7 +311,7 @@
         .macro-input-group input[type="number"] {
             flex: 0 0 60px; /* 수량 input의 크기를 줄임 */
         }
-        .macro-button {
+        .macro-button2 {
             gap: 5px;
             margin-top: 5px;
             padding: 10px; /* 버튼의 크기를 늘림 */
@@ -374,6 +410,21 @@
                 <button id="logoutButton" style="display:none;">로그아웃</button>
             </div>
         </header>
+        <div class="form-container">
+            <div class="macro-group">
+                <button id="macroButton" class="macro-button">매크로</button>
+                <div class="text-group">
+                    <div class="text-box" id="lineText">호선</div>
+                    <div class="text-box" id="porText">POR</div>
+                    <div class="text-box" id="seqText">SEQ</div>
+                    <div class="text-box" id="piecsText">PIECS</div>
+                    <div class="text-box" id="partIdText">PARTID</div>
+                    <div class="text-box" id="materialTypeText">자재종류</div>
+                    <div class="text-box" id="processingLocationText">가공위치</div>
+                </div>
+            </div>
+        </div>
+    
         <div class="Display" id="display">
             <h1>Canvas</h1>
             <div id="displayContent"></div>
@@ -448,8 +499,7 @@
                                 <th>가공길이</th>
                                 <th>전체길이</th>
                                 <th>중량</th>
-                                <th>가공수</th>
-                                <th>등록일자</th>                                    
+                                <th>가공수</th>                                    
                             </tr>
                         </thead>
                         <tbody id="content2Body">

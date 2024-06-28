@@ -5,12 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedMacroInfo = null;
     let lastSearchParams = {};
     localStorage.clear()
+    let currentSort = {
+        key: '',
+        order: 'asc'
+    };
     if (!localStorage.getItem('drawingData')) {
         const initialDrawingData = [
-            { "호선": "1", "POR": "P001", "SEQ": "S001", "PIECS": "1", "수량": 5, "등록일자": "2024-01-01" },
-            { "호선": "1", "POR": "P001", "SEQ": "S001", "PIECS": "2", "수량": 3, "등록일자": "2024-01-02" },
-            { "호선": "1", "POR": "P002", "SEQ": "S002", "PIECS": "1", "수량": 4, "등록일자": "2024-01-03" },
-            { "호선": "1", "POR": "P002", "SEQ": "S002", "PIECS": "2", "수량": 2, "등록일자": "2024-01-04" }
+                    
         ];
         localStorage.setItem('drawingData', JSON.stringify(initialDrawingData));
     }
@@ -33,7 +34,9 @@ document.addEventListener('DOMContentLoaded', function() {
     let drawingData = JSON.parse(localStorage.getItem('drawingData'));
     let partData = JSON.parse(localStorage.getItem('partData'));
     let macroData = JSON.parse(localStorage.getItem('macroData'));
-
+    function generateUniqueId(dataArray) {
+        return dataArray.length > 0 ? Math.max(...dataArray.map(item => item.id)) + 1 : 1;
+    }
     function calculateMacroCount(partID) {
         return macroData.filter(macro => macro.partID === partID).length;
     }
@@ -79,6 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('모든 필드를 입력해주세요.');
                 return;
             }
+
             const isDuplicate = drawingData.some(drawing => 
                 drawing.호선 === lineNumber &&
                 drawing.POR === por &&
@@ -90,7 +94,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert('중복된 데이터입니다.');
                 return;
             }
+
             const newDrawing = {
+                id: generateUniqueId(drawingData),
                 호선: lineNumber,
                 POR: por,
                 SEQ: seq,
@@ -101,17 +107,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
             drawingData.push(newDrawing);
             localStorage.setItem('drawingData', JSON.stringify(drawingData)); 
-            if(lastSearchParams.length === 0){
-                filteredDrawingData = filterDrawingData(lineNumber, por, seq, piecs);
-                updateDrawingTable(filteredDrawingData);
-                clearDrawingInputs();
-                return 
-            }
-            filteredDrawingData = filterDrawingData(lastSearchParams.lineNumber, lastSearchParams.por, lastSearchParams.seq, lastSearchParams.piecs);
+            filteredDrawingData = filterDrawingData(newDrawing.호선);
             updateDrawingTable(filteredDrawingData);
             clearDrawingInputs();
         });
     }
+
 
     function filterDrawingData(lineNumber, por, seq, piecs) {
         let filteredData = drawingData.filter(row => row.호선 === lineNumber);
@@ -304,59 +305,59 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedData = selectedData.filter(d => d.PIECS === selectedPiecs);
         }
     
-        const newData = selectedData.map(d => ({
-            ...d,
-            호선: newLine || d.호선,
-            POR: newPor || d.POR,
-            SEQ: newSeq || d.SEQ,
-            PIECS: newPiecs || d.PIECS,
-            등록일자: new Date().toISOString().split('T')[0]
-        }));
+        const newData = selectedData.map(d => {
+            const newId = generateUniqueId(drawingData);
+            return {
+                ...d,
+                호선: newLine || d.호선,
+                POR: newPor || d.POR,
+                SEQ: newSeq || d.SEQ,
+                PIECS: newPiecs || d.PIECS,
+                등록일자: new Date().toISOString().split('T')[0],
+                id: newId
+            };
+        });
         drawingData.push(...newData);
     
-        // 부재 데이터 복사
-        let selectedPartData = filteredPartData.filter(p => p.호선 === selectedLine);
-        if (selectedPor) {
-            selectedPartData = selectedPartData.filter(p => p.POR === selectedPor);
-        }
-        if (selectedSeq) {
-            selectedPartData = selectedPartData.filter(p => p.SEQ === selectedSeq);
-        }
-        if (selectedPiecs) {
-            selectedPartData = selectedPartData.filter(p => p.PIECS === selectedPiecs);
-        }
+        // 새로운 도면의 ID 목록
+        const newIds = newData.map(d => d.id);
     
-        const newPartData = selectedPartData.map(p => ({
-            ...p,
-            호선: newLine || p.호선,
-            POR: newPor || p.POR,
-            SEQ: newSeq || p.SEQ,
-            PIECS: newPiecs || p.PIECS,
-            난수data: new Date().getTime() + Math.random(),
-            등록일자: new Date().toISOString().split('T')[0]
-        }));
+        // 부재 데이터 복사
+        let selectedPartData = partData.filter(p => selectedData.some(d => d.id === p.drawedid));
+    
+        const newPartData = selectedPartData.map(p => {
+            const newDrawedId = newIds[selectedData.findIndex(d => d.id === p.drawedid)];
+            return {
+                ...p,
+                호선: newLine || p.호선,
+                POR: newPor || p.POR,
+                SEQ: newSeq || p.SEQ,
+                PIECS: newPiecs || p.PIECS,
+                drawedid: newDrawedId,
+                id: generateUniqueId(partData)
+            };
+        });
         partData.push(...newPartData);
     
         // 매크로 데이터 복사
-        let selectedMacroData = macroData.filter(m => selectedPartData.some(p => p["Part ID"] === m.partID));
+        let selectedMacroData = macroData.filter(m => selectedPartData.some(p => p.id === m.partedid));
         const newMacroData = selectedMacroData.map(m => {
             const newPart = newPartData.find(p => p["Part ID"] === m.partID && p.호선 === (newLine || m.호선) && p.POR === (newPor || m.POR) && p.SEQ === (newSeq || m.SEQ) && p.PIECS === (newPiecs || m.PIECS));
             return {
                 ...m,
-                partID: newPart ? newPart["Part ID"] : m.partID,
+                partedid: newPart ? newPart.id : m.partedid,
                 호선: newLine || m.호선,
                 POR: newPor || m.POR,
                 SEQ: newSeq || m.SEQ,
                 PIECS: newPiecs || m.PIECS,
-                PART난수: newPart ? newPart.난수data : m.PART난수,
-                등록일자: new Date().toISOString().split('T')[0]
+                id: generateUniqueId(macroData)
             };
         });
         macroData.push(...newMacroData);
     
-        localStorage.setItem('drawingData', JSON.stringify(drawingData)); 
-        localStorage.setItem('partData', JSON.stringify(partData)); 
-        localStorage.setItem('macroData', JSON.stringify(macroData)); 
+        localStorage.setItem('drawingData', JSON.stringify(drawingData));
+        localStorage.setItem('partData', JSON.stringify(partData));
+        localStorage.setItem('macroData', JSON.stringify(macroData));
     
         // 팝업창 숨기기 및 입력 필드 초기화
         const popup = document.getElementById('copyPopup');
@@ -376,6 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('newSeqName').style.display = 'none';
         document.getElementById('newPiecsName').style.display = 'none';
     }
+    
     function updateTablesWithSelectedDrawingInfo() {
         const { 호선, POR, SEQ, PIECS } = selectedDrawingInfo;
         if (호선 && POR && SEQ && PIECS) {
@@ -402,20 +404,20 @@ document.addEventListener('DOMContentLoaded', function() {
             if (confirm('삭제하겠습니까?')) {
                 const checkedBoxes = document.querySelectorAll('#content1Body input[type="checkbox"]:checked');
                 const rowsToDelete = Array.from(checkedBoxes).map(checkbox => {
-                    return checkbox.parentElement.parentElement; // Row element
+                    return checkbox.parentElement.parentElement; // 행 요소
                 });
 
                 const identifiersToDelete = rowsToDelete.map(row => ({
-                    호선: row.cells[2].textContent,   // Assuming 호선 is in the third cell
-                    POR: row.cells[3].textContent,     // Assuming POR is in the fourth cell
-                    SEQ: row.cells[4].textContent,     // Assuming SEQ is in the fifth cell
-                    PIECS: row.cells[5].textContent    // Assuming PIECS is in the sixth cell
+                    호선: row.cells[2].textContent, // 호선이 세 번째 셀에 있다고 가정
+                    POR: row.cells[3].textContent,  // POR이 네 번째 셀에 있다고 가정
+                    SEQ: row.cells[4].textContent,  // SEQ가 다섯 번째 셀에 있다고 가정
+                    PIECS: row.cells[5].textContent // PIECS가 여섯 번째 셀에 있다고 가정
                 }));
 
-                // Remove rows from the table
+                // 테이블에서 행 제거
                 rowsToDelete.forEach(row => row.remove());
 
-                // Remove from drawingData array
+                // drawingData 배열에서 항목 제거
                 identifiersToDelete.forEach(identifier => {
                     const index = drawingData.findIndex(item => 
                         item.호선 === identifier.호선 &&
@@ -424,40 +426,16 @@ document.addEventListener('DOMContentLoaded', function() {
                         item.PIECS === identifier.PIECS
                     );
                     if (index !== -1) {
+                        const idToDelete = drawingData[index].id; // 삭제할 ID 저장
                         drawingData.splice(index, 1);
+
+                        // 관련된 partData 및 macroData 제거
+                        partData = partData.filter(part => part.drawedid !== idToDelete);
+                        macroData = macroData.filter(macro => !partData.some(part => part.id === macro.partedid));
                     }
                 });
 
-                // Remove related partData and macroData
-                identifiersToDelete.forEach(identifier => {
-                    // Get parts related to the deleted drawing
-                    const partsToDelete = partData.filter(part => 
-                        part.호선 === identifier.호선 &&
-                        part.POR === identifier.POR &&
-                        part.SEQ === identifier.SEQ &&
-                        part.PIECS === identifier.PIECS
-                    );
-
-                    // Remove parts related to the deleted drawing
-                    partData = partData.filter(part => 
-                        !(part.호선 === identifier.호선 &&
-                        part.POR === identifier.POR &&
-                        part.SEQ === identifier.SEQ &&
-                        part.PIECS === identifier.PIECS)
-                    );
-
-                    // Remove macros related to the deleted parts
-                    partsToDelete.forEach(part => {
-                        macroData = macroData.filter(macro => 
-                            !(macro.partID === part["Part ID"] &&
-                            macro.호선 === part.호선 &&
-                            macro.POR === part.POR &&
-                            macro.SEQ === part.SEQ)
-                        );
-                    });
-                });
-
-                // Filter out the deleted items from the filteredDrawingData
+                // filteredDrawingData에서 삭제된 항목 필터링
                 filteredDrawingData = filteredDrawingData.filter(item => 
                     !identifiersToDelete.some(identifier => 
                         item.호선 === identifier.호선 &&
@@ -467,17 +445,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     )
                 );
 
-                // Update localStorage
+                // localStorage 업데이트
                 localStorage.setItem('drawingData', JSON.stringify(drawingData)); 
                 localStorage.setItem('partData', JSON.stringify(partData)); 
                 localStorage.setItem('macroData', JSON.stringify(macroData)); 
 
-                // Update table display
+                // 테이블 디스플레이 업데이트
                 updateDrawingTable(filteredDrawingData);
-                updatePartTable([]); // Clear the part information table
+                updatePartTable([]); // 부재 정보 테이블 초기화
             }
         });
     }
+
+
     document.getElementById('content2').addEventListener('click', function(event) {
         if (event.target && event.target.id === 'deletePartButton') {
             if (confirm('삭제하겠습니까?')) {
@@ -491,28 +471,32 @@ document.addEventListener('DOMContentLoaded', function() {
                     POR: selectedDrawingInfo.POR,
                     SEQ: selectedDrawingInfo.SEQ,
                     PIECS: selectedDrawingInfo.PIECS,
+
                     난수data: partData.find(part => part["Part ID"] === row.cells[2].textContent).난수data // Ensure this retrieves the correct 난수data
                 }));
     
                 rowsToDelete.forEach(row => row.remove());
     
                 identifiersToDelete.forEach(identifier => {
-                    console.log('난수', identifier.난수data);
-                    partData = partData.filter(part => 
-                        !(part["Part ID"] === identifier.PartID &&
-                          part.자재종류 === identifier.자재종류 &&
-                          part.재질 === identifier.재질 &&
-                          part.호선 === identifier.호선 &&
-                          part.POR === identifier.POR &&
-                          part.SEQ === identifier.SEQ &&
-                          part.PIECS === identifier.PIECS)
-                    );
-    
-                    // Delete macros with the same 난수data
-                    macroData = macroData.filter(macro => 
-                        macro.PART난수 !== identifier.난수data
-                    );
-                });
+                const partToDelete = partData.find(part => 
+                    part["Part ID"] === identifier.PartID &&
+                    part.자재종류 === identifier.자재종류 &&
+                    part.재질 === identifier.재질 &&
+                    part.호선 === identifier.호선 &&
+                    part.POR === identifier.POR &&
+                    part.SEQ === identifier.SEQ &&
+                    part.PIECS === identifier.PIECS
+                );
+
+                if (partToDelete) {
+                    // Remove the part from partData
+                    partData = partData.filter(part => part.id !== partToDelete.id);
+
+                    // Remove macros with the same part id
+                    macroData = macroData.filter(macro => macro.partedid !== partToDelete.id);
+                }
+            });
+
     
                 localStorage.setItem('partData', JSON.stringify(partData));
                 localStorage.setItem('macroData', JSON.stringify(macroData));
@@ -530,70 +514,54 @@ document.addEventListener('DOMContentLoaded', function() {
         const contentDiv = document.getElementById('content1');
         const tbody = contentDiv.querySelector('tbody');
         tbody.innerHTML = '';
-
+    
         data.forEach((rowData, index) => {
             const tr = document.createElement('tr');
             tr.classList.add('clickable');
             tr.addEventListener('click', function() {
-                // 클릭된 도면 정보를 저장
                 selectedDrawingInfo = {
                     호선: rowData.호선,
                     POR: rowData.POR,
                     SEQ: rowData.SEQ,
-                    PIECS: rowData.PIECS
+                    PIECS: rowData.PIECS,
+                    drawid : rowData.id
                 };
-
-                // 모든 행에서 선택된 CSS 클래스 제거
                 document.querySelectorAll('#content1Body tr').forEach(row => {
                     row.classList.remove('selected-row');
                 });
-
-                // 클릭된 행에 선택된 CSS 클래스 추가
                 tr.classList.add('selected-row');
-
-                console.log(`도면정보 클릭됨: 호선=${selectedDrawingInfo.호선}, POR=${selectedDrawingInfo.POR}, SEQ=${selectedDrawingInfo.SEQ}, PIECS=${selectedDrawingInfo.PIECS}`);
-
                 filteredPartData = partData.filter(part => 
-                    part.호선 === rowData.호선 && 
-                    part.POR === rowData.POR && 
-                    part.SEQ === rowData.SEQ && 
-                    rowData.PIECS === part.PIECS
+                    rowData.id === part.drawedid
                 );
-
                 updatePartTable(filteredPartData);
                 updatePartInputForm();
             });
-
+    
             const checkboxTd = document.createElement('td');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkboxTd.appendChild(checkbox);
             tr.appendChild(checkboxTd);
-
+    
             const tdNo = document.createElement('td');
-            tdNo.textContent = index + 1; // 순서대로 No 할당
+            tdNo.textContent = index + 1;
             tr.appendChild(tdNo);
-
+    
             const headers = ["호선", "POR", "SEQ", "PIECS", "수량", "등록일자"];
             headers.forEach(header => {
                 const td = document.createElement('td');
                 td.textContent = rowData[header];
                 tr.appendChild(td);
             });
-
+    
             tbody.appendChild(tr);
         });
-
-        // Add sorting functionality
-        const porHeader = contentDiv.querySelector('th.por-header');
-        const seqHeader = contentDiv.querySelector('th.seq-header');
-        const piecsHeader = contentDiv.querySelector('th.piecs-header');
-
-        porHeader.addEventListener('click', () => sortDrawingTable(data, 'POR'));
-        seqHeader.addEventListener('click', () => sortDrawingTable(data, 'SEQ'));
-        piecsHeader.addEventListener('click', () => sortDrawingTable(data, 'PIECS'));
-    }
     
+        // Add sorting functionality
+        document.querySelector('th.por-header').addEventListener('click', () => sortTableAndUpdate('POR'));
+        document.querySelector('th.seq-header').addEventListener('click', () => sortTableAndUpdate('SEQ'));
+        document.querySelector('th.piecs-header').addEventListener('click', () => sortTableAndUpdate('PIECS'));
+    }
     
     // Modify your header HTML to include class names for the sortable columns
     const tableHeader = document.querySelector('#content1 thead');
@@ -610,11 +578,16 @@ document.addEventListener('DOMContentLoaded', function() {
         </tr>
     `;
 
-
     function updatePartTable(data = partData) {
         const contentTitle = document.getElementById('content2Title');
-        contentTitle.innerHTML = '<span class="title-text">부재정보 (Part List)</span><button class="content-button" id="copyPartButton">복사</button><button class="content-button" id="deletePartButton">삭제</button>';
-    
+        contentTitle.innerHTML = `
+        <span class="title-text">부재정보 (Part List)</span>
+        <span class="drawing-info">
+            호선:${selectedDrawingInfo.호선} POR:${selectedDrawingInfo.POR} SEQ:${selectedDrawingInfo.SEQ} PIECS:${selectedDrawingInfo.PIECS}
+        </span>
+        <button class="content-button" id="copyPartButton">복사</button>
+        <button class="content-button" id="deletePartButton">삭제</button>
+    `;
         const tableHeader = document.getElementById('content2Header');
         tableHeader.innerHTML = `
             <tr>
@@ -628,7 +601,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <th>전체길이</th>
                 <th>중량</th>
                 <th>가공수</th>
-                <th>등록일자</th>
             </tr>
         `;
     
@@ -643,18 +615,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     return;
                 }
                 selectedPartInfo = {
-                    호선: rowData.호선,
-                    POR: rowData.POR,
-                    SEQ: rowData.SEQ,
-                    PIECS: rowData.PIECS,
                     PartID: rowData["Part ID"],
-                    난수data: rowData.난수data
+                    partedid: rowData.id,
+                    자재종류 : rowData.자재종류,
+                    중량 : rowData.중량,
+                    전체길이 : rowData.전체길이
                 };
     
                 console.log(`부재정보 클릭됨: 호선=${selectedPartInfo.호선}, POR=${selectedPartInfo.POR}, SEQ=${selectedPartInfo.SEQ}, PIECS=${selectedPartInfo.PIECS}, PartID=${selectedPartInfo.PartID}, 난수data=${selectedPartInfo.난수data}`);
     
                 const filteredMacroData = macroData.filter(macro =>
-                    macro.PART난수 === selectedPartInfo.난수data  // 난수data로 필터링
+                    macro.partedid === selectedPartInfo.partedid
                 );
                 updateMacroTable(filteredMacroData);
                 updateMacroInputForm();
@@ -667,9 +638,9 @@ document.addEventListener('DOMContentLoaded', function() {
             tr.appendChild(checkboxTd);
     
             const tdNo = document.createElement('td');
-            tdNo.textContent = index + 1; // 순서대로 No 할당
+            tdNo.textContent = index + 1;
             tr.appendChild(tdNo);
-            const headers = ["Part ID", "자재종류", "재질", "수량", "가공길이", "전체길이", "중량", "가공수", "등록일자"];
+            const headers = ["Part ID", "자재종류", "재질", "수량", "가공길이", "전체길이", "중량", "가공수"];
             headers.forEach(header => {
                 const td = document.createElement('td');
                 td.textContent = rowData[header];
@@ -686,7 +657,6 @@ document.addEventListener('DOMContentLoaded', function() {
         partIdHeader.addEventListener('click', () => sortPartTable(data, 'Part ID'));
         materialHeader.addEventListener('click', () => sortPartTable(data, '자재종류'));
     
-        // 복사 버튼 이벤트 리스너 추가
         const copyPartButton = document.getElementById('copyPartButton');
         if (copyPartButton) {
             copyPartButton.addEventListener('click', function() {
@@ -705,31 +675,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 const 전체길이 = selectedRow.cells[7].textContent;
                 const 중량 = selectedRow.cells[8].textContent;
                 const 가공수 = selectedRow.cells[9].textContent;
-                const 등록일자 = selectedRow.cells[10].textContent;
-                const part난수data = selectedPartInfo.난수data;
-                const 난수data = new Date().getTime() + Math.random();
-                const { 호선, POR, SEQ, PIECS} = selectedDrawingInfo;
-                
+                const selectedPart = partData.find(part => part["Part ID"] === partID);
+    
                 const newPartID = prompt('새로운 PART ID를 입력하세요:');
-                
                 if (!newPartID) {
                     alert('PART ID를 입력해야 합니다.');
                     return;
                 }
+    
                 const isDuplicate = partData.some(part => 
-                    part.호선 === selectedDrawingInfo.호선 &&
-                    part.POR === selectedDrawingInfo.POR &&
-                    part.SEQ === selectedDrawingInfo.SEQ &&
-                    part.PIECS === selectedDrawingInfo.PIECS&&
-                    part["Part ID"] === newPartID
+                    part["Part ID"] === newPartID && part.drawedid === selectedPart.drawedid
                 );
-
+    
                 if (isDuplicate) {
                     alert('중복된 데이터입니다.');
                     return;
                 }
     
                 const newPart = {
+                    id: generateUniqueId(partData),
                     "Part ID": newPartID,
                     자재종류,
                     재질,
@@ -738,42 +702,48 @@ document.addEventListener('DOMContentLoaded', function() {
                     전체길이: parseInt(전체길이),
                     중량: parseFloat(중량),
                     가공수: parseInt(가공수),
-                    등록일자: new Date().toISOString().split('T')[0],
-                    호선,
-                    POR,
-                    SEQ,
-                    PIECS,
-                    난수data // 난수data 포함
+                    drawedid: selectedPart.drawedid
                 };
                 partData.push(newPart);
     
-                const selectedMacroData = macroData.filter(macro => macro.PART난수 === part난수data);
-                const newMacroData = selectedMacroData.map(macro => ({
-                    ...macro,
-                    partID: newPartID,
-                    호선,
-                    POR,
-                    SEQ,
-                    PIECS,
-                    PART난수: 난수data,  // 난수data 포함
-                    등록일자: new Date().toISOString().split('T')[0]
-                }));
-                macroData.push(...newMacroData);
+                if (selectedPart) {
+                    const selectedPartID = selectedPart.id;
+                    const newPartID = newPart.id;
+    
+                    const selectedMacroData = macroData.filter(macro => macro.partedid === selectedPartID);
+                    const newMacroData = selectedMacroData.map(macro => ({
+                        ...macro,
+                        partedid: newPartID,
+                        id: generateUniqueId(macroData)
+                    }));
+                    macroData.push(...newMacroData);
+                }
     
                 localStorage.setItem('partData', JSON.stringify(partData));
                 localStorage.setItem('macroData', JSON.stringify(macroData));
                 updateMacroTable(macroData);
                 updatePartTable(partData);
     
-                // 현재 클릭된 도면 정보로 테이블 업데이트
-                updateTablesWithSelectedDrawingInfo();
+                filteredPartData = partData.filter(part => 
+                    part.drawedid === selectedDrawingInfo.drawid
+                );
+                updatePartTable(filteredPartData);
+                updatePartInputForm();
             });
         }
     }
+    
+
     function updateMacroTable(data = macroData) {
         const contentTitle = document.getElementById('content2Title');
-        contentTitle.innerHTML = '<span class="title-text">가공정보 (cutting list)</span><button class="content-button" id="deleteMacroButton">삭제</button><button class="content-button" id="BackButton">뒤로가기</button>';
-        
+        contentTitle.innerHTML = `
+        <span class="title-text">가공정보 (Cutting List)</span>
+        <span class="drawing-info">
+            호선:${selectedDrawingInfo.호선} POR:${selectedDrawingInfo.POR} SEQ:${selectedDrawingInfo.SEQ} PIECS:${selectedDrawingInfo.PIECS}
+        </span>
+        <button class="content-button" id="deleteMacroButton">삭제</button>
+        <button class="content-button" id="BackButton">뒤로가기</button>
+    `;
         const tableHeader = document.getElementById('content2Header');
         tableHeader.innerHTML = `
             <tr>
@@ -804,6 +774,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('macroInputE').value = params[4];
                 document.getElementById('macroInputF').value = params[5];
     
+                document.getElementById('lineText').textContent = selectedDrawingInfo.호선 || '';
+                document.getElementById('porText').textContent = selectedDrawingInfo.POR || '';
+                document.getElementById('seqText').textContent = selectedDrawingInfo.SEQ || '';
+                document.getElementById('piecsText').textContent = selectedDrawingInfo.PIECS || '';
+                document.getElementById('partIdText').textContent = rowData.partID || '';
+                document.getElementById('materialTypeText').textContent = selectedPartInfo.자재종류 || '';
+                document.getElementById('processingLocationText').textContent = rowData.가공위치 || '';
+        
                 // 클릭된 매크로 정보를 전역 변수에 저장
                 selectedMacroInfo = rowData;
             });
@@ -880,10 +858,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (selectedDrawingInfo) {
                 // Filter partData based on last selected drawing information
                 filteredPartData = partData.filter(part => 
-                    part.호선 === selectedDrawingInfo.호선 && 
-                    part.POR === selectedDrawingInfo.POR && 
-                    part.SEQ === selectedDrawingInfo.SEQ && 
-                    part.PIECS === selectedDrawingInfo.PIECS
+                    part.drawedid === selectedDrawingInfo.drawid
                 );
                 updatePartTable(filteredPartData);
                 updatePartInputForm();
@@ -918,17 +893,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const 가공길이 = document.getElementById('partInput5').value;
             const 전체길이 = 가공길이;
             const 중량 = calculateWeight(자재종류, 가공길이);
-            const 난수data = new Date().getTime() + Math.random()
 
             if (!partID || !자재종류 || !재질 || !수량 || !가공길이) {
                 alert('모든 필드를 입력해주세요.');
                 return;
             }
             const isDuplicate = partData.some(part => 
-                part.호선 === selectedDrawingInfo.호선 &&
-                part.POR === selectedDrawingInfo.POR &&
-                part.SEQ === selectedDrawingInfo.SEQ &&
-                part.PIECS === selectedDrawingInfo.PIECS&&
+                part.drawedid === selectedDrawingInfo.drawid&&
                 part["Part ID"] === partID
             );
             
@@ -945,22 +916,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 전체길이: parseInt(전체길이),
                 중량,
                 가공수: calculateMacroCount(partID),
-                등록일자: new Date().toISOString().split('T')[0],
-                호선: selectedDrawingInfo.호선 || '',
-                POR: selectedDrawingInfo.POR || '',
-                SEQ: selectedDrawingInfo.SEQ || '',
-                PIECS: selectedDrawingInfo.PIECS || '',
-                난수data
+                drawedid : selectedDrawingInfo.drawid,
+                id : generateUniqueId(partData),
+
             };
     
             partData.push(newPart);
             localStorage.setItem('partData', JSON.stringify(partData)); 
-            if (selectedDrawingInfo.호선 && selectedDrawingInfo.POR && selectedDrawingInfo.SEQ && selectedDrawingInfo.PIECS) {
+            if (selectedDrawingInfo.drawid) {
                 filteredPartData = partData.filter(part => 
-                    part.호선 === selectedDrawingInfo.호선 && 
-                    part.POR === selectedDrawingInfo.POR && 
-                    part.SEQ === selectedDrawingInfo.SEQ && 
-                    part.PIECS === selectedDrawingInfo.PIECS
+                    part.drawedid === selectedDrawingInfo.drawid
                 );
             }
     
@@ -1013,16 +978,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="text" id="macroInputF" placeholder="F">
             </div>
             <div class="macro-button-group">
-                <button class="macro-button" id="addMacroButton">등록</button>
-                <button class="macro-button" id="updateMacroButton">수정</button>
+                <button class="macro-button2" id="addMacroButton">등록</button>
+                <button class="macro-button2" id="updateMacroButton">수정</button>
             </div>
         `;
     
         document.getElementById('addMacroButton').addEventListener('click', function() {
             const partID = selectedPartInfo.PartID;
-            const 호선 = selectedPartInfo.호선;
-            const POR = selectedPartInfo.POR;
-            const SEQ = selectedPartInfo.SEQ;
+            const partedid = selectedPartInfo.partedid;
             const PIECS = selectedPartInfo.PIECS;
             const PART난수 = selectedPartInfo.난수data;  // 난수data 추가
             const 가공위치 = document.getElementById('macroInput2').value;
@@ -1042,14 +1005,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
             const newMacro = {
                 partID,
-                호선,
-                POR,
-                SEQ,
-                PIECS,
-                PART난수,  // 난수data 포함
+                partedid,
                 가공위치,
                 매크로,
-                파라미터
+                파라미터,
+                id: generateUniqueId(macroData)
             };
     
             macroData.push(newMacro);
@@ -1150,12 +1110,22 @@ document.addEventListener('DOMContentLoaded', function() {
         };
         return weightPerMeter[materialType] * (length / 1000);
     }
-    function sortDrawingTable(data, key) {
-        const sortedData = data.slice().sort((a, b) => {
-            if (a[key] < b[key]) return -1;
-            if (a[key] > b[key]) return 1;
-            return 0;
+    function sortTableAndUpdate(key) {
+        if (currentSort.key === key) {
+            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.key = key;
+            currentSort.order = 'asc';
+        }
+    
+        const sortedData = drawingData.slice().sort((a, b) => {
+            if (currentSort.order === 'asc') {
+                return a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0;
+            } else {
+                return a[key] > b[key] ? -1 : a[key] < b[key] ? 1 : 0;
+            }
         });
+    
         updateDrawingTable(sortedData);
     }
     function sortPartTable(data, key) {
@@ -1173,6 +1143,24 @@ document.addEventListener('DOMContentLoaded', function() {
             return 0;
         });
         updateMacroTable(sortedData);
+    }
+    function sortTable(data, key) {
+        if (currentSort.key === key) {
+            currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+        } else {
+            currentSort.key = key;
+            currentSort.order = 'asc';
+        }
+    
+        const sortedData = data.slice().sort((a, b) => {
+            if (currentSort.order === 'asc') {
+                return a[key] < b[key] ? -1 : a[key] > b[key] ? 1 : 0;
+            } else {
+                return a[key] > b[key] ? -1 : a[key] < b[key] ? 1 : 0;
+            }
+        });
+    
+        return sortedData;
     }
     document.getElementById('checkAllDrawings').addEventListener('change', function() {
         const checkboxes = document.querySelectorAll('#content1Body input[type="checkbox"]');
