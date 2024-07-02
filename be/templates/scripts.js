@@ -45,7 +45,41 @@ document.addEventListener('DOMContentLoaded', function() {
         const 가공수 = calculateMacroCount(part["Part ID"]);
         return { ...part, 가공수 };
     });
+    const toggleButton = document.getElementById('toggle-button');
+    const content1 = document.getElementById('content1');
+    const content2 = document.getElementById('content2');
 
+    let isCollapsed = false;
+
+    function toggleContent1() {
+        if (isCollapsed) {
+            content1.style.display = 'block';
+            toggleButton.textContent = ''; // 바와 같은 모습으로 유지
+        } else {
+            content1.style.display = 'none';
+            toggleButton.textContent = ''; // 바와 같은 모습으로 유지
+        }
+        isCollapsed = !isCollapsed;
+    }
+
+    toggleButton.addEventListener('click', toggleContent1);
+
+    // 도면정보 테이블의 내용을 클릭할 때 content1을 줄이는 기능
+    function collapseContent1OnMobile() {
+        if (window.matchMedia("(max-width: 768px)").matches) {
+            content1.style.display = 'none';
+            isCollapsed = true;
+        }
+    }
+
+    const content1Body = document.getElementById('content1Body');
+    if (content1Body) {
+        content1Body.addEventListener('click', function (event) {
+            if (event.target && event.target.nodeName === "TD") {
+                collapseContent1OnMobile();
+            }
+        });
+    }
     
     const searchButton = document.getElementById('searchButton');
     if (searchButton) {

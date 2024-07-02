@@ -95,12 +95,10 @@
             background-color: #0056b3;
         }
         .macro-group {
-            
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
         }
-
         .macro-button {
             flex: 0 0 5%; /* 절반 크기 설정 */
             padding: 10px 15px;
@@ -112,14 +110,12 @@
             text-align: center;
             cursor: pointer;
         }
-
         .text-group {
             display: flex;
             flex-wrap: wrap;
             gap: 10px;
             flex: 1; /* 나머지 공간 차지 */
         }
-
         .text-box {
             padding: 10px 15px;
             background-color: #ffffff;
@@ -210,7 +206,6 @@
             color: white;
             border-radius: 4px;
         }
-        
         .button-group {
             display: flex;
             gap: 5px;
@@ -233,14 +228,12 @@
             overflow-x: auto;
             position: relative; /* 부모 요소에 위치 속성 추가 */
         }
-        
         .table1 thead, .table2 thead {
             position: sticky;
             top: 0;
             background: #e0e0e0; /* 테이블 헤더 배경색 */
             z-index: 1;
         }
-
         table {
             margin-top: 0;
             width: 100%;
@@ -257,7 +250,6 @@
             vertical-align: middle;
             white-space: nowrap;
         }
-        
         /* 숨길 컬럼에 대한 스타일 추가 */
         .hide-column {
             display: none;
@@ -329,8 +321,6 @@
             justify-content: flex-end;
             gap: 10px; /* Add some space between the buttons if needed */
         }
-        
-    
         #addDisplayContentButton {
             padding: 5px 10px;
             background-color: #007bff;
@@ -378,6 +368,47 @@
             background: #f9f9f9;
             border: 1px solid #ccc;
             margin-bottom: 10px;
+            transition: all 0.3s ease; /* Smooth transition */
+        }
+        .macro-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .macro-button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            cursor: pointer;
+        }
+        .text-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            flex: 1;
+        }
+        .text-box {
+            padding: 10px 15px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 5px;
+            flex: 1;
+            text-align: center;
+            min-width: 100px;
+            transition: all 0.3s ease;
+        }
+        .resizable-bar {
+            width: 10px;
+            cursor: pointer;
+            background-color: #ccc;
+            position: relative;
+            z-index: 1;
+            display: none; /* 기본적으로 숨김 */
         }
         @media (max-width: 768px) {
             .main-content {
@@ -392,8 +423,55 @@
             .content div {
                 flex: 1 1 100%;
             }
+            .collapsed {
+                display: none;
+            }
+            .expandable {
+                cursor: pointer;
+            }
+            .form-container {
+                padding: 5px;
+                font-size: 14px;
+                margin: 5px; /* Adjust margin for mobile */
+            }
+            .macro-group {
+                flex-direction: column;
+                gap: 5px;
+            }
+            .macro-button {
+                padding: 8px 12px;
+                font-size: 12px; /* Reduce font size */
+            }
+            .text-group {
+                gap: 5px;
+            }
+            .text-box {
+                padding: 8px 12px;
+                font-size: 12px; /* Reduce font size */
+                margin: 2px;
+                min-width: 80px; /* Reduce minimum width */
+            }
+            .input-group input,
+            .input-group button {
+                font-size: 12px; /* 작은 화면에서의 폰트 크기 */
+                padding: 8px;
+                font-size: 12px; /* Reduce font size */
+            }
+            .input-group {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            .resizable-bar {
+                display: block; /* 모바일에서 보임 */
+                width: 100%;
+                height: 10px;
+                cursor: pointer;
+            }
+            .drawing-info {
+                display: none; /* Hide drawing-info on mobile */
+            }
+
         }
-        
     </style>
 </head>
 <body>
@@ -424,7 +502,6 @@
                 </div>
             </div>
         </div>
-    
         <div class="Display" id="display">
             <h1>Canvas</h1>
             <div id="displayContent"></div>
@@ -448,7 +525,7 @@
                     <button class="content-button">복사</button>
                     <button class="content-button" id="deleteDrawingButton">삭제</button>
                 </h5>
-                <div class="table1-container">
+                <div id="drawingTableContainer" class="table1-container">
                     <table class="table1">
                         <thead>
                             <tr>
@@ -468,6 +545,7 @@
                     </table>
                 </div>
             </div>
+            <div id="toggle-button" class="resizable-bar"></div>
             <div id="content2" class="content-container">
                 <div class="form-container" id="partFormContainer">
                     <h5>부재 정보 등록</h5>
@@ -499,7 +577,7 @@
                                 <th>가공길이</th>
                                 <th>전체길이</th>
                                 <th>중량</th>
-                                <th>가공수</th>                                    
+                                <th>가공수</th>
                             </tr>
                         </thead>
                         <tbody id="content2Body">
@@ -539,12 +617,10 @@
             <button id="confirmCopyButton">확인</button>
             <button id="cancelCopyButton">취소</button>
         </div>
-        
         <footer>
             <p>&copy; 2024 Flexbox Layout. All rights reserved.</p>
         </footer>
     </div>
-    
     <script src="scripts.js"></script>
 </body>
 </html>
