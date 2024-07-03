@@ -4,7 +4,8 @@ document.addEventListener('DOMContentLoaded', function() {
     let selectedPartInfo = {};
     let selectedMacroInfo = null;
     let lastSearchParams = {};
-    localStorage.clear()
+
+    //localStorage.clear()
     let currentSort = {
         key: '',
         order: 'asc'
@@ -34,6 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let drawingData = JSON.parse(localStorage.getItem('drawingData'));
     let partData = JSON.parse(localStorage.getItem('partData'));
     let macroData = JSON.parse(localStorage.getItem('macroData'));
+
     function generateUniqueId(dataArray) {
         return dataArray.length > 0 ? Math.max(...dataArray.map(item => item.id)) + 1 : 1;
     }
@@ -45,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const 가공수 = calculateMacroCount(part["Part ID"]);
         return { ...part, 가공수 };
     });
+
     const toggleButton = document.getElementById('toggle-button');
     const content1 = document.getElementById('content1');
     const content2 = document.getElementById('content2');
@@ -81,6 +84,33 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    document.getElementById('MacroInfoButton').addEventListener('click', function() {
+        // 텍스트박스 그룹을 숨기고 이미지 컨테이너와 뒤로가기 버튼을 보여줌
+        document.querySelector('header').classList.add('hidden');
+        document.querySelector('.info-container').classList.add('hidden');
+        document.querySelector('.macroinfo-container').classList.remove('hidden');
+        document.getElementById('MacroInfoBackButton').classList.remove('hidden');
+    });
+    
+    document.getElementById('MacroInfoBackButton').addEventListener('click', function() {
+        // 이미지 컨테이너와 뒤로가기 버튼을 숨기고 텍스트박스 그룹을 보여줌
+        document.querySelector('header').classList.remove('hidden');
+        document.querySelector('.macroinfo-container').classList.add('hidden');
+        document.querySelector('.info-container').classList.remove('hidden');
+        document.getElementById('MacroInfoButton').classList.remove('hidden');
+        var infoContainerCheckbox = document.getElementById('infoContainerCheckbox');
+        if (infoContainerCheckbox.checked) {
+            infoContainerCheckbox.checked = false;
+        }
+    });
+    document.getElementById('infoContainerCheckbox').addEventListener('change', function() {
+        if (this.checked) {
+            document.querySelector('.info-container').classList.remove('hidden');
+        } else {
+            document.querySelector('.info-container').classList.add('hidden');
+        }
+    });
+    // macro-svg 이미지 클릭 이벤트 추가
     const searchButton = document.getElementById('searchButton');
     if (searchButton) {
         searchButton.addEventListener('click', function() {
@@ -569,6 +599,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 updatePartTable(filteredPartData);
                 updatePartInputForm();
+                selectedPartInfo = {}
+                hideImageContainer()
             });
     
             const checkboxTd = document.createElement('td');
@@ -663,6 +695,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 updateMacroTable(filteredMacroData);
                 updateMacroInputForm();
+                updateMacroList();
+
+                const infoEA = document.querySelector('.Info-EA');
+                const infoHB = document.querySelector('.Info-HB');
+                if (infoEA && infoHB) { // 요소가 존재하는지 확인
+                    if (selectedPartInfo.자재종류.startsWith('EA')) {
+                        infoEA.classList.remove('hidden');
+                        infoHB.classList.add('hidden');
+                    } else if (selectedPartInfo.자재종류.startsWith('HB')) {
+                        infoEA.classList.add('hidden');
+                        infoHB.classList.remove('hidden');
+                    } else {
+                        infoEA.classList.add('hidden');
+                        infoHB.classList.add('hidden');
+                    }
+                } else {
+                    console.error('Info-EA 또는 Info-HB 요소를 찾을 수 없습니다.');
+                }
+
             });
     
             const checkboxTd = document.createElement('td');
@@ -818,6 +869,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
                 // 클릭된 매크로 정보를 전역 변수에 저장
                 selectedMacroInfo = rowData;
+                hideImageContainer()
             });
     
             const checkboxTd = document.createElement('td');
@@ -896,6 +948,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 updatePartTable(filteredPartData);
                 updatePartInputForm();
+                hideImageContainer()
+                selectedPartInfo = {}
             }
         });
         const macroheader = tableHeader.querySelector('th.th-macro');
@@ -910,7 +964,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <h5>부재 정보 등록</h5>
             <div class="input-group" id="partInputGroup">
                 <input type="text" id="partInput1" placeholder="Part ID">
-                <input type="text" id="partInput2" placeholder="자재규격">
+                <input type="text" id="partInput2" placeholder="자재규격" list="materialSpecList">
+                <datalist id="materialSpecList">
+                    <option value="EA 25*25*3T">
+                    <option value="EA 30*30*3T">
+                    <option value="EA 40*40*3T">
+                    <option value="EA 40*40*5T">
+                    <option value="HB 96*100*5/8T">
+                    <option value="HB 100*50*5/7T">
+                </datalist>
                 <input type="text" id="partInput3" placeholder="재질">
                 <input type="text" id="partInput4" placeholder="수량">
                 <input type="text" id="partInput5" placeholder="가공길이">
@@ -1003,7 +1065,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <h5>매크로 정보 등록</h5>
             <div class="macro-input-group">
                 <input type="text" id="macroInput2" placeholder="가공위치">
-                <input type="text" id="macroInput3" placeholder="매크로">
+                <input type="text" id="macroInput3" placeholder="매크로" list="macroList">
+                <datalist id="macroList">
+                    <option value="EA001">
+                    <option value="EA002">
+                    <option value="EA003">
+                    <option value="EA004">
+                    <option value="EA005">
+                    <!-- 필요한 만큼 옵션 추가 -->
+                </datalist>
                 <input type="text" id="macroInputA" placeholder="A">
                 <input type="text" id="macroInputB" placeholder="B">
                 <input type="text" id="macroInputC" placeholder="C">
@@ -1056,6 +1126,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             updateMacroTable(filteredMacroData);
             clearMacroInputs();
+            hideImageContainer()
         });
     
         document.getElementById('updateMacroButton').addEventListener('click', function() {
@@ -1109,8 +1180,65 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-    
+    document.querySelectorAll('.macro-svg').forEach(function(svg) {
+        svg.addEventListener('click', function() {
+            if (selectedPartInfo && selectedPartInfo.PartID) {
+                console.log(selectedPartInfo)
+                // 클릭된 이미지의 ID를 매크로 입력 필드에 자동으로 넣기
+                const macroId = this.id;
+                document.getElementById('macroInput3').value = macroId;
 
+                // 클릭된 이미지를 왼쪽에 표시하기
+                const selectedImageContainer = document.getElementById('selectedImageContainer');
+                let selectedImage = document.getElementById('selectedImage');
+                if (!selectedImage) {
+                    selectedImage = document.createElement('img');
+                    selectedImage.id = 'selectedImage';
+                    selectedImage.style.width = '300px';
+                    selectedImage.style.height = '300px';
+                    selectedImageContainer.appendChild(selectedImage);
+                }
+                selectedImage.src = `img/svg/${macroId}.svg`;
+                selectedImageContainer.style.display = 'block'; // 이미지 컨테이너 보이게 하기
+            }
+            else {
+                alert('부재정보가 선택되지 않았습니다.');
+            }
+        });
+    });
+
+    // 다른 버튼 클릭 시 이미지 컨테이너 숨기기
+    function hideImageContainer() {
+        const selectedImageContainer = document.getElementById('selectedImageContainer');
+        if (selectedImageContainer) {
+            selectedImageContainer.style.display = 'none';
+        }
+    }
+    const selectedImageContainer = document.getElementById('selectedImageContainer');
+    selectedImageContainer.addEventListener('click', hideImageContainer);
+
+
+    function updateMacroList() {
+        const macroList = document.getElementById('macroList');
+        const macroOptions = [];
+
+        // info-img 내의 모든 img 요소의 ID를 가져와서 macroOptions에 추가
+        document.querySelectorAll('.info-img img').forEach(function(img) {
+            if (img.parentElement.id) {
+                macroOptions.push(img.parentElement.id);
+            }
+        });
+
+        // 기존 옵션을 모두 제거
+        macroList.innerHTML = '';
+
+        // 새로운 옵션 추가
+        macroOptions.forEach(function(macro) {
+            const option = document.createElement('option');
+            option.value = macro;
+            macroList.appendChild(option);
+        });
+    }
     function clearDrawingInputs() {
         document.getElementById('drawingInput1').value = '';
         document.getElementById('drawingInput2').value = '';

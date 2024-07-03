@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="149.94"
+   height="131.74"
+   version="1.1"
+   viewBox="0 0 149.94 131.74"
+   id="svg98"
+   sodipodi:docname="UA022.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview100"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="3.1577348"
+     inkscape:cx="73.78707"
+     inkscape:cy="51.619281"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     inkscape:window-x="-8"
+     inkscape:window-y="636"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg98" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1,.cls-3,.cls-4,.cls-5{fill:none;}.cls-1,.cls-3,.cls-5{stroke:#040000;}.cls-1,.cls-2,.cls-3,.cls-4{stroke-miterlimit:10;}.cls-1{stroke-dasharray:2;}.cls-2{fill:#f8f9f9;stroke:#231815;}.cls-4{stroke:#00a0e9;}.cls-5{stroke-linejoin:round;}.cls-6{fill:#040000;}.cls-7{font-size:20px;fill:#231815;font-family:NanumSquareRoundR, NanumSquareRound;}</style>
+  </defs>
+  <title
+     id="title6">UA022</title>
+  <g
+     id="g2069">
+    <path
+       class="cls-2"
+       d="m 101.99116,47.913252 0.0498,-17.944852 -99.9100032,0.093 c 0,0 12.5900002,20.88 8.1500002,33.32 0,0 -9.1900001,24.3 -9.78000015,35.56 0,0 0.72000005,17.48 10.73000015,32.3 H 120.06093 l -0.05,-83.302999 z"
+       id="path8"
+       sodipodi:nodetypes="ccccccccc" />
+    <line
+       class="cls-3"
+       x1="120.06092"
+       x2="1.1709268"
+       y1="93.721405"
+       y2="93.721405"
+       id="line10" />
+    <path
+       class="cls-4"
+       d="m 2.1309268,30.0514 c 0,0 12.5900002,20.89 8.1500002,33.33 0,0 -9.1900001,24.3 -9.78000015,35.56 a 68.78,68.78 0 0 0 10.73000015,32.3"
+       id="path12" />
+    <text
+       class="cls-7"
+       x="104.67752"
+       y="13.320005"
+       id="text14">A</text>
+    <text
+       class="cls-7"
+       x="136.39589"
+       y="44.312649"
+       id="text16">B</text>
+    <g
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="g34"
+       transform="translate(9.2685e-4,3.7814)">
+      <line
+         class="cls-2"
+         x1="120.01"
+         x2="120.01"
+         y1="44.157001"
+         y2="43.157001"
+         id="line18" />
+      <line
+         class="cls-3"
+         x1="120.01"
+         x2="120.01"
+         y1="41.387001"
+         y2="28.077"
+         stroke-dasharray="1.77, 1.77"
+         id="line20" />
+      <polyline
+         class="cls-2"
+         transform="translate(-7.2904,-6.0832)"
+         points="127.3 33.27 127.3 32.27 126.3 32.27"
+         id="polyline22" />
+      <line
+         class="cls-3"
+         x1="117.24"
+         x2="103.93"
+         y1="26.187"
+         y2="26.187"
+         stroke-dasharray="1.77, 1.77"
+         id="line24" />
+      <line
+         class="cls-2"
+         x1="103.04"
+         x2="102.04"
+         y1="26.187"
+         y2="26.187"
+         id="line26" />
+      <line
+         class="cls-2"
+         x1="120.01"
+         x2="120.01"
+         y1="21.187"
+         y2="11.397"
+         id="line28" />
+      <line
+         class="cls-2"
+         x1="102.04"
+         x2="102.04"
+         y1="21.187"
+         y2="11.397"
+         id="line30" />
+      <line
+         class="cls-2"
+         x1="116.53"
+         x2="105.53"
+         y1="13.177"
+         y2="13.177"
+         id="line32" />
+    </g>
+    <polygon
+       class="cls-4"
+       transform="translate(-7.2894731,-2.3018)"
+       points="125.97,19.25 123.38,20.75 123.38,17.76 "
+       fill="#040000"
+       id="polygon36"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <polygon
+       class="cls-4"
+       transform="translate(-7.2894731,-2.3018)"
+       points="110.66,19.25 113.25,20.75 113.25,17.76 "
+       fill="#040000"
+       id="polygon38"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <g
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="g48"
+       transform="translate(9.2685e-4,3.7814)">
+      <line
+         class="cls-2"
+         x1="125.01"
+         x2="134.8"
+         y1="44.157001"
+         y2="44.157001"
+         id="line40" />
+      <line
+         class="cls-2"
+         x1="125.01"
+         x2="134.8"
+         y1="26.187"
+         y2="26.187"
+         id="line42" />
+      <line
+         class="cls-2"
+         x1="133.03"
+         x2="133.03"
+         y1="40.676998"
+         y2="29.677"
+         id="line44" />
+      <line
+         class="cls-2"
+         x1="133.00999"
+         x2="133.00999"
+         y1="51.636002"
+         y2="46.584999"
+         stroke-width="0.67762"
+         id="line46" />
+    </g>
+    <polygon
+       class="cls-4"
+       transform="translate(-7.2894731,-2.3018)"
+       points="140.32,48.91 138.82,46.32 141.81,46.32 "
+       fill="#040000"
+       id="polygon50"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <polygon
+       class="cls-4"
+       transform="translate(-7.2894731,-2.3018)"
+       points="140.32,33.6 138.82,36.19 141.81,36.19 "
+       fill="#040000"
+       id="polygon52"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <line
+       class="cls-2"
+       x1="124.99092"
+       x2="134.78093"
+       y1="57.8354"
+       y2="57.8354"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line54" />
+    <line
+       class="cls-2"
+       x1="124.99092"
+       x2="134.78093"
+       y1="47.865398"
+       y2="47.865398"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line56" />
+    <polygon
+       class="cls-4"
+       transform="translate(-7.3065731,7.5949)"
+       points="141.81,46.32 140.32,48.91 138.82,46.32 "
+       fill="#040000"
+       id="polygon58"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <polygon
+       class="cls-4"
+       transform="translate(-7.3065731,15.5954)"
+       points="138.82,36.19 141.81,36.19 140.32,33.6 "
+       fill="#040000"
+       id="polygon60"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <line
+       class="cls-2"
+       x1="97.240921"
+       x2="87.45192"
+       y1="47.83408"
+       y2="47.83408"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line62" />
+    <line
+       class="cls-2"
+       x1="89.221924"
+       x2="89.221924"
+       y1="44.35408"
+       y2="33.35408"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line64" />
+    <polygon
+       class="cls-4"
+       transform="matrix(-1,0,0,1,229.54093,-2.4060172)"
+       points="141.81,46.32 140.32,48.91 138.82,46.32 "
+       fill="#040000"
+       id="polygon66"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <polygon
+       class="cls-4"
+       transform="matrix(-1,0,0,1,229.54093,-2.4060172)"
+       points="141.81,36.19 140.32,33.6 138.82,36.19 "
+       fill="#040000"
+       id="polygon68"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <text
+       x="74.134354"
+       y="45.602524"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="line-height:1.25;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       xml:space="preserve"
+       id="text72"><tspan
+         x="74.134354"
+         y="45.602524"
+         font-family="NanumSquareRoundR, NanumSquareRound"
+         font-size="20px"
+         style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan70">C</tspan></text>
+    <text
+       x="136.44011"
+       y="62.70932"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="line-height:1.25;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       xml:space="preserve"
+       id="text76"><tspan
+         x="136.44011"
+         y="62.70932"
+         font-family="NanumSquareRoundR, NanumSquareRound"
+         font-size="20px"
+         style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan74">D</tspan></text>
+    <path
+       d="m 120.00093,57.6294 c -9.9283,-9.9283 -9.8999,-9.8145 -9.8999,-9.8145"
+       fill="#000080"
+       stroke="#000000"
+       stroke-dasharray="1.6, 0.8"
+       stroke-width="0.8"
+       id="path78" />
+    <g
+       transform="translate(-7.2894731,-2.3018)"
+       fill="#000080"
+       stroke-dasharray="0.0455166, 0.0227583"
+       stroke-width="0.022758"
+       id="g92">
+      <path
+         d="m 117.94,51.172 -0.54765,-0.53453 0.52633,-0.55556 0.56389,0.54802 0.56388,0.54802 -0.26462,0.26572 c -0.14554,0.14615 -0.27127,0.26508 -0.2794,0.26429 -0.008,-7.89e-4 -0.26123,-0.24197 -0.56243,-0.53596 z"
+         id="path80" />
+      <path
+         d="m 119.65,52.851 -0.54616,-0.53404 0.53708,-0.53485 0.14961,0.14105 c 0.0823,0.07758 0.33199,0.32024 0.5549,0.53924 l 0.4053,0.39819 -0.2625,0.26359 c -0.14437,0.14498 -0.26915,0.26298 -0.27728,0.26222 -0.008,-7.56e-4 -0.26056,-0.24169 -0.56095,-0.53541 z"
+         id="path82" />
+      <path
+         d="m 121.35,54.547 -0.54749,-0.54804 0.54109,-0.53884 1.1089,1.1078 -0.26245,0.26355 c -0.14435,0.14495 -0.26923,0.26355 -0.27751,0.26355 -0.008,0 -0.26143,-0.24662 -0.56256,-0.54804 z"
+         id="path84" />
+      <path
+         d="m 123.05,56.247 -0.55428,-0.55482 0.27025,-0.27026 0.27026,-0.27026 0.55428,0.55482 0.55427,0.55482 -0.54051,0.54051 z"
+         id="path86" />
+      <path
+         d="m 124.75,57.94 -0.53981,-0.54037 0.53883,-0.54109 1.0958,1.0947 -0.26245,0.26355 c -0.14435,0.14495 -0.26923,0.26355 -0.27752,0.26355 -0.008,0 -0.25798,-0.24317 -0.55487,-0.54037 z"
+         id="path88" />
+      <path
+         d="m 126.46,59.638 -0.56339,-0.54616 0.53983,-0.53563 0.55662,0.53491 c 0.30614,0.2942 0.55662,0.54299 0.55662,0.55286 0,0.0099 -0.11841,0.13545 -0.26314,0.27907 l -0.26315,0.26112 z"
+         id="path90" />
+    </g>
+  </g>
+  <metadata
+     id="metadata96">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>UA022</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

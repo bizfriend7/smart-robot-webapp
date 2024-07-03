@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="154.11" height="131.36" version="1.1" viewBox="0 0 154.11 131.36" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <defs>
+  <style>.cls-1{fill:#f7f8f8;stroke-width:0.76px;}.cls-1,.cls-2,.cls-3{stroke:#040000;stroke-linejoin:round;}.cls-2,.cls-3{fill:none;}.cls-3{stroke-dasharray:1.77 1.77;}.cls-4{fill:#040000;}.cls-5{font-size:20px;fill:#231815;font-family:NanumSquareRoundR, NanumSquareRound;}</style>
+ </defs>
+ <title>EA002</title>
+ <g transform="translate(-2.615 -2.5191)">
+  <path class="cls-1" d="m29.42 50.24h18v-18h100.1s17.48 16.85 3.25 46.11a45.1 45.1 0 0 0-4.28 15.29 61.4 61.4 0 0 0 9.85 39.86h-126.92z"/>
+  <line class="cls-1" x1="29.42" x2="148.88" y1="82.89" y2="82.89"/>
+  <line class="cls-2" x1="29.42" x2="29.42" y1="50.24" y2="49.24"/>
+  <line class="cls-3" x1="29.42" x2="29.42" y1="47.631" y2="34.321"/>
+  <polyline class="cls-2" points="29.41 33.27 29.41 32.27 30.41 32.27"/>
+  <line class="cls-3" x1="32.19" x2="45.5" y1="32.431" y2="32.431"/>
+  <line class="cls-2" x1="46.39" x2="47.39" y1="32.27" y2="32.27"/>
+  <g fill="none" stroke="#040000" stroke-linejoin="round">
+   <line class="cls-2" x1="29.454" x2="29.454" y1="50.079" y2="49.079"/>
+   <polyline class="cls-2" transform="matrix(-1 0 0 1 156.75 -.16093)" points="127.3 33.27 127.3 32.27 126.3 32.27"/>
+   <line class="cls-2" x1="46.424" x2="47.424" y1="32.109" y2="32.109"/>
+   <line class="cls-2" x1="29.454" x2="29.454" y1="27.109" y2="17.319"/>
+   <line class="cls-2" x1="47.424" x2="47.424" y1="27.109" y2="17.319"/>
+   <line class="cls-2" x1="32.934" x2="43.934" y1="19.099" y2="19.099"/>
+  </g>
+  <polygon class="cls-4" transform="matrix(-1 0 0 1 156.75 -.16093)" points="123.38 17.76 125.97 19.25 123.38 20.75" fill="#040000"/>
+  <polygon class="cls-4" transform="matrix(-1 0 0 1 156.75 -.16093)" points="113.25 17.76 110.66 19.25 113.25 20.75" fill="#040000"/>
+  <text class="cls-5" x="31.97127" y="15.839073" fill="#231815" font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">A</text>
+  <g fill="none" stroke="#040000" stroke-linejoin="round">
+   <line class="cls-2" x1="24.454" x2="14.664" y1="50.079" y2="50.079"/>
+   <line class="cls-2" x1="24.454" x2="14.664" y1="32.109" y2="32.109"/>
+   <line class="cls-2" x1="16.434" x2="16.434" y1="46.599" y2="35.599"/>
+   <line class="cls-2" x1="16.454" x2="16.454" y1="57.558" y2="52.507" stroke-width=".67762"/>
+  </g>
+  <polygon class="cls-4" transform="matrix(-1 0 0 1 156.75 -.16093)" points="141.81 46.32 140.32 48.91 138.82 46.32" fill="#040000"/>
+  <polygon class="cls-4" transform="matrix(-1 0 0 1 156.75 -.16093)" points="141.81 36.19 140.32 33.6 138.82 36.19" fill="#040000"/>
+  <line class="cls-2" x1="24.474" x2="14.684" y1="59.976" y2="59.976" fill="none" stroke="#040000" stroke-linejoin="round"/>
+  <line class="cls-2" x1="24.474" x2="14.684" y1="50.006" y2="50.006" fill="none" stroke="#040000" stroke-linejoin="round"/>
+  <polygon class="cls-4" transform="matrix(-1 0 0 1 156.77 9.7358)" points="138.82 46.32 141.81 46.32 140.32 48.91" fill="#040000"/>
+  <polygon class="cls-4" transform="matrix(-1 0 0 1 156.77 17.736)" points="140.32 33.6 138.82 36.19 141.81 36.19" fill="#040000"/>
+  <line class="cls-2" x1="52.224" x2="62.013" y1="49.658" y2="49.658" fill="none" stroke="#040000" stroke-linejoin="round"/>
+  <line class="cls-2" x1="60.243" x2="60.243" y1="46.178" y2="35.178" fill="none" stroke="#040000" stroke-linejoin="round"/>
+  <polygon class="cls-4" transform="translate(-80.076 -.58183)" points="138.82 46.32 141.81 46.32 140.32 48.91" fill="#040000"/>
+  <polygon class="cls-4" transform="translate(-80.076 -.58183)" points="138.82 36.19 141.81 36.19 140.32 33.6" fill="#040000"/>
+  <g font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px">
+   <text class="cls-5" x="0.6949656" y="47.643726" fill="#231815" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">B</text>
+   <text x="62.690224" y="47.426723" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="62.690224" y="47.426723" font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">C</tspan></text>
+   <text x="0.83987451" y="63.796356" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="0.83987451" y="63.796356" font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">D</tspan></text>
+  </g>
+  <path d="m29.464 59.77c9.9283-9.9283 9.8999-9.8145 9.8999-9.8145" fill="#000080" stroke="#000" stroke-dasharray="1.6, 0.8" stroke-width=".8"/>
+  <g transform="matrix(-1 0 0 1 156.75 -.16093)" fill="#000080" stroke-dasharray="0.0455166, 0.0227583" stroke-width=".022758">
+   <path d="m117.94 51.172-0.54765-0.53453 0.52633-0.55556 0.56389 0.54802 0.56388 0.54802-0.26462 0.26572c-0.14554 0.14615-0.27127 0.26508-0.2794 0.26429-8e-3 -7.89e-4 -0.26123-0.24197-0.56243-0.53596z"/>
+   <path d="m119.65 52.851-0.54616-0.53404 0.53708-0.53485 0.14961 0.14105c0.0823 0.07758 0.33199 0.32024 0.5549 0.53924l0.4053 0.39819-0.2625 0.26359c-0.14437 0.14498-0.26915 0.26298-0.27728 0.26222-8e-3 -7.56e-4 -0.26056-0.24169-0.56095-0.53541z"/>
+   <path d="m121.35 54.547-0.54749-0.54804 0.54109-0.53884 1.1089 1.1078-0.26245 0.26355c-0.14435 0.14495-0.26923 0.26355-0.27751 0.26355-8e-3 0-0.26143-0.24662-0.56256-0.54804z"/>
+   <path d="m123.05 56.247-0.55428-0.55482 0.27025-0.27026 0.27026-0.27026 0.55428 0.55482 0.55427 0.55482-0.54051 0.54051z"/>
+   <path d="m124.75 57.94-0.53981-0.54037 0.53883-0.54109 1.0958 1.0947-0.26245 0.26355c-0.14435 0.14495-0.26923 0.26355-0.27752 0.26355-8e-3 0-0.25798-0.24317-0.55487-0.54037z"/>
+   <path d="m126.46 59.638-0.56339-0.54616 0.53983-0.53563 0.55662 0.53491c0.30614 0.2942 0.55662 0.54299 0.55662 0.55286 0 0.0099-0.11841 0.13545-0.26314 0.27907l-0.26315 0.26112z"/>
+  </g>
+ </g>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:title>EA002</dc:title>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+</svg>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="156.31" height="131.2" version="1.1" viewBox="0 0 156.31 131.2" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+ <title>EA022</title>
+ <defs>
+  <style>.cls-1{fill:#f7f8f8;stroke-width:0.76px;}.cls-1,.cls-2,.cls-3{stroke:#040000;stroke-linejoin:round;}.cls-2,.cls-3{fill:none;}.cls-3{stroke-dasharray:1.77 1.77;}.cls-4{fill:#040000;}.cls-5{font-size:20px;fill:#231815;font-family:NanumSquareRoundR, NanumSquareRound;}</style>
+ </defs>
+ <path class="cls-1" d="m127.3 130.82h-118.1s-17.45-16.81-3.2-46.08a44.8 44.8 0 0 0 4.27-15.29 61.32 61.32 0 0 0-9.89-39.86h109v18h18z"/>
+ <line class="cls-1" x1="127.3" x2="7.83" y1="80.21" y2="80.21"/>
+ <line class="cls-2" x1="127.3" x2="127.3" y1="47.56" y2="46.56"/>
+ <line class="cls-3" x1="127.3" x2="127.3" y1="44.79" y2="31.48"/>
+ <polyline class="cls-2" transform="translate(-3.2713e-5 -2.68)" points="127.3 33.27 127.3 32.27 126.3 32.27"/>
+ <line class="cls-3" x1="124.53" x2="111.22" y1="29.59" y2="29.59"/>
+ <line class="cls-2" x1="110.33" x2="109.33" y1="29.59" y2="29.59"/>
+ <line class="cls-2" x1="127.3" x2="127.3" y1="24.59" y2="14.8"/>
+ <line class="cls-2" x1="109.33" x2="109.33" y1="24.59" y2="14.8"/>
+ <line class="cls-2" x1="123.82" x2="112.82" y1="16.58" y2="16.58"/>
+ <polygon class="cls-4" transform="translate(-3.2713e-5 -2.68)" points="123.38 20.75 123.38 17.76 125.97 19.25"/>
+ <polygon class="cls-4" transform="translate(-3.2713e-5 -2.68)" points="113.25 20.75 113.25 17.76 110.66 19.25"/>
+ <text class="cls-5" x="112.20274" y="13.32" fill="#231815" font-family="Aparajita" font-size="21.333px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">A</text>
+ <line class="cls-2" x1="132.3" x2="142.09" y1="47.56" y2="47.56"/>
+ <line class="cls-2" x1="132.3" x2="142.09" y1="29.59" y2="29.59"/>
+ <line class="cls-2" x1="140.32" x2="140.32" y1="44.08" y2="33.08"/>
+ <line class="cls-2" x1="140.3" x2="140.3" y1="55.039" y2="49.988" fill="none" stroke="#040000" stroke-linejoin="round" stroke-width=".67762"/>
+ <polygon class="cls-4" transform="translate(-3.2713e-5 -2.68)" points="138.82 46.32 141.81 46.32 140.32 48.91"/>
+ <polygon class="cls-4" transform="translate(-3.2713e-5 -2.68)" points="138.82 36.19 141.81 36.19 140.32 33.6"/>
+ <line class="cls-2" x1="132.28" x2="142.07" y1="57.457" y2="57.457" fill="none" stroke="#040000" stroke-linejoin="round"/>
+ <line class="cls-2" x1="132.28" x2="142.07" y1="47.487" y2="47.487" fill="none" stroke="#040000" stroke-linejoin="round"/>
+ <polygon class="cls-4" transform="translate(-.017113 7.2167)" points="140.32 48.91 138.82 46.32 141.81 46.32" fill="#040000"/>
+ <polygon class="cls-4" transform="translate(-.017113 15.217)" points="141.81 36.19 140.32 33.6 138.82 36.19" fill="#040000"/>
+ <line class="cls-2" x1="104.53" x2="94.741" y1="47.139" y2="47.139" fill="none" stroke="#040000" stroke-linejoin="round"/>
+ <line class="cls-2" x1="96.511" x2="96.511" y1="43.659" y2="32.659" fill="none" stroke="#040000" stroke-linejoin="round"/>
+ <polygon class="cls-4" transform="matrix(-1 0 0 1 236.83 -3.1009)" points="140.32 48.91 138.82 46.32 141.81 46.32" fill="#040000"/>
+ <polygon class="cls-4" transform="matrix(-1 0 0 1 236.83 -3.1009)" points="140.32 33.6 138.82 36.19 141.81 36.19" fill="#040000"/>
+ <text class="cls-5" x="143.75905" y="45.131123" fill="#231815" font-family="Aparajita" font-size="21.333px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">B</text>
+ <text x="81.42379" y="44.90765" font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="81.42379" y="44.90765" font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">C</tspan></text>
+ <text x="143.72952" y="62.331131" font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal;line-height:1.25" xml:space="preserve"><tspan x="143.72952" y="62.331131" font-family="NanumSquareRoundR, NanumSquareRound" font-size="20px" style="font-variant-caps:normal;font-variant-east-asian:normal;font-variant-ligatures:normal;font-variant-numeric:normal">D</tspan></text>
+ <path d="m127.29 57.251c-9.9283-9.9283-9.8999-9.8145-9.8999-9.8145" fill="#000080" stroke="#000" stroke-dasharray="1.6, 0.8" stroke-width=".8"/>
+ <g transform="translate(-3.2713e-5 -2.68)" fill="#000080" stroke-dasharray="0.0455166, 0.0227583" stroke-width=".022758">
+  <path d="m117.94 51.172-0.54765-0.53453 0.52633-0.55556 0.56389 0.54802 0.56388 0.54802-0.26462 0.26572c-0.14554 0.14615-0.27127 0.26508-0.2794 0.26429-8e-3 -7.89e-4 -0.26123-0.24197-0.56243-0.53596z"/>
+  <path d="m119.65 52.851-0.54616-0.53404 0.53708-0.53485 0.14961 0.14105c0.0823 0.07758 0.33199 0.32024 0.5549 0.53924l0.4053 0.39819-0.2625 0.26359c-0.14437 0.14498-0.26915 0.26298-0.27728 0.26222-8e-3 -7.56e-4 -0.26056-0.24169-0.56095-0.53541z"/>
+  <path d="m121.35 54.547-0.54749-0.54804 0.54109-0.53884 1.1089 1.1078-0.26245 0.26355c-0.14435 0.14495-0.26923 0.26355-0.27751 0.26355-8e-3 0-0.26143-0.24662-0.56256-0.54804z"/>
+  <path d="m123.05 56.247-0.55428-0.55482 0.27025-0.27026 0.27026-0.27026 0.55428 0.55482 0.55427 0.55482-0.54051 0.54051z"/>
+  <path d="m124.75 57.94-0.53981-0.54037 0.53883-0.54109 1.0958 1.0947-0.26245 0.26355c-0.14435 0.14495-0.26923 0.26355-0.27752 0.26355-8e-3 0-0.25798-0.24317-0.55487-0.54037z"/>
+  <path d="m126.46 59.638-0.56339-0.54616 0.53983-0.53563 0.55662 0.53491c0.30614 0.2942 0.55662 0.54299 0.55662 0.55286 0 0.0099-0.11841 0.13545-0.26314 0.27907l-0.26315 0.26112z"/>
+ </g>
+ <metadata>
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:title>EA022</dc:title>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+</svg>

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="146.96"
+   height="130.97"
+   version="1.1"
+   viewBox="0 0 146.96 130.97"
+   id="svg94"
+   sodipodi:docname="UA102.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview96"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="6.3525998"
+     inkscape:cx="71.151972"
+     inkscape:cy="65.485001"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     inkscape:window-x="-8"
+     inkscape:window-y="636"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg94" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1,.cls-3,.cls-4,.cls-5{fill:none;}.cls-1,.cls-3,.cls-5{stroke:#040000;}.cls-1,.cls-2,.cls-3,.cls-4{stroke-miterlimit:10;}.cls-1{stroke-dasharray:2;}.cls-2{fill:#fff;stroke:#231815;}.cls-4{stroke:#00a0e9;}.cls-5{stroke-linejoin:round;}.cls-6{fill:#040000;}.cls-7{font-size:20px;fill:#231815;font-family:NanumSquareRoundR, NanumSquareRound;}</style>
+  </defs>
+  <title
+     id="title6">UA102</title>
+  <metadata
+     id="metadata92">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>UA102</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="g1661">
+    <path
+       class="cls-2"
+       d="m 26.262,0.5 h 110.67 c 0,0 12.59,20.89 8.14,33.33 0,0 -9.18,24.3 -9.77,35.56 0,0 0.71,17.48 10.72,32.3 l -101.73,0.15042 -0.26691,-17.992 -17.703,0.02178 z"
+       id="path8" />
+    <line
+       class="cls-3"
+       x1="26.261999"
+       x2="135.142"
+       y1="64.169998"
+       y2="64.169998"
+       id="line10" />
+    <path
+       class="cls-4"
+       d="m 136.932,0.5 c 0,0 12.59,20.89 8.14,33.33 0,0 -9.18,24.3 -9.77,35.56 a 68.84,68.84 0 0 0 10.72,32.3"
+       id="path12" />
+    <line
+       class="cls-2"
+       x1="44.290001"
+       x2="43.290001"
+       y1="101.84"
+       y2="101.84"
+       id="line14"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-3"
+       x1="41.52"
+       x2="28.2101"
+       y1="101.84"
+       y2="101.84"
+       stroke-dasharray="1.77, 1.77"
+       id="line16"
+       style="stroke-linejoin:round" />
+    <polyline
+       class="cls-2"
+       transform="translate(-3.42,0.23042)"
+       points="30.74 101.61 29.74 101.61 29.74 100.61"
+       id="polyline18"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-3"
+       x1="26.32012"
+       x2="26.32012"
+       y1="99.07"
+       y2="85.760002"
+       stroke-dasharray="1.77, 1.77"
+       id="line20"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-2"
+       x1="26.32012"
+       x2="26.32012"
+       y1="84.870003"
+       y2="83.870003"
+       id="line22"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-2"
+       x1="44.290001"
+       x2="44.290001"
+       y1="106.84"
+       y2="116.63"
+       id="line24"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-2"
+       x1="26.32012"
+       x2="26.32012"
+       y1="106.84"
+       y2="116.63"
+       id="line26"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-2"
+       x1="40.810001"
+       x2="29.810101"
+       y1="114.86"
+       y2="114.86"
+       id="line28"
+       style="stroke-linejoin:round" />
+    <polygon
+       class="cls-4"
+       transform="translate(-3.42,0.23042)"
+       points="43.79,116.13 43.79,113.13 46.38,114.63 "
+       fill="#040000"
+       id="polygon32"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <polygon
+       class="cls-4"
+       transform="translate(-3.42,0.23042)"
+       points="33.66,116.13 33.66,113.13 31.07,114.63 "
+       fill="#040000"
+       id="polygon34"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <line
+       class="cls-2"
+       x1="21.320101"
+       x2="11.53"
+       y1="101.84"
+       y2="101.84"
+       id="line38"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-2"
+       x1="21.320101"
+       x2="11.53"
+       y1="83.870003"
+       y2="83.870003"
+       id="line40"
+       style="stroke-linejoin:round" />
+    <line
+       class="cls-2"
+       x1="13.31"
+       x2="13.31"
+       y1="98.360001"
+       y2="87.360001"
+       id="line42"
+       style="stroke-linejoin:round" />
+    <polygon
+       class="cls-4"
+       transform="translate(-3.42,0.23042)"
+       points="15.23,97.69 18.22,97.69 16.73,100.28 "
+       fill="#040000"
+       id="polygon46"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <polygon
+       class="cls-4"
+       transform="translate(-3.42,0.23042)"
+       points="15.23,87.57 18.22,87.57 16.73,84.97 "
+       fill="#040000"
+       id="polygon48"
+       style="fill:#000000;stroke:none;stroke-opacity:1" />
+    <line
+       class="cls-2"
+       x1="48.950001"
+       x2="58.740002"
+       y1="84.169998"
+       y2="84.169998"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line52" />
+    <line
+       class="cls-2"
+       x1="56.970001"
+       x2="56.970001"
+       y1="87.650002"
+       y2="98.650002"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line54" />
+    <polygon
+       class="cls-4"
+       transform="matrix(1,0,0,-1,-83.348,134.41)"
+       points="141.81,46.32 140.32,48.91 138.82,46.32 "
+       fill="#040000"
+       id="polygon56"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <polygon
+       class="cls-4"
+       transform="matrix(1,0,0,-1,-83.348,134.41)"
+       points="141.81,36.19 140.32,33.6 138.82,36.19 "
+       fill="#040000"
+       id="polygon58"
+       style="fill:#000000;fill-opacity:1;stroke:none" />
+    <text
+       x="60.578396"
+       y="98.489601"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="line-height:1.25;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       xml:space="preserve"
+       id="text62"><tspan
+         x="60.578396"
+         y="98.489601"
+         font-family="NanumSquareRoundR, NanumSquareRound"
+         font-size="20px"
+         style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan60">C</tspan></text>
+    <line
+       class="cls-2"
+       x1="13.486"
+       x2="13.486"
+       y1="76.238998"
+       y2="81.290001"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       stroke-width="0.67762"
+       id="line64" />
+    <line
+       class="cls-2"
+       x1="21.4993"
+       x2="11.709"
+       y1="73.820999"
+       y2="73.820999"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line66" />
+    <polygon
+       class="cls-4"
+       transform="rotate(180,76.9,62.031)"
+       points="140.32,48.91 138.82,46.32 141.81,46.32 "
+       fill="#040000"
+       id="polygon68"
+       style="fill:#000000;stroke:none;stroke-opacity:1" />
+    <polygon
+       class="cls-4"
+       transform="rotate(180,76.9,58.031)"
+       points="141.81,36.19 140.32,33.6 138.82,36.19 "
+       fill="#040000"
+       id="polygon70"
+       style="fill:#000000;stroke:none;stroke-opacity:1" />
+    <text
+       x="-1.4271308"
+       y="82.799194"
+       fill="#000000"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="line-height:1.25;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       xml:space="preserve"
+       id="text74"><tspan
+         x="-1.4271308"
+         y="82.799194"
+         fill="#000000"
+         font-family="NanumSquareRoundR, NanumSquareRound"
+         font-size="20px"
+         style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+         id="tspan72">D</tspan></text>
+    <text
+       x="-1.3509974"
+       y="99.174126"
+       fill="#000000"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:NanumSquareRoundR, NanumSquareRound;-inkscape-font-specification:'NanumSquareRoundR, NanumSquareRound, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000"
+       xml:space="preserve"
+       id="text74-2"><tspan
+         sodipodi:role="line"
+         id="tspan1536"
+         x="-1.3509974"
+         y="99.174126">B</tspan></text>
+    <path
+       d="m 35.841,82.78642 0.54765,0.53452 -0.26317,0.27778 -0.26316,0.27779 -0.56389,-0.54802 -0.56388,-0.54802 0.26462,-0.26572 c 0.14554,-0.14615 0.27127,-0.26508 0.2794,-0.2643 0.008,7.9e-4 0.26123,0.24198 0.56243,0.53597 z"
+       id="path76"
+       style="fill:#000080;stroke-width:0.022758;stroke-dasharray:0.0455166, 0.0227583" />
+    <path
+       d="m 34.133,81.10742 0.54616,0.53404 -0.53708,0.53485 -0.14961,-0.14106 c -0.0823,-0.0776 -0.33199,-0.32023 -0.5549,-0.53924 l -0.4053,-0.39819 0.2625,-0.26359 c 0.14437,-0.14498 0.26915,-0.26297 0.27728,-0.26222 0.008,7.6e-4 0.26056,0.24169 0.56095,0.53541 z"
+       id="path78"
+       style="fill:#000080;stroke-width:0.022758;stroke-dasharray:0.0455166, 0.0227583" />
+    <path
+       d="m 32.428,79.41142 0.54749,0.54804 -0.54109,0.53884 -1.1089,-1.1078 0.26245,-0.26355 c 0.14435,-0.14495 0.26923,-0.26355 0.27751,-0.26355 0.008,0 0.26143,0.24662 0.56256,0.54804 z"
+       id="path80"
+       style="fill:#000080;stroke-width:0.022758;stroke-dasharray:0.0455166, 0.0227583" />
+    <path
+       d="m 30.727,77.71142 0.55428,0.55482 -0.27025,0.27026 -0.27026,0.27025 -0.55428,-0.55482 -0.55427,-0.55483 0.54051,-0.54051 z"
+       id="path82"
+       style="fill:#000080;stroke-width:0.022758;stroke-dasharray:0.0455166, 0.0227583" />
+    <path
+       d="m 29.035,76.01842 0.53981,0.54036 -0.53883,0.54109 -0.54791,-0.54736 -0.54791,-0.54737 0.26245,-0.26355 c 0.14435,-0.14495 0.26923,-0.26354 0.27752,-0.26354 0.008,0 0.25798,0.24316 0.55487,0.54037 z"
+       id="path84"
+       style="fill:#000080;stroke-width:0.022758;stroke-dasharray:0.0455166, 0.0227583" />
+    <path
+       d="m 27.322,74.32042 0.56339,0.54617 -0.53983,0.53563 -0.55662,-0.53491 c -0.30614,-0.2942 -0.55662,-0.54298 -0.55662,-0.55286 0,-0.01 0.11841,-0.13545 0.26314,-0.27907 l 0.26315,-0.26112 z"
+       id="path86"
+       style="fill:#000080;stroke-width:0.022758;stroke-dasharray:0.0455166, 0.0227583" />
+    <text
+       x="29.113064"
+       y="131.33336"
+       fill="#000000"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:20px;line-height:1.25;font-family:NanumSquareRoundR, NanumSquareRound;-inkscape-font-specification:'NanumSquareRoundR, NanumSquareRound, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#000000"
+       xml:space="preserve"
+       id="text74-20"><tspan
+         sodipodi:role="line"
+         id="tspan1573"
+         x="29.113064"
+         y="131.33336">A</tspan></text>
+  </g>
+</svg>

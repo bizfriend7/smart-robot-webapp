@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="142.71"
+   height="125.03"
+   version="1.1"
+   viewBox="0 0 142.71 125.03"
+   id="svg88"
+   sodipodi:docname="CH202.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview90"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="6.654403"
+     inkscape:cx="71.381309"
+     inkscape:cy="62.514999"
+     inkscape:window-width="1920"
+     inkscape:window-height="1058"
+     inkscape:window-x="-8"
+     inkscape:window-y="636"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg88" />
+  <defs
+     id="defs4">
+    <style
+       id="style2">.cls-1{fill:#f8f9f9;}.cls-1,.cls-4{stroke:#231815;}.cls-1,.cls-2,.cls-3,.cls-4{stroke-miterlimit:10;}.cls-2,.cls-3,.cls-4,.cls-5{fill:none;}.cls-2,.cls-5{stroke:#040000;}.cls-3{stroke:#00a0e9;}.cls-4{stroke-dasharray:1;}.cls-5{stroke-linejoin:round;}.cls-6{fill:#040000;}.cls-7{font-size:20px;fill:#231815;font-family:NanumSquareRoundR, NanumSquareRound;}</style>
+  </defs>
+  <title
+     id="title6">CH202</title>
+  <g
+     transform="translate(21.332)"
+     id="g84">
+    <path
+       class="cls-1"
+       d="m 0.67,0.5 h 110.67 c 0,0 12.59,20.89 8.15,33.33 0,0 -9.19,24.3 -9.78,35.56 0,0 0.71,17.48 10.73,32.3 l -92.533,-0.0599 v -8.2 h -27.5 z"
+       id="path8" />
+    <line
+       class="cls-2"
+       x1="0.67000002"
+       x2="109.55"
+       y1="72.580002"
+       y2="72.580002"
+       id="line10" />
+    <line
+       class="cls-2"
+       x1="0.67000002"
+       x2="120.41"
+       y1="28.629999"
+       y2="28.629999"
+       id="line12" />
+    <path
+       class="cls-3"
+       d="m 111.34,0.5 c 0,0 12.59,20.89 8.15,33.33 0,0 -9.19,24.3 -9.78,35.56 a 68.78,68.78 0 0 0 10.73,32.3"
+       id="path14" />
+    <rect
+       class="cls-6"
+       transform="scale(1,-1)"
+       x="0.40652001"
+       y="-101.7"
+       width="27.5"
+       height="8.1999998"
+       fill="none"
+       stroke="#231815"
+       stroke-dasharray="1"
+       stroke-miterlimit="10"
+       stroke-width="0.79905"
+       id="rect16"
+       style="fill:none" />
+    <line
+       class="cls-7"
+       x1="3.997"
+       x2="24.597"
+       y1="108.45"
+       y2="108.45"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line18" />
+    <polygon
+       class="cls-8"
+       transform="matrix(1,0,0,-1,0.007,127.71)"
+       points="1.83,19.25 4.42,17.76 4.42,20.75 "
+       fill="#040000"
+       id="polygon20" />
+    <polygon
+       class="cls-8"
+       transform="matrix(1,0,0,-1,0.007,127.71)"
+       points="26.74,19.25 24.15,17.76 24.15,20.75 "
+       fill="#040000"
+       id="polygon22" />
+    <line
+       class="cls-7"
+       x1="0.50700003"
+       x2="0.50700003"
+       y1="104.44"
+       y2="110.23"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line24" />
+    <line
+       class="cls-7"
+       x1="28.077"
+       x2="28.077"
+       y1="104.44"
+       y2="110.23"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line26" />
+    <text
+       class="cls-9"
+       x="7.6970024"
+       y="125.03009"
+       fill="#231815"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       id="text28">A</text>
+    <line
+       class="cls-7"
+       x1="37.777"
+       x2="31.487"
+       y1="93.223999"
+       y2="93.223999"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line30" />
+    <line
+       class="cls-7"
+       x1="35.617001"
+       x2="35.617001"
+       y1="96.127998"
+       y2="98.57"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       stroke-width="0.62657"
+       id="line32" />
+    <polygon
+       class="cls-8"
+       transform="matrix(1,0,0,-1,0.007,131.71)"
+       points="37.1,34.92 35.61,37.51 34.11,34.92 "
+       fill="#040000"
+       id="polygon34" />
+    <polygon
+       class="cls-8"
+       transform="matrix(1,0,0,-1,0.007,127.71)"
+       points="35.61,26.99 34.11,29.58 37.1,29.58 "
+       fill="#040000"
+       id="polygon36" />
+    <text
+       class="cls-9"
+       x="38.407021"
+       y="99.873932"
+       fill="#231815"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       id="text40"><tspan
+         x="38.407021"
+         y="99.873932"
+         id="tspan38">C</tspan></text>
+    <g
+       transform="translate(0.007,-2.8299)"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="g48">
+      <line
+         class="cls-7"
+         x1="-9.4194002"
+         x2="-3.1294"
+         y1="96.210999"
+         y2="96.210999"
+         id="line42" />
+      <line
+         class="cls-7"
+         x1="-9.4372997"
+         x2="-3.1473"
+         y1="104.54"
+         y2="104.54"
+         id="line44" />
+      <line
+         class="cls-7"
+         x1="-7.2593999"
+         x2="-7.2593999"
+         y1="99.114998"
+         y2="101.56"
+         stroke-width="0.62657"
+         id="line46" />
+    </g>
+    <polygon
+       class="cls-8"
+       transform="rotate(180,14.179,65.933)"
+       points="37.1,34.92 35.61,37.51 34.11,34.92 "
+       fill="#040000"
+       id="polygon50" />
+    <polygon
+       class="cls-8"
+       transform="rotate(180,14.179,63.933)"
+       points="35.61,26.99 34.11,29.58 37.1,29.58 "
+       fill="#040000"
+       id="polygon52" />
+    <line
+       class="cls-7"
+       x1="-9.3781996"
+       x2="-3.0882001"
+       y1="88.535004"
+       y2="88.535004"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       id="line54" />
+    <line
+       class="cls-7"
+       x1="-7.2368002"
+       x2="-7.2368002"
+       y1="89.841003"
+       y2="92.293999"
+       fill="none"
+       stroke="#040000"
+       stroke-linejoin="round"
+       stroke-width="0.39969"
+       id="line56" />
+    <polygon
+       class="cls-8"
+       transform="matrix(-1,0,0,-0.51581,28.392,106.75)"
+       points="34.11,29.58 37.1,29.58 35.61,26.99 "
+       fill="#040000"
+       id="polygon58" />
+    <polygon
+       class="cls-8"
+       transform="matrix(-1,0,0,0.51581,28.393,75.199)"
+       points="34.11,29.58 37.1,29.58 35.61,26.99 "
+       fill="#040000"
+       id="polygon60" />
+    <text
+       class="cls-9"
+       x="-23.226269"
+       y="107.48677"
+       fill="#231815"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       id="text64"><tspan
+         x="-23.226269"
+         y="107.48677"
+         id="tspan62">B</tspan></text>
+    <text
+       class="cls-9"
+       transform="scale(1,-1)"
+       x="-23.252102"
+       y="-78.095825"
+       fill="#231815"
+       font-family="NanumSquareRoundR, NanumSquareRound"
+       font-size="20px"
+       style="font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+       id="text68"><tspan
+         x="-23.252102"
+         y="-78.095825"
+         id="tspan66">D</tspan></text>
+    <g
+       transform="translate(0.007,-2.8299)"
+       fill="#000080"
+       stroke="#000000"
+       stroke-miterlimit="1"
+       id="g82">
+      <path
+         d="m 0.5094,91.295 c 4.6695,4.8393 4.6695,4.9242 4.6695,4.9242"
+         stroke-dasharray="1, 1"
+         id="path70" />
+      <g
+         stroke-dasharray="0.0212251, 0.0212251"
+         stroke-width="0.021225"
+         id="g80">
+        <path
+           d="m 1.9018,92.746 -0.34809,0.33681 0.67406,0.70187 0.33878,-0.32324 C 2.75288,93.28366 2.90836,93.1291 2.91206,93.11799 2.91576,93.10688 2.76829,92.94285 2.58434,92.75349 L 2.24989,92.4092 Z"
+           id="path72" />
+        <path
+           d="m 3.2825,94.196 c -0.33688,0.31855 -0.34002,0.32236 -0.30372,0.36851 0.020172,0.02564 0.17006,0.18616 0.33308,0.35671 l 0.2964,0.31008 0.70367,-0.67213 -0.32726,-0.34252 c -0.18,-0.18839 -0.33503,-0.34252 -0.34452,-0.34252 -0.00949,0 -0.17043,0.14485 -0.35765,0.32188 z"
+           id="path74" />
+        <path
+           d="m 4.6713,95.631 c -0.18582,0.17155 -0.34202,0.32444 -0.34712,0.33976 -0.00509,0.01532 0.051568,0.09173 0.12592,0.1698 0.074348,0.07807 0.18046,0.19319 0.2358,0.25581 l 0.10063,0.11386 0.076599,-0.0608 c 0.042129,-0.03344 0.12888,-0.10139 0.19277,-0.151 l 0.11617,-0.09021 h 0.50461 L 5.663533,96.13924 c -0.024696,-0.12959 -0.09167,-0.22592 -0.36074,-0.51884 -0.14804,-0.16116 -0.27467,-0.29488 -0.2814,-0.29716 -0.00673,-0.0023 -0.16428,0.13621 -0.35009,0.30776 z"
+           id="path76" />
+        <path
+           d="m 0.52359,91.295 c -0.18875,0.18326 -0.34318,0.34055 -0.34318,0.34954 0,0.009 0.1489,0.17022 0.33089,0.3583 L 0.84219,92.3448 1.19033,92.0107 C 1.38181,91.82695 1.53616,91.67082 1.53334,91.66375 1.53052,91.65665 1.37938,91.49585 1.19749,91.30635 L 0.86677,90.96181 Z"
+           id="path78" />
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata86">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>CH202</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

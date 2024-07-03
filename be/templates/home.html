@@ -4,475 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flexbox Layout</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-        header {
-            background: #fff;
-            color: #333;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .details-span .clickable-detail {
-            cursor: pointer;
-        }
-        .selected-row {
-            background-color: #4b434b; /* 원하는 색상으로 변경 */
-        }
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        .logo img {
-            height: 30px;
-        }
-        .menu {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-        .menu > a {
-            color: #333;
-            text-decoration: none;
-            padding: 10px 20px;
-            display: inline-block;
-        }
-        .dropdown {
-            display: none;
-            flex-direction: column;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #fff;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-        }
-        .dropdown a {
-            color: #333;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown a:hover {
-            background: #e0e0e0;
-        }
-        .menu:hover .dropdown {
-            display: flex;
-        }
-        .login {
-            display: flex;
-            align-items: center;
-        }
-        .login button {
-            padding: 5px 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        .login button:hover {
-            background-color: #0056b3;
-        }
-        .macro-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .macro-button {
-            flex: 0 0 5%; /* 절반 크기 설정 */
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            cursor: pointer;
-        }
-        .text-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            flex: 1; /* 나머지 공간 차지 */
-        }
-        .text-box {
-            padding: 10px 15px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 5px;
-            flex: 1;
-            text-align: center;
-            min-width: 100px; /* 최소 너비 설정 */
-        }
-        .container {
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-        }
-        footer {
-            background: #333;
-            color: #fff;
-            text-align: center;
-            padding: 20px;
-            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-        }
-        .Display {
-            display: flex;
-            height: 20vh;
-            padding: 20px;
-            background: #fff;
-            color: #333;
-            overflow: hidden;
-            border: 1px solid #ccc;
-            white-space: pre-wrap;
-        }
-        .main-content {
-            display: flex;
-            flex-direction: row;
-            flex: 1;
-            overflow-x: hidden;
-            position: relative;
-        }
-        .input-container {
-            background: #f9f9f9;
-            padding: 10px;
-            margin: 10px;
-            border: 1px solid #ccc;
-            flex: 0 0 20%; /* 너비를 20%로 설정 */
-        }
-        .content-container {
-            background: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            flex: 1;
-            min-width: 300px; /* 최소 너비 조정 */
-        }
-        .content {
-            background: #fff;
-            padding: 20px;
-            display: flex;
-            gap: 10px;
-            overflow-x: hidden;
-            flex-wrap: nowrap; /* 줄바꿈 없음 */
-        }
-        .content-title {
-            display: flex;
-            align-items: center;
-            padding: 0px 10px;
-        }
-        .title-text {
-            background-color: #17a2b8;
-            color: white;
-            padding: 6px 6px;
-            border-radius: 4px;
-            margin-right: auto;
-            margin-bottom: 0;
-        }
-        .content-title .content-button {
-            background-color: transparent;
-            border: none;
-            color: #007bff;
-            cursor: pointer;
-            font-size: 14px;
-            padding: 5px 10px;
-        }
-        .content-title .content-button:hover {
-            background-color: #0d6efd;
-            color: white;
-            border-radius: 4px;
-        }
-        .button-group {
-            display: flex;
-            gap: 5px;
-        }
-        .content div {
-            background: #fff;
-            padding: 0;
-            flex: 1;
-            box-sizing: border-box;
-            text-align: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            overflow-x: auto;
-            height: 40vh;
-            overflow-y: auto;
-        }
-        .table1-container, .table2-container {
-            max-height: 800px;
-            max-width: 1000px;
-            overflow-y: auto;
-            overflow-x: auto;
-            position: relative; /* 부모 요소에 위치 속성 추가 */
-        }
-        .table1 thead, .table2 thead {
-            position: sticky;
-            top: 0;
-            background: #e0e0e0; /* 테이블 헤더 배경색 */
-            z-index: 1;
-        }
-        table {
-            margin-top: 0;
-            width: 100%;
-            padding-left: 10px;
-            padding-right: 10px;
-            border-collapse: separate;
-        }
-        /* 기존 스타일 정의 */
-        .table1 th, .table1 td, .table2 th, .table2 td {
-            background-color: #e0e0e0;
-            border: 1px solid #ccc;
-            padding: 8px;
-            text-align: center;
-            vertical-align: middle;
-            white-space: nowrap;
-        }
-        /* 숨길 컬럼에 대한 스타일 추가 */
-        .hide-column {
-            display: none;
-        }
-        .clickable {
-            cursor: pointer;
-            color: #007bff;
-            text-decoration: underline;
-        }
-        .clickable:hover {
-            color: #0056b3;
-        }
-        .content-input {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-        }
-        .content-input .button-group {
-            display: flex;
-            gap: 5px;
-        }
-        .content-input button {
-            padding: 10px 20px; /* 버튼의 크기를 늘림 */
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        .content-input button:hover {
-            background-color: #0056b3;
-        }
-        .macro-input-group {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .macro-input-group input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 11px;
-            flex: 1;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-        .macro-input-group input[type="number"] {
-            flex: 0 0 60px; /* 수량 input의 크기를 줄임 */
-        }
-        .macro-button2 {
-            gap: 5px;
-            margin-top: 5px;
-            padding: 10px; /* 버튼의 크기를 늘림 */
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-            justify-content: flex-end;
-        }
-        .macro-button-group {
-            display: flex;
-            justify-content: flex-end;
-            gap: 10px; /* Add some space between the buttons if needed */
-        }
-        #addDisplayContentButton {
-            padding: 5px 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        #addDisplayContentButton:hover {
-            background-color: #0056b3;
-        }
-        .input-group {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            flex-wrap: nowrap;
-        }
-        .input-group input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 11px;
-            flex: 1;
-            min-width: 0;
-            box-sizing: border-box;
-        }
-        .input-group input[type="number"] {
-            flex: 0 0 60px; /* 수량 input의 크기를 줄임 */
-        }
-        .input-group button {
-            padding: 10px 15px; /* 버튼의 크기를 늘림 */
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background-color 0.3s;
-        }
-        .form-container {
-            padding: 10px;
-            background: #f9f9f9;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-            transition: all 0.3s ease; /* Smooth transition */
-        }
-        .macro-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .macro-button {
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            cursor: pointer;
-        }
-        .text-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            flex: 1;
-        }
-        .text-box {
-            padding: 10px 15px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 5px;
-            flex: 1;
-            text-align: center;
-            min-width: 100px;
-            transition: all 0.3s ease;
-        }
-        .resizable-bar {
-            width: 10px;
-            cursor: pointer;
-            background-color: #ccc;
-            position: relative;
-            z-index: 1;
-            display: none; /* 기본적으로 숨김 */
-        }
-        @media (max-width: 768px) {
-            .main-content {
-                flex-direction: column;
-            }
-            .input-container {
-                flex: 1 1 100%;
-            }
-            .content-container {
-                flex: 1 1 100%;
-            }
-            .content div {
-                flex: 1 1 100%;
-            }
-            .collapsed {
-                display: none;
-            }
-            .expandable {
-                cursor: pointer;
-            }
-            .form-container {
-                padding: 5px;
-                font-size: 14px;
-                margin: 5px; /* Adjust margin for mobile */
-            }
-            .macro-group {
-                flex-direction: column;
-                gap: 5px;
-            }
-            .macro-button {
-                padding: 8px 12px;
-                font-size: 12px; /* Reduce font size */
-            }
-            .text-group {
-                gap: 5px;
-            }
-            .text-box {
-                padding: 8px 12px;
-                font-size: 12px; /* Reduce font size */
-                margin: 2px;
-                min-width: 80px; /* Reduce minimum width */
-            }
-            .input-group input,
-            .input-group button {
-                font-size: 12px; /* 작은 화면에서의 폰트 크기 */
-                padding: 8px;
-                font-size: 12px; /* Reduce font size */
-            }
-            .input-group {
-                flex-wrap: wrap;
-                gap: 5px;
-            }
-            .resizable-bar {
-                display: block; /* 모바일에서 보임 */
-                width: 100%;
-                height: 10px;
-                cursor: pointer;
-            }
-            .drawing-info {
-                display: none; /* Hide drawing-info on mobile */
-            }
-
-        }
-    </style>
+    <link rel="stylesheet" href="home.css"> <!-- CSS 파일 링크 -->
 </head>
 <body>
     <div class="container">
@@ -488,9 +20,101 @@
                 <button id="logoutButton" style="display:none;">로그아웃</button>
             </div>
         </header>
-        <div class="form-container">
+        <div class="macroinfo-container hidden"><!-- 새로운 컨테이너 추가 -->
+            <div class="button-checkbox-container">
+                <button id="MacroInfoBackButton" class="macroinfo-button hidden">Macro Code Detail</button>
+                <div class="checkbox-container">
+                    <input type="checkbox" id="infoContainerCheckbox">
+                </div>
+            </div>
+            <div class="Info-EA">
+                <div class="image-row">
+                    <div class="separator-text" style="grid-column: 1;">좌가공</div>
+                    <div class="macro-svg" id="EA001" style="grid-column: 2;"><img src="img/svg/EA001.svg" alt="Image 1"></div>
+                    <div class="macro-svg" id="EA002" style="grid-column: 3;"><img src="img/svg/EA002.svg" alt="Image 2"></div>
+                    <div class="macro-svg" id="EA003" style="grid-column: 4;"><img src="img/svg/EA003.svg" alt="Image 3"></div>
+                    <div class="macro-svg" id="EA004" style="grid-column: 5;"><img src="img/svg/EA004.svg" alt="Image 4"></div>
+                    <div class="macro-svg" id="EA005" style="grid-column: 6;"><img src="img/svg/EA005.svg" alt="Image 5"></div>
+                    <div class="separator-text" style="grid-column: 7;">중가공</div>
+                    <div class="macro-svg" id="EA011" style="grid-column: 8;"><img src="img/svg/EA011.svg" alt="Image 6"></div>
+                    <div class="macro-svg" id="UBOLT" style="grid-column: 9;"><img src="img/svg/UBOLT.svg" alt="Image 7"></div>
+                    <div class="macro-svg" id="EA013" style="grid-column: 10;"><img src="img/svg/EA013.svg" alt="Image 8"></div>
+                    <div class="macro-svg" id="EA014" style="grid-column: 11;"><img src="img/svg/EA014.svg" alt="Image 9"></div>
+                    <div class="macro-svg" id="EA015" style="grid-column: 12;"><img src="img/svg/EA015.svg" alt="Image 10"></div>
+                    <div class="macro-svg" id="EA016" style="grid-column: 13;"><img src="img/svg/EA016.svg" alt="Image 11"></div>
+                    <div class="separator-text" style="grid-column: 14;">우가공</div>
+                    <div class="macro-svg" id="EA021" style="grid-column: 15;"><img src="img/svg/EA021.svg" alt="Image 12"></div>
+                    <div class="macro-svg" id="EA022" style="grid-column: 16;"><img src="img/svg/EA022.svg" alt="Image 13"></div>
+                    <div class="macro-svg" id="EA023" style="grid-column: 17;"><img src="img/svg/EA023.svg" alt="Image 14"></div>
+                    <div class="macro-svg" id="EA024" style="grid-column: 18;"><img src="img/svg/EA024.svg" alt="Image 15"></div>
+                    <div class="macro-svg" id="EA025" style="grid-column: 19;"><img src="img/svg/EA025.svg" alt="Image 16"></div>
+                </div>
+            
+                <!-- 두 번째 줄 이미지와 구분 텍스트 -->
+                <div class="image-row">
+                    <div class="separator-text" style="grid-column: 1;">하**좌</div>
+                    <div class="macro-svg" id="EA101" style="grid-column: 2;"><img src="img/svg/EA101.svg" alt="Image 17"></div>
+                    <div class="macro-svg" id="EA102" style="grid-column: 3;"><img src="img/svg/EA102.svg" alt="Image 18"></div>
+                    <div class="macro-svg" id="EA103" style="grid-column: 4;"><img src="img/svg/EA103.svg" alt="Image 19"></div>
+                    <div class="macro-svg" id="EA104" style="grid-column: 5;"><img src="img/svg/EA104.svg" alt="Image 20"></div>
+                    <div class="separator-text" style="grid-column: 7;">하**중</div>
+                    <div class="macro-svg" id="EA111" style="grid-column: 8;"><img src="img/svg/EA111.svg" alt="Image 22"></div>
+                    <div class="macro-svg" id="UBOLT" style="grid-column: 9;"><img src="img/svg/UBOLT.svg" alt="Image 23"></div>
+                    <div class="macro-svg" id="EA113" style="grid-column: 10;"><img src="img/svg/EA113.svg" alt="Image 24"></div>
+                    <div class="macro-svg" id="EA114" style="grid-column: 11;"><img src="img/svg/EA114.svg" alt="Image 25"></div>
+                    <div class="macro-svg" id="EA115" style="grid-column: 12;"><img src="img/svg/EA115.svg" alt="Image 26"></div>
+                    <div class="macro-svg" id="EA116" style="grid-column: 13;"><img src="img/svg/EA116.svg" alt="Image 27"></div>
+                    <div class="separator-text" style="grid-column: 14;">하**우</div>
+                    <div class="macro-svg" id="EA121" style="grid-column: 15;"><img src="img/svg/EA121.svg" alt="Image 28"></div>
+                    <div class="macro-svg" id="EA122" style="grid-column: 16;"><img src="img/svg/EA122.svg" alt="Image 29"></div>
+                    <div class="macro-svg" id="EA123" style="grid-column: 17;"><img src="img/svg/EA123.svg" alt="Image 30"></div>
+                    <div class="macro-svg" id="EA124" style="grid-column: 18;"><img src="img/svg/EA124.svg" alt="Image 31"></div>
+                </div>
+            </div>
+            <div class ="Info-HB hidden">
+                <div class="image-row">
+                    <div class="separator-text" style="grid-column: 1;">좌가공</div>
+                    <div class="macro-svg" id="HB001" style="grid-column: 2;"><img src="img/svg/HB001.svg" alt="Image 1"></div>
+                    <div class="macro-svg" id="HB002" style="grid-column: 3;"><img src="img/svg/HB002.svg" alt="Image 2"></div>
+                    <div class="macro-svg" id="HB003" style="grid-column: 4;"><img src="img/svg/HB003.svg" alt="Image 3"></div>
+                    <div class="separator-text" style="grid-column: 5;">중가공</div>
+                    <div class="macro-svg" id="HB011" style="grid-column: 6;"><img src="img/svg/HB011.svg" alt="Image 6"></div>
+                    <div class="macro-svg" id="UBOLT" style="grid-column: 7;"><img src="img/svg/UBOLT.svg" alt="Image 7"></div>
+                    <div class="macro-svg" id="HB013" style="grid-column: 8;"><img src="img/svg/HB013.svg" alt="Image 8"></div>
+                    <div class="macro-svg" id="HB014" style="grid-column: 9;"><img src="img/svg/HB014.svg" alt="Image 9"></div>
+                    <div class="macro-svg" id="HB016" style="grid-column: 10;"><img src="img/svg/HB016.svg" alt="Image 10"></div>
+                    <div class="macro-svg" id="HB031" style="grid-column: 11;"><img src="img/svg/HB031.svg" alt="Image 11"></div>
+                    <div class="macro-svg" id="HB032" style="grid-column: 12;"><img src="img/svg/HB032.svg" alt="Image 11"></div>
+                    <div class="macro-svg" id="HB033" style="grid-column: 13;"><img src="img/svg/HB033.svg" alt="Image 11"></div>
+                    <div class="macro-svg" id="HB034" style="grid-column: 14;"><img src="img/svg/HB034.svg" alt="Image 11"></div>
+                    <div class="separator-text" style="grid-column: 15;">우가공</div>
+                    <div class="macro-svg" id="HB021" style="grid-column: 16;"><img src="img/svg/HB021.svg" alt="Image 12"></div>
+                    <div class="macro-svg" id="HB022" style="grid-column: 17;"><img src="img/svg/HB022.svg" alt="Image 13"></div>
+                    <div class="macro-svg" id="HB023" style="grid-column: 18;"><img src="img/svg/HB023.svg" alt="Image 14"></div>
+                </div>
+                <div class="image-row">
+                    <div class="separator-text" style="grid-column: 1;">상2**좌</div>
+                    <div class="macro-svg" id="HB101" style="grid-column: 2;"><img src="img/svg/HB101.svg" alt="Image 1"></div>
+                    <div class="macro-svg" id="HB102" style="grid-column: 3;"><img src="img/svg/HB102.svg" alt="Image 2"></div>
+                    <div class="separator-text" style="grid-column: 5;">상2**중</div>
+                    <div class="macro-svg" id="HB111" style="grid-column: 6;"><img src="img/svg/HB111.svg" alt="Image 6"></div>
+                    <div class="macro-svg" id="UBOLT" style="grid-column: 7;"><img src="img/svg/UBOLT.svg" alt="Image 7"></div>
+                    <div class="macro-svg" id="HB113" style="grid-column: 8;"><img src="img/svg/HB113.svg" alt="Image 8"></div>
+                    <div class="macro-svg" id="HB114" style="grid-column: 9;"><img src="img/svg/HB114.svg" alt="Image 9"></div>
+                    <div class="macro-svg" id="HB116" style="grid-column: 10;"><img src="img/svg/HB116.svg" alt="Image 10"></div>
+                    <div class="macro-svg" id="HB131" style="grid-column: 11;"><img src="img/svg/HB131.svg" alt="Image 11"></div>
+                    <div class="macro-svg" id="HB132" style="grid-column: 12;"><img src="img/svg/HB132.svg" alt="Image 11"></div>
+                    <div class="macro-svg" id="HB133" style="grid-column: 13;"><img src="img/svg/HB133.svg" alt="Image 11"></div>
+                    <div class="macro-svg" id="HB134" style="grid-column: 14;"><img src="img/svg/HB134.svg" alt="Image 11"></div>
+                    <div class="separator-text" style="grid-column: 15;">상2**우</div>
+                    <div class="macro-svg" id="HB121" style="grid-column: 16;"><img src="img/svg/HB121.svg" alt="Image 12"></div>
+                    <div class="macro-svg" id="HB122" style="grid-column: 17;"><img src="img/svg/HB122.svg" alt="Image 13"></div>
+                </div>
+            </div>
+        </div>
+        <div class="info-container">
             <div class="macro-group">
-                <button id="macroButton" class="macro-button">매크로</button>
+                <button id="MacroInfoButton" class="macro-button">매크로</button>
                 <div class="text-group">
                     <div class="text-box" id="lineText">호선</div>
                     <div class="text-box" id="porText">POR</div>
@@ -502,6 +126,7 @@
                 </div>
             </div>
         </div>
+        
         <div class="Display" id="display">
             <h1>Canvas</h1>
             <div id="displayContent"></div>
@@ -520,6 +145,8 @@
                         <button id="searchButton">조회</button>
                     </div>
                 </div>
+                <div id="selectedImageContainer" style="position: absolute; left: 10px; top: 10px; display: none; z-index: 1000;"></div>
+
                 <h5 class="content-title">
                     <span class="title-text">도면정보 (Drawing Information)</span>
                     <button class="content-button">복사</button>
@@ -551,7 +178,15 @@
                     <h5>부재 정보 등록</h5>
                     <div class="input-group" id="partInputGroup">
                         <input type="text" id="partInput1" placeholder="Part ID">
-                        <input type="text" id="partInput2" placeholder="자재규격">
+                        <input type="text" id="partInput2" placeholder="자재규격" list="materialSpecList">
+                        <datalist id="materialSpecList">
+                            <option value="EA 25*25*3T">
+                            <option value="EA 30*30*3T">
+                            <option value="EA 40*40*3T">
+                            <option value="EA 40*40*5T">
+                            <option value="HB 96*100*5/8T">
+                            <option value="HB 100*50*5/7T">
+                        </datalist>
                         <input type="text" id="partInput3" placeholder="재질">
                         <input type="text" id="partInput4" placeholder="수량">
                         <input type="text" id="partInput5" placeholder="가공길이">
