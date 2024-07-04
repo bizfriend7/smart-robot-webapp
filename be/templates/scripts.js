@@ -699,20 +699,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 const infoEA = document.querySelector('.Info-EA');
                 const infoHB = document.querySelector('.Info-HB');
-                if (infoEA && infoHB) { // 요소가 존재하는지 확인
-                    if (selectedPartInfo.자재종류.startsWith('EA')) {
-                        infoEA.classList.remove('hidden');
-                        infoHB.classList.add('hidden');
-                    } else if (selectedPartInfo.자재종류.startsWith('HB')) {
-                        infoEA.classList.add('hidden');
-                        infoHB.classList.remove('hidden');
-                    } else {
-                        infoEA.classList.add('hidden');
-                        infoHB.classList.add('hidden');
+                const infoCH = document.querySelector('.Info-CH');
+                const infoPI = document.querySelector('.Info-PI');
+                const infoIB = document.querySelector('.Info-IB');
+                const infoUA = document.querySelector('.Info-UA');
+                const infoSP = document.querySelector('.Info-SP'); // Info-SP 추가
+
+                const allInfoElements = [infoEA, infoHB, infoCH, infoPI, infoIB, infoUA, infoSP];
+
+                if (infoEA && infoHB && infoCH && infoPI && infoIB && infoUA && infoSP) { // 요소가 존재하는지 확인
+                    allInfoElements.forEach(element => element.classList.add('hidden')); // 모든 요소 숨기기
+
+                    switch (true) {
+                        case selectedPartInfo.자재종류.startsWith('EA'):
+                            infoEA.classList.remove('hidden');
+                            break;
+                        case selectedPartInfo.자재종류.startsWith('HB'):
+                            infoHB.classList.remove('hidden');
+                            break;
+                        case selectedPartInfo.자재종류.startsWith('CH'):
+                            infoCH.classList.remove('hidden');
+                            break;
+                        case selectedPartInfo.자재종류.startsWith('PI'):
+                            infoPI.classList.remove('hidden');
+                            break;
+                        case selectedPartInfo.자재종류.startsWith('IB'):
+                            infoIB.classList.remove('hidden');
+                            break;
+                        case selectedPartInfo.자재종류.startsWith('UA'):
+                            infoUA.classList.remove('hidden');
+                            break;
+                        case selectedPartInfo.자재종류.startsWith('SP'):
+                            infoSP.classList.remove('hidden');
+                            break;
                     }
                 } else {
-                    console.error('Info-EA 또는 Info-HB 요소를 찾을 수 없습니다.');
+                    console.error('Info-EA, Info-HB, Info-CH, Info-PI, Info-IB, Info-UA 또는 Info-SP 요소를 찾을 수 없습니다.');
                 }
+
+
 
             });
     
@@ -966,12 +991,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="text" id="partInput1" placeholder="Part ID">
                 <input type="text" id="partInput2" placeholder="자재규격" list="materialSpecList">
                 <datalist id="materialSpecList">
-                    <option value="EA 25*25*3T">
-                    <option value="EA 30*30*3T">
-                    <option value="EA 40*40*3T">
-                    <option value="EA 40*40*5T">
-                    <option value="HB 96*100*5/8T">
-                    <option value="HB 100*50*5/7T">
+                    <option value="HB 96*100*5/8T" data-weight="16.2"></option>
+                    <option value="HB 100*50*5/7T" data-weight="9.3"></option>
+                    <option value="EA 40*40*3T" data-weight="1.83"></option>
+                    <option value="EA 40*40*5T" data-weight="2.95"></option>
+                    <option value="UA 350*100*12/17T" data-weight="45.3"></option>
+                    <option value="UA 400*100*13/18T" data-weight="53.8"></option>
+                    <option value="UA 450*125*11.5/18T" data-weight="57.4"></option>
+                    <option value="CH 65*42*5.5/7.5T" data-weight="7.09"></option>
+                    <option value="CH 75*40*5/7T" data-weight="6.92"></option>
+                    <option value="IB 300*150*11.5/22T" data-weight="76.8"></option>
+                    <option value="IB 350*150*9/15T" data-weight="58.5"></option>
+                    <option value="IB 350*150*12/24T" data-weight="87.2"></option>
+                    <option value="PI 32A-42.7 SPP_SGP-3.3T" data-weight="3.16"></option>
+                    <option value="PI 32A-42.7 SCH40-3.6T" data-weight="3.47"></option>
+                    <option value="SP 250*250*12.5T" data-weight="91.9"></option>
+                    <option value="SP 250*250*16T" data-weight="115"></option>
                 </datalist>
                 <input type="text" id="partInput3" placeholder="재질">
                 <input type="text" id="partInput4" placeholder="수량">
@@ -980,6 +1015,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button id="searchPartButton">조회</button>
             </div>
         `;
+        document.getElementById('partInput2').addEventListener('input', function() {
+            const selectedValue = this.value;
+            const options = document.querySelectorAll('#materialSpecList option');
+            options.forEach(option => {
+                if (option.value === selectedValue) {
+                    const weightPerMeter = parseFloat(option.getAttribute('data-weight'));
+                    document.getElementById('partInput2').setAttribute('data-selected-weight', weightPerMeter);
+                }
+            });
+        });
     
         document.getElementById('addPartButton').addEventListener('click', function() {
             const partID = document.getElementById('partInput1').value;
@@ -988,8 +1033,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const 수량 = document.getElementById('partInput4').value;
             const 가공길이 = document.getElementById('partInput5').value;
             const 전체길이 = 가공길이;
-            const 중량 = calculateWeight(자재종류, 가공길이);
+            const 중량 = parseFloat(document.getElementById('partInput2').getAttribute('data-selected-weight'));
+            
 
+            const materialSpecList = Array.from(document.querySelectorAll('#materialSpecList option')).map(option => option.value);
+            if (!materialSpecList.includes(자재종류)) {
+                alert('존재하지 않는 자재입니다.');
+                return;
+            }
             if (!partID || !자재종류 || !재질 || !수량 || !가공길이) {
                 alert('모든 필드를 입력해주세요.');
                 return;
@@ -1265,13 +1316,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('macroInputF').value = '';
     }
 
-    function calculateWeight(materialType, length) {
-        const weightPerMeter = {    
-            "EA 100*100*10T": 29.80,
-            "EA 50*50*5T": 14.90
-        };
-        return weightPerMeter[materialType] * (length / 1000);
-    }
+
     function sortTableAndUpdate(key) {
         if (currentSort.key === key) {
             currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';

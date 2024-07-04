@@ -392,11 +392,14 @@ table {
     width: 100px; /* 컨테이너의 너비를 줄임 */
 }
 
-.Info-EA, .Info-HB{
+.Info-EA, .Info-HB, .Info-CH, .Info-PI, .Info-IB, .Info-UA, .Info-SP{
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto auto; /* 18개의 컬럼 */
     gap: 10px; /* 요소 사이의 간격 */
-    overflow-x: auto; /* 가로 스크롤 추가 */
+    height: 150px; /* 필요한 높이로 조정하세요 */
+    overflow-y: auto; /* 세로 스크롤 */
+    overflow-x: auto; /* 가로 스크롤 숨김 */
+    padding: 10px;
 }
 
 .macroinfo-button {
@@ -482,25 +485,7 @@ table {
     z-index: 1;
     display: none; /* 기본적으로 숨김 */
 }
-.macro_popup_name { width: 28px; font-size: 10px; margin-top: 3px; padding: 2px 6px; background-color: #EAEAEA; }
 
-.macro_popup_left { float: left; width: 64px; height: 64px; margin-left: 10px; position: relative; cursor: pointer; }
-.macro_popup_center { float: left; width: 52px; height: 52px; margin-left: 10px; position: relative; cursor: pointer; }
-.macro_popup_right { float: right; width: 64px; height: 64px; margin-right: 10px; position: relative; cursor: pointer; }
-
-.macro_popup_left_EA { float: left; width: 67px; height: 67px; margin-left: 10px; position: relative; cursor: pointer; }
-.macro_popup_center_EA { float: left; width: 58px; height: 58px; margin-left: 10px; position: relative; cursor: pointer; }
-.macro_popup_right_EA { float: right; width: 67px; height: 67px; margin-left: 10px; position: relative; cursor: pointer; }
-
-.macro_popup_LU { position: absolute; left: 36px; top: 46px; }
-.macro_popup_CU { position: absolute; left: 8px; top: 46px; }
-.macro_popup_RU { position: absolute; left: 2px; top: 46px; }
-
-.macro_popup_CC { position: absolute; left: 8px; top: 46px; }
-
-.macro_popup_LD { position: absolute; left: 36px; top: 5px; }
-.macro_popup_CD { position: absolute; left: 8px; top: 5px; }
-.macro_popup_RD { position: absolute; left: 2px; top: 5px; }
 #selectedImageContainer {
     position: absolute;
     left: 30px;
@@ -540,7 +525,7 @@ table {
         font-size: 14px;
         margin: 5px; /* Adjust margin for mobile */
     }
-    .Info-EA, .Info-HB{
+    .Info-EA, .Info-HB, .Info-CH,.Info-PI, .Info-IB, .Info-UA, .Info-SP{
         padding: 5px;
         font-size: 14px;
         margin: 5px;
