@@ -687,7 +687,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 updateMacroTable(filteredMacroData);
                 updateMacroInputForm();
-                updateMacroList();
+                //updateMacroList();
 
                 const infoEA = document.querySelector('.Info-EA');
                 const infoHB = document.querySelector('.Info-HB');
@@ -1109,7 +1109,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <h5>매크로 정보 등록</h5>
             <div class="macro-input-group">
                 <input type="text" id="macroInput2" placeholder="가공위치">
-                <input type="text" id="macroInput3" placeholder="매크로" list="macroList" style="flex-grow: 2;>
+                <input type="text" id="macroInput3" placeholder="매크로" list="macroList" style="flex-grow: 2;">
                 <datalist id="macroList"></datalist>
                 <input type="text" id="macroInputA" placeholder="A">
                 <input type="text" id="macroInputB" placeholder="B">
@@ -1305,27 +1305,7 @@ document.addEventListener('DOMContentLoaded', function() {
     selectedImageContainer.addEventListener('click', hideImageContainer);
 
 
-    function updateMacroList() {
-        const macroList = document.getElementById('macroList');
-        const macroOptions = [];
-
-        // info-img 내의 모든 img 요소의 ID를 가져와서 macroOptions에 추가
-        document.querySelectorAll('.info-img img').forEach(function(img) {
-            if (img.parentElement.id) {
-                macroOptions.push(img.parentElement.id);
-            }
-        });
-
-        // 기존 옵션을 모두 제거
-        macroList.innerHTML = '';
-
-        // 새로운 옵션 추가
-        macroOptions.forEach(function(macro) {
-            const option = document.createElement('option');
-            option.value = macro;
-            macroList.appendChild(option);
-        });
-    }
+    
     function clearDrawingInputs() {
         document.getElementById('drawingInput1').value = '';
         document.getElementById('drawingInput2').value = '';
