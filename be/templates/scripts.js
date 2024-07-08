@@ -705,24 +705,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     switch (true) {
                         case selectedPartInfo.자재종류.startsWith('EA'):
                             infoEA.classList.remove('hidden');
+                            Info_EA(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('HB'):
                             infoHB.classList.remove('hidden');
+                            Info_HB(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('CH'):
                             infoCH.classList.remove('hidden');
+                            Info_CH(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('PI'):
                             infoPI.classList.remove('hidden');
+                            Info_PI(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('IB'):
                             infoIB.classList.remove('hidden');
+                            Info_IB(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('UA'):
                             infoUA.classList.remove('hidden');
+                            Info_UA(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('SP'):
                             infoSP.classList.remove('hidden');
+                            Info_SP(); // 함수 실행 추가
                             break;
                     }
                 } else {

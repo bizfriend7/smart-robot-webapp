@@ -133,13 +133,16 @@ footer {
 }
 .Display {
     display: flex;
-    height: 20vh;
-    padding: 20px;
-    background: #fff;
-    color: #333;
-    overflow: hidden;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+canvas {
+    width: 100%;
+    height: 200px;
+    background : #fff;
     border: 1px solid #ccc;
-    white-space: pre-wrap;
 }
 .main-content {
     display: flex;
@@ -496,7 +499,60 @@ table {
     padding: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+.Display {
+    display: flex;
+    align-items: stretch; /* 텍스트 컨테이너와 캔버스를 세로로 정렬 */
+    overflow-x: auto;
+}
+
+.canvas-text-EA, .canvas-text-CH, .canvas-text-HB, .canvas-text-PI, .canvas-text-IB, .canvas-text-UA {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 10px; /* 텍스트 컨테이너와 캔버스 사이의 공간 추가 */
+}
+
+.canvas-text-box-EA, .canvas-text-box-CH, .canvas-text-box-HB, .canvas-text-box-PI, .canvas-text-box-IB, .canvas-text-box-UA{
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px; /* 텍스트 박스의 최소 너비 */
+    box-sizing: border-box;
+    background-color: #d3d3d3; /* 원하는 배경색 */
+}
+.canvas-text-SP {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-right: 10px; /* 텍스트 컨테이너와 캔버스 사이의 공간 추가 */
+}
+
+.canvas-text-box-SP {
+    background-color: #d3d3d3;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    box-sizing: border-box;
+}
+.canvas-container {
+    overflow-x: auto; /* 가로 스크롤바 추가 */
+    overflow-y: hidden; /* 세로 스크롤바 제거 */
+    width: 100%; /* 부모 요소의 너비를 차지 */
+    height: 200px; /* 캔버스의 높이를 유지 */
+}
 @media (max-width: 768px) {
+    #myCanvas {
+        width: 100%;
+        height: auto;
+    }
     .main-content {
         flex-direction: column;
     }
