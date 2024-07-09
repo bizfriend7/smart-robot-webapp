@@ -677,7 +677,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     partedid: rowData.id,
                     자재종류 : rowData.자재종류,
                     중량 : rowData.중량,
-                    전체길이 : rowData.전체길이
+                    가공길이 : rowData.가공길이
                 };
     
                 console.log(`부재정보 클릭됨: 호선=${selectedPartInfo.호선}, POR=${selectedPartInfo.POR}, SEQ=${selectedPartInfo.SEQ}, PIECS=${selectedPartInfo.PIECS}, PartID=${selectedPartInfo.PartID}, 난수data=${selectedPartInfo.난수data}`);
@@ -1180,7 +1180,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const partID = selectedPartInfo.PartID;
             const partedid = selectedPartInfo.partedid;
             const PIECS = selectedPartInfo.PIECS;
-            const PART난수 = selectedPartInfo.난수data;  // 난수data 추가
+            const 가공길이 = selectedPartInfo.가공길이;
             const 가공위치 = document.getElementById('macroInput2').value;
             const 매크로 = document.getElementById('macroInput3').value;
             const A = document.getElementById('macroInputA').value.trim() || '0';
@@ -1190,7 +1190,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const E = document.getElementById('macroInputE').value.trim() || '0';
             const F = document.getElementById('macroInputF').value.trim() || '0';
             const 파라미터 = [A, B, C, D, E, F];
-    
+            const materialType = selectedPartInfo.자재종류; // 자재종류 추가
+
             const macroOptionsArray = Array.from(macroList.options).map(option => option.value);
             if (!macroOptionsArray.includes(매크로)) {
                 alert('해당 매크로는 유효하지 않습니다.');
@@ -1212,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
             macroData.push(newMacro);
             localStorage.setItem('macroData', JSON.stringify(macroData));
-            const filteredMacroData = macroData.filter(macro => macro.partID === partID && macro.PART난수 === PART난수);
+            const filteredMacroData = macroData.filter(macro => macro.partID === partID);
             partData = partData.map(part => {
                 const 가공수 = calculateMacroCount(part["Part ID"]);
                 return { ...part, 가공수 };
@@ -1221,6 +1222,7 @@ document.addEventListener('DOMContentLoaded', function() {
             updateMacroTable(filteredMacroData);
             clearMacroInputs();
             hideImageContainer()
+            macroEA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
         });
     
         document.getElementById('updateMacroButton').addEventListener('click', function() {

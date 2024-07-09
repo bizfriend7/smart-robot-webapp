@@ -1,6 +1,6 @@
 window.onload = function() {
     // 페이지 로드 시 호출할 함수를 지정합니다.
-    Info_SP();
+    Info_EA();
 };
 
 function toggleHiddenClass(showClass) {
@@ -314,4 +314,196 @@ function Info_SP() {
     textBoxes[2].style.height = largeSectionHeight + 'px'; // 상
     textBoxes[3].style.height = largeSectionHeight + 'px'; // 좌
     textBoxes[4].style.height = smallSectionHeight + 'px'; // 하2
+}
+
+// 매크로 그리기 시작
+
+function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
+    var canvas = document.getElementById('myCanvas');
+    var context = canvas.getContext('2d');
+
+    // Calculate height from materialType
+    const heightMatch = materialType.match(/\d+(\*\d+)?/);
+    let height = 0;
+    if (heightMatch) {
+        const heightParts = heightMatch[0].split('*');
+        if (heightParts.length > 0) {
+            height = parseFloat(heightParts[0]) * 2;
+        }
+    }
+    console.log(height)
+    
+    if (type === 'EA001') {
+        // 가공길이를 전체 캔버스 길이로 보고, 가공위치에 선을 그림
+        var startX = canvas.width * parseFloat(A) / length
+        var startY = 0
+
+        // endX와 endY는 선을 그릴 끝 지점
+        var endX = 0
+        var endY = canvas.height * parseFloat(B) / height
+
+        // Draw the line based on coordinates A and height
+        context.beginPath();
+        context.moveTo(startX, startY);
+        context.lineTo(endX, endY);
+        context.strokeStyle = '#000'; // Set the line color
+        context.lineWidth = 2; // Set the line width
+        context.stroke();
+    }
+    if (type === 'EA002') {
+        var startX1 = canvas.width * parseFloat(A) / length;
+        var startY1 = 0;
+
+        var endX1 = startX1
+        var endY1 = canvas.height * parseFloat(C) / height
+
+        var endX2 = canvas.width * parseFloat(D) / length;
+        var endY2 = canvas.height * parseFloat(B) / height
+
+        var endX3 = 0;
+        var endY3 = (canvas.height * parseFloat(B) / height)+(canvas.height * parseFloat(D) / height)
+
+        context.beginPath();
+        context.moveTo(startX1, startY1);
+        context.lineTo(endX1, endY1);
+        context.moveTo(endX1, endY1);
+        context.lineTo(endX2, endY2);
+        context.moveTo(endX2, endY2);
+        context.lineTo(endX3, endY3);
+        context.strokeStyle = '#000'; // Set the line color
+        context.lineWidth = 2; // Set the line width
+        context.stroke();
+    }
+    if (type === 'EA003') {
+        var startX1 = canvas.width * parseFloat(B) / length;
+        var startY1 = 0;
+
+        var endX1 = canvas.width * parseFloat(A) / length;
+        var endY1 = (canvas.height/2) + canvas.height * parseFloat(C) / height
+
+        var endX2 = canvas.width * parseFloat(D) / length;
+        var endY2 = (canvas.height/2) + canvas.height * parseFloat(C) / height
+
+        var endX3 = 0;
+        var endY3 = (canvas.height/2) +((canvas.height * parseFloat(C) / height)+(canvas.height * parseFloat(D) / height))
+
+        context.beginPath();
+        context.moveTo(startX1, startY1);
+        context.lineTo(endX1, endY1);
+        context.moveTo(endX1, endY1);
+        context.lineTo(endX2, endY2);
+        context.moveTo(endX2, endY2);
+        context.lineTo(endX3, endY3);
+        context.strokeStyle = '#000'; // Set the line color
+        context.lineWidth = 2; // Set the line width
+        context.stroke();
+    }
+    if (type === 'EA004') {
+        var startX1 = canvas.width * parseFloat(A) / length;
+        var startY1 = 0;
+
+        var endX1 = 0;
+        var endY1 = canvas.height * parseFloat(B) / height
+
+        var endX2 = canvas.width * parseFloat(A) / length;
+        var endY2 = (canvas.height/2)
+
+        var endX3 = canvas.width * parseFloat(C) / length;
+        var endY3 = (canvas.height)
+
+        context.beginPath();
+        context.moveTo(startX1, startY1);
+        context.lineTo(endX1, endY1);
+        context.moveTo(endX1, endY1);
+        context.lineTo(endX2, endY2);
+        context.moveTo(endX2, endY2);
+        context.lineTo(endX3, endY3);
+        context.strokeStyle = '#000'; // Set the line color
+        context.lineWidth = 2; // Set the line width
+        context.stroke();
+    }
+    if (type === 'EA005') {
+        var startX1 = 0;
+        var startY1 = 0;
+
+        var endX1 = canvas.width * parseFloat(B) / length;;
+        var endY1 = canvas.height/2
+
+        var endX2 = canvas.width * parseFloat(C) / length;
+        var endY2 = (canvas.height)
+
+        context.beginPath();
+        context.moveTo(startX1, startY1);
+        context.lineTo(endX1, endY1);
+        context.moveTo(endX1, endY1);
+        context.lineTo(endX2, endY2);
+        context.strokeStyle = '#000'; // Set the line color
+        context.lineWidth = 2; // Set the line width
+        context.stroke();
+    }
+    if (type === 'EA011') {
+        x = canvas.width * position / length;
+        y = canvas.height * parseFloat(B) / height;
+        radius = parseFloat(A);
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI, false);
+        context.strokeStyle = '#000'; // 선 색깔
+        context.lineWidth = 2; // 선 두께
+        context.stroke();
+        context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, x, y + radius + 10);
+
+    }
+    if (type === 'EA013') {
+        x = canvas.width * position / length;
+        y = canvas.height * parseFloat(B) / height;
+        radiusX = parseFloat(A)+canvas.width * parseFloat(C) / length;
+        radiusY = 5
+        context.beginPath();
+        context.arc(x - parseFloat(A)+canvas.width * parseFloat(C) / length, y, 5, 0.5 * Math.PI, 1.5 * Math.PI);
+        // 상단 직선
+        context.moveTo(x - parseFloat(A)+canvas.width * parseFloat(C) / length, y - 5);
+        context.lineTo(x + parseFloat(A)+canvas.width * parseFloat(C) / length, y - 5);
+        // 오른쪽 반원
+        context.arc(x + parseFloat(A)+canvas.width * parseFloat(C) / length, y, 5, 1.5 * Math.PI, 0.5 * Math.PI);
+        // 하단 직선
+        context.moveTo(x + parseFloat(A)+canvas.width * parseFloat(C) / length, y + 5);
+        context.lineTo(x - parseFloat(A)+canvas.width * parseFloat(C) / length, y + 5);
+        context.strokeStyle = '#000'; // 선 색깔
+        context.lineWidth = 2; // 선 두께
+        context.stroke();
+        context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, x, y + radiusY + 10);
+        context.fillText(B, x, y + radiusY + 20);
+        context.fillText(C, x, y + radiusY + 30);
+    }
+    if (type === 'EA014') {
+        x = canvas.width * position / length;
+        y = canvas.height * parseFloat(B) / height;
+        radiusX = parseFloat(A)+canvas.width * parseFloat(C) / length;
+        radiusY = 5
+        context.beginPath();
+        context.arc(x, y-parseFloat(A)+canvas.height * parseFloat(C) / height   , 5, 1 * Math.PI, 2 * Math.PI);
+        // 상단 직선
+        context.moveTo(x - 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.lineTo(x - 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        // 오른쪽 반원
+        context.arc(x, y-parseFloat(A)+canvas.height * parseFloat(C) / height, y, 5, 0 * Math.PI, 1 * Math.PI);
+        // 하단 직선
+        context.moveTo(x + 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.lineTo(x + 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.strokeStyle = '#000'; // 선 색깔
+        context.lineWidth = 2; // 선 두께
+        context.stroke();
+        context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, x, y + radiusY + 10);
+        context.fillText(B, x, y + radiusY + 20);
+        context.fillText(C, x, y + radiusY + 30);
+    }
 }
