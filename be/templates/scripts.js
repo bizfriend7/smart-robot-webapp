@@ -1222,7 +1222,19 @@ document.addEventListener('DOMContentLoaded', function() {
             updateMacroTable(filteredMacroData);
             clearMacroInputs();
             hideImageContainer()
-            macroEA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+            if (materialType.startsWith("EA")){ 
+                macroEA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+            }
+            else if (materialType.startsWith("CH")){ 
+                macroCH(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+            }
+            else if (materialType.startsWith("UA")){ 
+                macroUA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+            }
+            else if (materialType.startsWith("SP")){ 
+                macroSP(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+            }
+            
         });
     
         document.getElementById('updateMacroButton').addEventListener('click', function() {
