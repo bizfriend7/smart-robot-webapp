@@ -1234,6 +1234,12 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (materialType.startsWith("SP")){ 
                 macroSP(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
             }
+            else if (materialType.startsWith("HB")){ 
+                macroHB(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+            }
+            else if (materialType.startsWith("IB")){ 
+                macroIB(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+            }
             
         });
     
