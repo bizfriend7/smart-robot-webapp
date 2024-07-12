@@ -1,10 +1,9 @@
+let selectedDrawingInfo = {};
+let filteredPartData = [];
+let selectedPartInfo = {};
+let selectedMacroInfo = null;
+let lastSearchParams = {};
 document.addEventListener('DOMContentLoaded', function() {
-    let selectedDrawingInfo = {};
-    let filteredPartData = [];
-    let selectedPartInfo = {};
-    let selectedMacroInfo = null;
-    let lastSearchParams = {};
-
     //localStorage.clear()
     let currentSort = {
         key: '',
@@ -47,6 +46,92 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     function calculateMacroCount(partID) {
         return macroData.filter(macro => macro.partID === partID).length;
+    }
+    const canvas = document.getElementById('myCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // partedid 별로 캔버스 데이터를 저장하는 함수
+    function saveCanvasDataForPart(partedid) {
+        const canvasData = canvas.toDataURL();
+        localStorage.setItem(`canvasData_${partedid}`, canvasData);
+    }
+
+    // partedid 별로 캔버스 데이터를 로드하는 함수
+    function loadCanvasDataForPart(partedid) {
+        const canvasData = localStorage.getItem(`canvasData_${partedid}`);
+        if (canvasData) {
+            const img = new Image();
+            img.onload = function() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // 이전 캔버스 내용 지우기
+                ctx.drawImage(img, 0, 0);
+            };
+            img.src = canvasData;
+        }
+    }
+    function redrawCanvasForPart(partedid) {
+        // 캔버스를 초기화
+        const materialType = selectedPartInfo.자재종류;
+        // 해당 partedid에 해당하는 매크로 데이터를 불러옴
+        const macrosForPart = macroData.filter(macro => macro.partedid === partedid);
+        if (macrosForPart){
+            clearCanvas(materialType)
+            macrosForPart.forEach(macro => {
+                executeMacro(macro);
+            });
+        }
+        else{
+            clearCanvas(materialType)
+        }
+        // 매크로 데이터를 사용하여 캔버스를 다시 그림
+
+        // 캔버스 데이터를 저장
+        saveCanvasDataForPart(partedid);
+    }
+    function clearCanvas(materialType){
+        if (materialType.startsWith("EA")){ 
+            Info_EA()
+         }
+        else if (materialType.startsWith("CH")){ 
+            Info_CH()
+         }
+        else if (materialType.startsWith("UA")){ 
+            Info_UA()
+       }
+        else if (materialType.startsWith("SP")){ 
+            Info_SP()
+        }
+        else if (materialType.startsWith("HB")){ 
+            Info_HB()
+        }
+        else if (materialType.startsWith("IB")){ 
+            Info_IB()
+        }
+    }
+
+    // 매크로 데이터를 사용하여 적절한 매크로 함수를 실행하는 함수
+    function executeMacro(macro) {
+        console.log(macro)
+        const { 매크로, 파라미터, 가공위치, 가공길이 } = macro;
+        const [A, B, C, D, E, F] = 파라미터.map(Number);
+        const materialType = selectedPartInfo.자재종류;
+        if (materialType.startsWith("EA")){ 
+            macroEA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이, materialType);
+        }
+        else if (materialType.startsWith("CH")){ 
+            macroCH(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이, materialType);
+        }
+        else if (materialType.startsWith("UA")){ 
+            macroUA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이, materialType);
+        }
+        else if (materialType.startsWith("SP")){ 
+            macroSP(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이, materialType);
+        }
+        else if (materialType.startsWith("HB")){
+            macroHB(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이, materialType);
+        }
+        else if (materialType.startsWith("IB")){ 
+            macroIB(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이, materialType);
+        }
     }
 
     partData = partData.map(part => {
@@ -593,6 +678,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 updatePartInputForm();
                 selectedPartInfo = {}
                 hideImageContainer()
+                
             });
     
             const checkboxTd = document.createElement('td');
@@ -687,6 +773,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 );
                 updateMacroTable(filteredMacroData);
                 updateMacroInputForm();
+                window.onMacroInputFormUpdated();
                 //updateMacroList();
 
                 const infoEA = document.querySelector('.Info-EA');
@@ -735,7 +822,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     console.error('Info-EA, Info-HB, Info-CH, Info-PI, Info-IB, Info-UA 또는 Info-SP 요소를 찾을 수 없습니다.');
                 }
-
+                loadCanvasDataForPart(selectedPartInfo.partedid);
 
 
             });
@@ -964,6 +1051,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem('macroData', JSON.stringify(macroData));
                 updateMacroTable(macroData);
 
+                redrawCanvasForPart(selectedPartInfo.partedid);
+
                 // 클릭된 부재 정보로 부재 테이블 업데이트
                 if (selectedPartInfo.PartID && selectedPartInfo.partedid) {
                     const filteredMacroData = macroData.filter(macro => 
@@ -979,12 +1068,14 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('BackButton').addEventListener('click', function() {
             if (selectedDrawingInfo) {
                 // Filter partData based on last selected drawing information
+                const materialType = selectedPartInfo.자재종류;
                 filteredPartData = partData.filter(part => 
                     part.drawedid === selectedDrawingInfo.drawid
                 );
                 updatePartTable(filteredPartData);
                 updatePartInputForm();
                 hideImageContainer()
+                clearCanvas(materialType)
                 selectedPartInfo = {}
             }
         });
@@ -1208,22 +1299,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 가공위치,
                 매크로,
                 파라미터,
-                id: generateUniqueId(macroData)
+                id: generateUniqueId(macroData),
+                가공길이
             };
     
-            macroData.push(newMacro);
-            localStorage.setItem('macroData', JSON.stringify(macroData));
-            const filteredMacroData = macroData.filter(macro => macro.partID === partID);
-            partData = partData.map(part => {
-                const 가공수 = calculateMacroCount(part["Part ID"]);
-                return { ...part, 가공수 };
-            });
-    
-            updateMacroTable(filteredMacroData);
-            clearMacroInputs();
-            hideImageContainer()
             if (materialType.startsWith("EA")){ 
-                macroEA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
+                const result = macroEA(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이, materialType);
+                if (result && result.status === "error") {
+                    alert(result.message);
+                    return;
+                }
             }
             else if (materialType.startsWith("CH")){ 
                 macroCH(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
@@ -1240,6 +1325,18 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (materialType.startsWith("IB")){ 
                 macroIB(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
             }
+            saveCanvasDataForPart(selectedPartInfo.partedid);
+            macroData.push(newMacro);
+            localStorage.setItem('macroData', JSON.stringify(macroData));
+            const filteredMacroData = macroData.filter(macro => macro.partID === partID);
+            partData = partData.map(part => {
+                const 가공수 = calculateMacroCount(part["Part ID"]);
+                return { ...part, 가공수 };
+            });
+    
+            updateMacroTable(filteredMacroData);
+            clearMacroInputs();
+            hideImageContainer()
             
         });
     

@@ -319,6 +319,7 @@ function Info_SP() {
 // 매크로 그리기 시작
 
 function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
+    console.log("EA그리기")
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
 
@@ -341,7 +342,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         // endX와 endY는 선을 그릴 끝 지점
         var endX = 0
         var endY = canvas.height * parseFloat(B) / height
-
+        if (endY > canvas.height/2) {
+            return { status: "error", message: "Y축의 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         // Draw the line based on coordinates A and height
         context.beginPath();
         context.moveTo(startX, startY);
@@ -366,7 +369,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
 
         var endX3 = 0;
         var endY3 = (canvas.height * parseFloat(B) / height)+(canvas.height * parseFloat(D) / height)
-
+        if (endY3 > canvas.height/2) {
+            return { status: "error", message: "Y축의 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(startX1, startY1);
         context.lineTo(endX1, endY1);
@@ -396,7 +401,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
 
         var endX3 = 0;
         var endY3 = (canvas.height/2) +((canvas.height * parseFloat(C) / height)+(canvas.height * parseFloat(D) / height))
-
+        if (endY3 > canvas.height) {
+            return { status: "error", message: "Y 값 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(startX1, startY1);
         context.lineTo(endX1, endY1);
@@ -420,7 +427,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
 
         var endX1 = 0;
         var endY1 = canvas.height * parseFloat(B) / height
-
+        if (endY1 > canvas.height/2) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         var endX2 = canvas.width * parseFloat(A) / length;
         var endY2 = (canvas.height/2)
 
@@ -472,6 +481,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
     if (type === 'EA011') {
         x = canvas.width * position / length;
         y = canvas.height * parseFloat(B) / height;
+        if (y > canvas.height/2-canvas.height*parseFloat(A) / height) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         radius = 5;
         context.beginPath();
         context.arc(x, y, radius, 0, 2 * Math.PI, false);
@@ -487,6 +499,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
     if (type === 'EA013') {
         x = canvas.width * position / length;
         y = canvas.height * parseFloat(B) / height;
+        if (y > canvas.height/2-canvas.height*parseFloat(A) / height) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         radiusX = parseFloat(A)+canvas.width * parseFloat(C) / length;
         radiusY = 5
         context.beginPath();
@@ -510,29 +525,32 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.fillText(C, x, y + radiusY + 30);
     }
     if (type === 'EA014') {
-        x = canvas.width * position / length;
+        x = canvas.width * position / length
         y = canvas.height * parseFloat(B) / height;
-        radiusX = parseFloat(A)+canvas.width * parseFloat(C) / length;
-        radiusY = 5
+        radiusX = 5;
+        radiusY = y+(canvas.height*parseFloat(C)/ height)/2
+        if (radiusY > canvas.height/2) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
-        context.arc(x, y-parseFloat(A)+canvas.height * parseFloat(C) / height, 5, Math.PI, 2 * Math.PI);
+        context.arc(x, y-(canvas.height*parseFloat(C)/ height)/2, 5, Math.PI, 2 * Math.PI);
         // 상단 직선
-        context.moveTo(x - 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
-        context.lineTo(x - 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.moveTo(x - 5, y-(canvas.height*parseFloat(C)/ height)/2);
+        context.lineTo(x - 5,  y+(canvas.height*parseFloat(C)/ height)/2);
         // 오른쪽 반원
-        context.arc(x, y+parseFloat(A)+canvas.height * parseFloat(C) / height, 5, 0, Math.PI);
+        context.arc(x, y+(canvas.height*parseFloat(C)/ height)/2, 5, 0, Math.PI);
         // 하단 직선
-        context.moveTo(x + 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
-        context.lineTo(x + 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.moveTo(x + 5, y+(canvas.height*parseFloat(C)/ height)/2);
+        context.lineTo(x + 5,  y-(canvas.height*parseFloat(C)/ height)/2);
         context.strokeStyle = '#000'; // 선 색깔
         context.lineWidth = 2; // 선 두께
         context.stroke();
         context.closePath();
         context.font = '10px Arial';
         context.fillStyle = '#000'; // 글자 색깔
-        context.fillText(A, x+10, y + radiusY + 10);
-        context.fillText(B, x+10, y + radiusY + 20);
-        context.fillText(C, x+10, y + radiusY + 30);
+        context.fillText(A, x+10, radiusY + 10);
+        context.fillText(B, x+10, radiusY + 20);
+        context.fillText(C, x+10, radiusY + 30);
     }
     if (type === 'EA015') {
         centerX = canvas.width * position / length;
@@ -546,7 +564,7 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         var midY = canvas.height/2-15 
         var x2 = centerX - lineLength * Math.sin(angleRad / 2);
         var y2 = 0
-
+        
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(midX, midY);
@@ -569,6 +587,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         y3 = canvas.height*parseFloat(B)/height
         x4 = (canvas.width * position / length) + (canvas.width*parseFloat(A)/length)/2;
         y4 = 0
+        if (y2 > canvas.height/2) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
@@ -585,32 +606,21 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.fillText(A, (canvas.width * position / length), y1 + 10);
         context.fillText(B, (canvas.width * position / length), y1 + 20);
     }
-    if (type === 'EA016') {
-        x1 = (canvas.width * position / length) - (canvas.width*parseFloat(A)/length)/2;
-        y1 = 0
-        x2 = (canvas.width * position / length) - (canvas.width*parseFloat(A)/length)/2;
-        y2 = canvas.height*parseFloat(B)/height
-        x3 = (canvas.width * position / length) + (canvas.width*parseFloat(A)/length)/2;
-        y3 = canvas.height*parseFloat(B)/height
-        x4 = (canvas.width * position / length) + (canvas.width*parseFloat(A)/length)/2;
-        y4 = 0
-        context.beginPath();
-        context.moveTo(x1, y1);
-        context.lineTo(x2, y2);
-        // Draw the right line
-        context.moveTo(x2, y2);
-        context.lineTo(x3, y3);
-        context.moveTo(x3, y3);
-        context.lineTo(x4, y4);
-        context.strokeStyle = 'black';
-        context.stroke();
-        context.closePath();
-    }
     if (type === 'EA031') {
         x1 = (canvas.width * position / length) - (canvas.width*parseFloat(A)/length)/2;
         y1 = canvas.height*parseFloat(B)/height
         x2 = (canvas.width * position / length) + (canvas.width*parseFloat(A)/length)/2;
         y2 = canvas.height*parseFloat(B)/height
+        if (y1 > canvas.height/2) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
+        if (x1 < 0) {
+            return { status: "error", message: "x축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
+        if (x2 > canvas.width) {
+            return { status: "error", message: "x축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
+        
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
@@ -626,6 +636,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         y1 = canvas.height*parseFloat(B)/height
         x2 = (canvas.width * position / length)
         y2 = canvas.height*parseFloat(B)/height + canvas.height*parseFloat(A)/height 
+        if (y2 > canvas.height/2) {
+            return { status: "error", message: "y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
@@ -634,12 +647,20 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.closePath();
         context.fillText(A, (canvas.width * position / length)+10, y1 + 10);
         context.fillText(B, (canvas.width * position / length)+10, y1 + 20);
+    
+        
     }
     if (type === 'EA033') {
         x1 = (canvas.width * position / length)
         y1 = canvas.height*parseFloat(B)/height+canvas.height*parseFloat(C)/height
         x2 = (canvas.width * position / length) + canvas.width*parseFloat(A)/length
         y2 = canvas.height*parseFloat(B)/height 
+        if (y1 > canvas.height/2) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
+        if (x2 > canvas.width) {
+            return { status: "error", message: "x축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
@@ -654,18 +675,25 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         x1 = (canvas.width * position / length)
         y1 = canvas.height*parseFloat(B)/height
         x2 = (canvas.width * position / length) + canvas.width*parseFloat(A)/length
-        y2 = canvas.height*parseFloat(B)/height + +canvas.height*parseFloat(C)/height 
+        y2 = canvas.height*parseFloat(B)/height + +canvas.height*parseFloat(C)/height
+        if (y2 > canvas.height/2) {
+            return { status: "error", message: "Y축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
+        if (x2 > canvas.width) {
+            return { status: "error", message: "x축이 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(x1, y1);
         context.lineTo(x2, y2);
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
-        context.fillText(A, (canvas.width * position / length), y1 + 10);
-        context.fillText(B, (canvas.width * position / length), y1 + 20);
-        context.fillText(C, (canvas.width * position / length), y1 + 30);
+        context.fillText(A, (canvas.width * position / length)-10, y1 + 10);
+        context.fillText(B, (canvas.width * position / length)-10, y1 + 20);
+        context.fillText(C, (canvas.width * position / length)-10, y1 + 30);
     }
     if (type === 'EA021') {
+        console.log("EA021그리기")
         // 가공길이를 전체 캔버스 길이로 보고, 가공위치에 선을 그림
         var startX = canvas.width - canvas.width * parseFloat(A) / length
         var startY = 0
@@ -674,15 +702,18 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         var endX = canvas.width
         var endY = canvas.height * parseFloat(B) / height
 
+        if (endY > canvas.height/2) {
+            return { status: "error", message: "Y축의 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         // Draw the line based on coordinates A and height
         context.beginPath();
         context.moveTo(startX, startY);
         context.lineTo(endX, endY);
         context.strokeStyle = '#000'; // Set the line color
-        context.lineWidth = 2; // Set the line width
         context.stroke();
-        context.fillText(A, startX-10, y1 + 10);
-        context.fillText(B, startX-10, y1 + 20);
+        context.closePath();
+        context.fillText(A, startX-10, startY + 10);
+        context.fillText(B, startX-10, startY + 20);
 
     }
     if (type === 'EA022') {
@@ -697,7 +728,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
 
         var endX3 = canvas.width;
         var endY3 = (canvas.height * parseFloat(B) / height)+(canvas.height * parseFloat(D) / height)
-
+        if (endY3 > canvas.height/2) {
+            return { status: "error", message: "Y축의 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(startX1, startY1);
         context.lineTo(endX1, endY1);
@@ -706,8 +739,12 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.moveTo(endX2, endY2);
         context.lineTo(endX3, endY3);
         context.strokeStyle = '#000'; // Set the line color
-        context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.closePath();
+        context.fillText(A, startX1-10, startY1 + 10);
+        context.fillText(B, startX1-10, startY1 + 20);
+        context.fillText(C, startX1-10, startY1 + 30);
+        context.fillText(D, startX1-10, startY1 + 40);
     }
     if (type === 'EA023') {
         var startX1 = canvas.width - canvas.width * parseFloat(B) / length;
@@ -721,7 +758,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
 
         var endX3 = canvas.width;
         var endY3 = (canvas.height/2) +((canvas.height * parseFloat(C) / height)+(canvas.height * parseFloat(D) / height))
-
+        if (endY3 > canvas.height/2) {
+            return { status: "error", message: "Y축의 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(startX1, startY1);
         context.lineTo(endX1, endY1);
@@ -732,6 +771,11 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.closePath();
+        context.fillText(A, startX1-10, startY1 + 10);
+        context.fillText(B, startX1-10, startY1 + 10);
+        context.fillText(C, startX1-10, startY1 + 10);
+        context.fillText(D, startX1-10, startY1 + 10);
     }
     if (type === 'EA024') {
         var startX1 = canvas.width - canvas.width * parseFloat(A) / length;
@@ -745,7 +789,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
 
         var endX3 = canvas.width - canvas.width * parseFloat(C) / length;
         var endY3 = (canvas.height)
-
+        if (endY1 > canvas.height/2) {
+            return { status: "error", message: "Y축의 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         context.beginPath();
         context.moveTo(startX1, startY1);
         context.lineTo(endX1, endY1);
@@ -756,6 +802,10 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.closePath();
+        context.fillText(A, startX1-10, startY1 + 10);
+        context.fillText(B, startX1-10, startY1 + 10);
+        context.fillText(C, startX1-10, startY1 + 10);
     }
     if (type === 'EA025') {
         var startX1 = canvas.width;
@@ -766,7 +816,6 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
 
         var endX2 = canvas.width - canvas.width * parseFloat(C) / length;
         var endY2 = (canvas.height)
-
         context.beginPath();
         context.moveTo(startX1, startY1);
         context.lineTo(endX1, endY1);
@@ -775,6 +824,10 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.closePath();
+        context.fillText(A, startX1-10, startY1 + 10);
+        context.fillText(B, startX1-10, startY1 + 10);
+        context.fillText(C, startX1-10, startY1 + 10);
     }
     if (type === 'EA101') {
         // 가공길이를 전체 캔버스 길이로 보고, 가공위치에 선을 그림
@@ -785,6 +838,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         var endX = 0
         var endY = canvas.height - canvas.height * parseFloat(B) / height
 
+        if (endY3 > canvas.height/2) {
+            return { status: "error", message: "Y축의 특정 값을 초과하여 등록할 수 없습니다." };
+        }
         // Draw the line based on coordinates A and height
         context.beginPath();
         context.moveTo(startX, startY);
@@ -792,6 +848,12 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX+10, startY- 40);
+        context.fillText(B, startX+10,startY - 30);
+        //context.fillText(C, startX+10,startY - 20);
+        //context.fillText(D, startX+10,startY - 10);
     }
     if (type === 'EA102') {
         var startX1 = canvas.width * parseFloat(A) / length;
@@ -816,6 +878,12 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX+10, startY- 40);
+        context.fillText(B, startX+10,startY - 30);
+        context.fillText(C, startX+10,startY - 20);
+        context.fillText(D, startX+10,startY - 10);
     }
     if (type === 'EA103') {
         var startX1 = canvas.width * parseFloat(B) / length;
@@ -840,6 +908,12 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX+10, startY- 40);
+        context.fillText(B, startX+10,startY - 30);
+        context.fillText(C, startX+10,startY - 20);
+        context.fillText(D, startX+10,startY - 10);
     }
     if (type === 'EA104') {
         var startX1 = canvas.width * parseFloat(A) / length;
@@ -864,6 +938,11 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX+10, startY- 40);
+        context.fillText(B, startX+10,startY - 30);
+        context.fillText(C, startX+10,startY - 20);
     }
     if (type === 'EA111') {
         x = canvas.width * position / length;
@@ -877,7 +956,7 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.closePath();
         context.font = '10px Arial';
         context.fillStyle = '#000'; // 글자 색깔
-        context.fillText(A, x, y + radius + 10);
+        context.fillText(A, x, y + radius - 10);
 
     }
     if (type === 'EA113') {
@@ -901,9 +980,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.closePath();
         context.font = '10px Arial';
         context.fillStyle = '#000'; // 글자 색깔
-        context.fillText(A, x, y + radiusY + 10);
-        context.fillText(B, x, y + radiusY + 20);
-        context.fillText(C, x, y + radiusY + 30);
+        context.fillText(A, x, y + radiusY - 30);
+        context.fillText(B, x, y + radiusY - 20);
+        context.fillText(C, x, y + radiusY - 10);
     }
     if (type === 'EA114') {
         x = canvas.width * position / length;
@@ -911,24 +990,24 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         radiusX = parseFloat(A)+canvas.width * parseFloat(C) / length;
         radiusY = 5
         context.beginPath();
-        context.arc(x, y-parseFloat(A)+canvas.height * parseFloat(C) / height, 5, Math.PI, 2 * Math.PI);
+        context.arc(x, y-(canvas.height*parseFloat(C)/ height)/2, 5, Math.PI, 2 * Math.PI);
         // 상단 직선
-        context.moveTo(x - 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
-        context.lineTo(x - 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.moveTo(x - 5, y-(canvas.height*parseFloat(C)/ height)/2);
+        context.lineTo(x - 5,  y+(canvas.height*parseFloat(C)/ height)/2);
         // 오른쪽 반원
-        context.arc(x, y+parseFloat(A)+canvas.height * parseFloat(C) / height, 5, 0, Math.PI);
+        context.arc(x, y+(canvas.height*parseFloat(C)/ height)/2, 5, 0, Math.PI);
         // 하단 직선
-        context.moveTo(x + 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
-        context.lineTo(x + 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.moveTo(x + 5, y-(canvas.height*parseFloat(C)/ height)/2);
+        context.lineTo(x + 5,  y+(canvas.height*parseFloat(C)/ height)/2);
         context.strokeStyle = '#000'; // 선 색깔
         context.lineWidth = 2; // 선 두께
         context.stroke();
         context.closePath();
         context.font = '10px Arial';
         context.fillStyle = '#000'; // 글자 색깔
-        context.fillText(A, x+10, y + radiusY + 10);
-        context.fillText(B, x+10, y + radiusY + 20);
-        context.fillText(C, x+10, y + radiusY + 30);
+        context.fillText(A, x+10, y + radiusY -30);
+        context.fillText(B, x+10, y + radiusY - 20);
+        context.fillText(C, x+10, y + radiusY - 10);
     }
     if (type === 'EA115') {
         centerX = canvas.width * position / length;
@@ -952,6 +1031,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, centerX, midY + 20);
     }
     if (type === 'EA116') {
         x1 = (canvas.width * position / length) - (canvas.width*parseFloat(A)/length)/2;
@@ -973,6 +1055,11 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, (canvas.width * position / length), y1- 20);
+        context.fillText(B, (canvas.width * position / length),y1 - 10);
+
     }
     if (type === 'EA131') {
         x1 = (canvas.width * position / length);
@@ -985,6 +1072,8 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A, (canvas.width * position / length), y1 - 20);
+        context.fillText(B, (canvas.width * position / length), y1 - 10);
     }
     if (type === 'EA132') {
         x1 = (canvas.width * position / length)
@@ -997,6 +1086,8 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A, (canvas.width * position / length)-10, y1 - 20);
+        context.fillText(B, (canvas.width * position / length)-10, y1 - 10);
     }
     if (type === 'EA133') {
         x1 = (canvas.width * position / length)
@@ -1009,6 +1100,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A, (canvas.width * position / length), y1 - 30);
+        context.fillText(B, (canvas.width * position / length), y1 - 20);
+        context.fillText(C, (canvas.width * position / length), y1 - 10);
     }
     if (type === 'EA134') {
         x1 = (canvas.width * position / length)
@@ -1021,6 +1115,10 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.closePath();
+        context.fillText(A, (canvas.width * position / length), y1 - 30);
+        context.fillText(B, (canvas.width * position / length), y1 - 20);
+        context.fillText(C, (canvas.width * position / length), y1 - 10);
     }
     if (type === 'EA121') {
         // 가공길이를 전체 캔버스 길이로 보고, 가공위치에 선을 그림
@@ -1038,6 +1136,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.closePath();
+        context.fillText(A, startX-10, startY - 30);
+        context.fillText(B, startX-10, startY - 20);
     }
     if (type === 'EA122') {
         var startX1 = canvas.width - canvas.width * parseFloat(A) / length;
@@ -1062,6 +1163,11 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.fillText(A, startX-10, startY - 40);
+        context.fillText(B, startX-10, startY - 30);
+        context.fillText(C, startX-10, startY - 20);
+        context.fillText(D, startX-10, startY - 10);
+ 
     }
     if (type === 'EA123') {
         var startX1 = canvas.width - canvas.width * parseFloat(B) / length;
@@ -1086,6 +1192,10 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.fillText(A, startX-10, startY - 40);
+        context.fillText(B, startX-10, startY - 30);
+        context.fillText(C, startX-10, startY - 20);
+        context.fillText(D, startX-10, startY - 10);
     }
     if (type === 'EA124') {
         var startX1 = canvas.width - canvas.width * parseFloat(A) / length;
@@ -1110,6 +1220,9 @@ function macroEA(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.fillText(A, startX-10, startY - 40);
+        context.fillText(B, startX-10, startY - 30);
+        context.fillText(C, startX-10, startY - 20);
     }
 }
 function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
@@ -1147,6 +1260,10 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX+10, startY + 10);
+        context.fillText(B, startX+10,startY + 20);
     }
     if (type === 'CH002') {
         var startX1 = canvas.width * parseFloat(A) / length;
@@ -1171,6 +1288,12 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX+10, startY + 10);
+        context.fillText(B, startX+10,startY + 20);
+        context.fillText(C, startX+10,startY + 30);
+        context.fillText(D, startX+10,startY + 40);
     }
     if (type === 'CH003') {
         var startX1 = canvas.width * parseFloat(B) / length;
@@ -1195,6 +1318,13 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX+10, startY + 10);
+        context.fillText(B, startX+10,startY + 20);
+        context.fillText(C, startX+10,startY + 30);
+        context.fillText(D, startX+10,startY + 40);
+
     }
     if (type === 'CH004') {
         console.log('CH004')
@@ -1231,6 +1361,10 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.lineWidth = 2; // Set the line width
         context.stroke();
         context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, 5, canvas.height/2);
+        context.fillText(B, 5,canvas.height/2+10);
     }
     if (type === 'CH005') {
         console.log('CH005')
@@ -1257,6 +1391,12 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.lineWidth = 2; // Set the line width
         context.stroke();
         context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, 5, endY1 + 10);
+        context.fillText(B, 5,endY1 + 20);
+        context.fillText(C, 5,endY1 + 30);
+        context.fillText(D, 5,endY1 + 40);
     }
     if (type === 'CH011') {
         console.log("CH011")
@@ -1302,18 +1442,18 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
     if (type === 'CH014') {
         x = canvas.width * position / length;
         y = canvas.height * parseFloat(B) / height;
-        radiusX = parseFloat(A)+canvas.width * parseFloat(C) / length;
-        radiusY = 5
+        radiusX = 5;
+        radiusY = y+(canvas.height*parseFloat(C)/ height)/2
         context.beginPath();
-        context.arc(x, y-parseFloat(A)+canvas.height * parseFloat(C) / height, 5, Math.PI, 2 * Math.PI);
+        context.arc(x,y-(canvas.height*parseFloat(C)/ height)/2, 5, Math.PI, 2 * Math.PI);
         // 상단 직선
-        context.moveTo(x - 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
-        context.lineTo(x - 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.moveTo(x - 5, y-(canvas.height*parseFloat(C)/ height)/2);
+        context.lineTo(x - 5,  y+(canvas.height*parseFloat(C)/ height)/2);
         // 오른쪽 반원
-        context.arc(x, y+parseFloat(A)+canvas.height * parseFloat(C) / height, 5, 0, Math.PI);
+        context.arc(x, y+(canvas.height*parseFloat(C)/ height)/2, 5, 0, Math.PI);
         // 하단 직선
-        context.moveTo(x + 5, y-parseFloat(A)+canvas.height * parseFloat(C) / height);
-        context.lineTo(x + 5,  y+parseFloat(A)+canvas.height * parseFloat(C) / height);
+        context.moveTo(x + 5,y-(canvas.height*parseFloat(C)/ height)/2);
+        context.lineTo(x + 5, y+(canvas.height*parseFloat(C)/ height)/2);
         context.strokeStyle = '#000'; // 선 색깔
         context.lineWidth = 2; // 선 두께
         context.stroke();
@@ -1344,6 +1484,10 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, (canvas.width * position / length), y1 + 10);
+        context.fillText(B, (canvas.width * position / length), y1 + 20);
     }
     if (type === 'CH031') {
         x1 = (canvas.width * position / length) - (canvas.width*parseFloat(A)/length)/2;
@@ -1356,6 +1500,8 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A, (canvas.width * position / length), y1 + 10);
+        context.fillText(B, (canvas.width * position / length), y1 + 20);
     }
     if (type === 'CH032') {
         x1 = (canvas.width * position / length)
@@ -1368,6 +1514,8 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A, (canvas.width * position / length)+10, y1 + 10);
+        context.fillText(B, (canvas.width * position / length)+10, y1 + 20);
     }
     if (type === 'CH033') {
         x1 = (canvas.width * position / length)
@@ -1380,6 +1528,9 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A, (canvas.width * position / length), y1 + 10);
+        context.fillText(B, (canvas.width * position / length), y1 + 20);
+        context.fillText(C, (canvas.width * position / length), y1 + 30);
     }
     if (type === 'CH034') {
         x1 = (canvas.width * position / length)
@@ -1392,6 +1543,9 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A, (canvas.width * position / length)-10, y1 + 10);
+        context.fillText(B, (canvas.width * position / length)-10, y1 + 20);
+        context.fillText(C, (canvas.width * position / length)-10, y1 + 30);
     }
     if (type === 'CH021') {
         // 가공길이를 전체 캔버스 길이로 보고, 가공위치에 선을 그림
@@ -1409,6 +1563,10 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX-10, startY + 10);
+        context.fillText(B, startX-10,startY + 20);
     }
     if (type === 'CH022') {
         var startX1 = canvas.width - canvas.width * parseFloat(A) / length;
@@ -1433,6 +1591,12 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX-10, startY + 10);
+        context.fillText(B, startX-10,startY + 20);
+        context.fillText(C, startX-10,startY + 30);
+        context.fillText(D, startX-10,startY + 40);
     }
     if (type === 'CH023') {
         var startX1 = canvas.width - canvas.width * parseFloat(B) / length;
@@ -1457,6 +1621,12 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = '#000'; // Set the line color
         context.lineWidth = 2; // Set the line width
         context.stroke();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, startX-10, startY + 10);
+        context.fillText(B, startX-10,startY + 20);
+        context.fillText(C, startX-10,startY + 30);
+        context.fillText(D, startX-10,startY + 40);
     }
     if (type === 'CH024') {
         console.log('CH004')
@@ -1493,6 +1663,10 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.lineWidth = 2; // Set the line width
         context.stroke();
         context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, canvas.width-5, canvas.height/2);
+        context.fillText(B, canvas.width-5,canvas.height/2+10);
     }
     if (type === 'CH025') {
         console.log('CH025')
@@ -1519,6 +1693,12 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.lineWidth = 2; // Set the line width
         context.stroke();
         context.closePath();
+        context.font = '10px Arial';
+        context.fillStyle = '#000'; // 글자 색깔
+        context.fillText(A, canvas.width-5, endY1 + 10);
+        context.fillText(B, canvas.width-5,endY1 + 20);
+        context.fillText(C, canvas.width-5,endY1 + 30);
+        context.fillText(D, canvas.width-5,endY1 + 40);
     }
     if (type === 'CH111') {
         console.log(type)
@@ -1597,6 +1777,8 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A,(canvas.width * position / length), y1+10);
+        context.fillText(B,(canvas.width * position / length), y1+20);
     }
     if (type === 'CH132') {
         x1 = (canvas.width * position / length)
@@ -1609,6 +1791,8 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A,(canvas.width * position / length)+10, y1+10);
+        context.fillText(B,(canvas.width * position / length)+10, y1+20);
     }
     if (type === 'CH133') {
         x1 = (canvas.width * position / length)
@@ -1621,6 +1805,9 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A,(canvas.width * position / length), y1+10);
+        context.fillText(B,(canvas.width * position / length), y1+20);
+        context.fillText(C,(canvas.width * position / length), y1+30);
     }
     if (type === 'CH134') {
         x1 = (canvas.width * position / length)
@@ -1633,6 +1820,9 @@ function macroCH(type, A, B, C, D, E, F, position, length, materialType) {
         context.strokeStyle = 'black';
         context.stroke();
         context.closePath();
+        context.fillText(A,(canvas.width * position / length), y1+10);
+        context.fillText(B,(canvas.width * position / length), y1+20);
+        context.fillText(C,(canvas.width * position / length), y1+30);
     }
     if (type === 'CH201') {
         // 가공길이를 전체 캔버스 길이로 보고, 가공위치에 선을 그림
