@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
    
-    const copyButton = document.querySelector('.content-button');
+    const copyButton = document.getElementById('copyDrawingButton');
     if (copyButton) {
         copyButton.addEventListener('click', function() {
             const popup = document.getElementById('copyPopup');
@@ -635,6 +635,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Remove macros with the same part id
                     macroData = macroData.filter(macro => macro.partedid !== partToDelete.id);
+                    
+                    
                 }
             });
 
@@ -655,31 +657,38 @@ document.addEventListener('DOMContentLoaded', function() {
         const contentDiv = document.getElementById('content1');
         const tbody = contentDiv.querySelector('tbody');
         tbody.innerHTML = '';
-    
+        document.getElementById('checkAllDrawings').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('#content1Body input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
+        
         data.forEach((rowData, index) => {
             const tr = document.createElement('tr');
             tr.classList.add('clickable');
+            tr.setAttribute('data-url', `details.html?id=${rowData.id}`);
             tr.addEventListener('click', function() {
                 selectedDrawingInfo = {
                     호선: rowData.호선,
                     POR: rowData.POR,
                     SEQ: rowData.SEQ,
                     PIECS: rowData.PIECS,
-                    drawid : rowData.id
+                    drawid: rowData.id,
+                    수량: rowData.수량
                 };
-                document.querySelectorAll('#content1Body tr').forEach(row => {
+                document.querySelectorAll('#content1 tbody tr').forEach(row => {
                     row.classList.remove('selected-row');
                 });
                 tr.classList.add('selected-row');
                 filteredPartData = partData.filter(part => 
                     rowData.id === part.drawedid
                 );
+                
                 updatePartTable(filteredPartData);
                 updatePartInputForm();
-                selectedPartInfo = {}
-                hideImageContainer()
-                
+                selectedPartInfo = {};
+                hideImageContainer();
             });
+
     
             const checkboxTd = document.createElement('td');
             const checkbox = document.createElement('input');
@@ -723,15 +732,6 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
 
     function updatePartTable(data = partData) {
-        const contentTitle = document.getElementById('content2Title');
-        contentTitle.innerHTML = `
-        <span class="title-text">부재정보 (Part List)</span>
-        <span class="drawing-info">
-            호선:${selectedDrawingInfo.호선} POR:${selectedDrawingInfo.POR} SEQ:${selectedDrawingInfo.SEQ} PIECS:${selectedDrawingInfo.PIECS}
-        </span>
-        <button class="content-button" id="copyPartButton">복사</button>
-        <button class="content-button" id="deletePartButton">삭제</button>
-    `;
         const tableHeader = document.getElementById('content2Header');
         tableHeader.innerHTML = `
             <tr>
@@ -747,7 +747,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 <th>가공수</th>
             </tr>
         `;
-    
+        document.getElementById('checkAllParts').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('#content2Body input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
         const tbody = document.getElementById('content2Body');
         tbody.innerHTML = '';
     
@@ -775,6 +778,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 updateMacroInputForm();
                 window.onMacroInputFormUpdated();
                 //updateMacroList();
+                document.getElementById('lineText').textContent = selectedDrawingInfo.호선 || '';
+                document.getElementById('porText').textContent = selectedDrawingInfo.POR || '';
+                document.getElementById('seqText').textContent = selectedDrawingInfo.SEQ || '';
+                document.getElementById('piecsText').textContent = selectedDrawingInfo.PIECS || '';
+                document.getElementById('piecsquantityText').textContent = selectedDrawingInfo.수량 || '';
+                document.getElementById('partIdText').textContent = rowData["Part ID"] || '';
+                document.getElementById('partquantityText').textContent = rowData.수량 !== undefined ? (rowData.수량 === 0 ? '0' : rowData.수량) : '';
+                document.getElementById('materialTypeText').textContent = selectedPartInfo.자재종류 || '';
+                document.getElementById('weightText').textContent = selectedPartInfo.중량 || '';
+                document.getElementById('macroquantityText').textContent = rowData.가공수 !== undefined ? (rowData.가공수 === 0 ? '0' : rowData.가공수) : '';
 
                 const infoEA = document.querySelector('.Info-EA');
                 const infoHB = document.querySelector('.Info-HB');
@@ -792,10 +805,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     switch (true) {
                         case selectedPartInfo.자재종류.startsWith('EA'):
                             infoEA.classList.remove('hidden');
+                            console.log("EA 자재 선택")
                             Info_EA(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('HB'):
                             infoHB.classList.remove('hidden');
+                            console.log("HB 자재 선택")
                             Info_HB(); // 함수 실행 추가
                             break;
                         case selectedPartInfo.자재종류.startsWith('CH'):
@@ -931,15 +946,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     function updateMacroTable(data = macroData) {
-        const contentTitle = document.getElementById('content2Title');
-        contentTitle.innerHTML = `
-        <span class="title-text">가공정보 (Cutting List)</span>
-        <span class="drawing-info">
-            호선:${selectedDrawingInfo.호선} POR:${selectedDrawingInfo.POR} SEQ:${selectedDrawingInfo.SEQ} PIECS:${selectedDrawingInfo.PIECS}
-        </span>
-        <button class="content-button" id="deleteMacroButton">삭제</button>
-        <button class="content-button" id="BackButton">뒤로가기</button>
-    `;
         const tableHeader = document.getElementById('content2Header');
         tableHeader.innerHTML = `
             <tr>
@@ -951,6 +957,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 <th>파라미터</th>
             </tr>
         `;
+
+        document.getElementById('checkAllMacros').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('#content2Body input[type="checkbox"]');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        });
     
         const tbody = document.getElementById('content2Body');
         tbody.innerHTML = '';
@@ -970,14 +981,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('macroInputE').value = params[4];
                 document.getElementById('macroInputF').value = params[5];
     
-                document.getElementById('lineText').textContent = selectedDrawingInfo.호선 || '';
-                document.getElementById('porText').textContent = selectedDrawingInfo.POR || '';
-                document.getElementById('seqText').textContent = selectedDrawingInfo.SEQ || '';
-                document.getElementById('piecsText').textContent = selectedDrawingInfo.PIECS || '';
-                document.getElementById('partIdText').textContent = rowData.partID || '';
-                document.getElementById('materialTypeText').textContent = selectedPartInfo.자재종류 || '';
-                document.getElementById('processingLocationText').textContent = rowData.가공위치 || '';
-        
+            
+                document.querySelectorAll('#content2 tbody tr').forEach(row => {
+                    row.classList.remove('selected-row');
+                });
+                tr.classList.add('selected-row');
                 // 클릭된 매크로 정보를 전역 변수에 저장
                 selectedMacroInfo = rowData;
                 hideImageContainer()
@@ -1003,82 +1011,12 @@ document.addEventListener('DOMContentLoaded', function() {
             tbody.appendChild(tr);
         });
     
-        document.getElementById('checkAllMacros').addEventListener('change', function() {
-            const checkboxes = document.querySelectorAll('#content2Body input[type="checkbox"]');
-            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-        });
+        
     
         // Add event listener for the delete macro button
-        document.getElementById('deleteMacroButton').addEventListener('click', function() {
-            if (confirm('선택된 매크로를 삭제하시겠습니까?')) {
-                const checkedBoxes = document.querySelectorAll('#content2Body input[type="checkbox"]:checked');
-                const rowsToDelete = Array.from(checkedBoxes).map(checkbox => checkbox.parentElement.parentElement);
-    
-                rowsToDelete.forEach(row => {
-                    const partID = row.cells[2].textContent;
-                    const 가공위치 = row.cells[3].textContent;
-                    const 매크로 = row.cells[4].textContent;
-                    const 파라미터 = row.cells[5].textContent.split(','); // 파라미터를 배열로 변환
-                    const partedid = selectedPartInfo.partedid;
-
-                    console.log('삭제할 매크로:', {
-                        partID: partID,
-                        가공위치: 가공위치,
-                        매크로: 매크로,
-                        파라미터: 파라미터,
-                        partedid: partedid
-                    });
-
-                    // 매크로 데이터에서 해당 조건에 맞는 매크로 항목들을 필터링
-                    const matchingMacros = macroData.filter(macro => 
-                        macro.partID === partID && 
-                        macro.가공위치 === 가공위치 && 
-                        macro.매크로 === 매크로 && 
-                        macro.partedid === partedid
-                    );
-
-                    console.log('매칭된 매크로들:', matchingMacros);
-
-                    // 매칭된 매크로 항목들 중에서 삭제할 항목 선택
-                    matchingMacros.forEach(matchingMacro => {
-                        macroData = macroData.filter(macro => macro.id !== matchingMacro.id);
-                    });
-
-                    // 테이블에서 행 삭제
-                    row.remove();
-                });
-    
-                localStorage.setItem('macroData', JSON.stringify(macroData));
-                updateMacroTable(macroData);
-
-                redrawCanvasForPart(selectedPartInfo.partedid);
-
-                // 클릭된 부재 정보로 부재 테이블 업데이트
-                if (selectedPartInfo.PartID && selectedPartInfo.partedid) {
-                    const filteredMacroData = macroData.filter(macro => 
-                        macro.partID === selectedPartInfo.PartID &&
-                        macro.partedid === selectedPartInfo.partedid
-                    );
-                    updateMacroTable(filteredMacroData);
-                }
-            }
-        });
     
         // Add event listener for the back button
-        document.getElementById('BackButton').addEventListener('click', function() {
-            if (selectedDrawingInfo) {
-                // Filter partData based on last selected drawing information
-                const materialType = selectedPartInfo.자재종류;
-                filteredPartData = partData.filter(part => 
-                    part.drawedid === selectedDrawingInfo.drawid
-                );
-                updatePartTable(filteredPartData);
-                updatePartInputForm();
-                hideImageContainer()
-                clearCanvas(materialType)
-                selectedPartInfo = {}
-            }
-        });
+
         const macroheader = tableHeader.querySelector('th.th-macro');
     
         macroheader.addEventListener('click', () => sortMacroTable(data, '가공위치'));
@@ -1094,10 +1032,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="text" id="partInput2" placeholder="자재규격" list="materialSpecList" style="flex-grow: 2;">
                 <datalist id="materialSpecList"></datalist>
                 <input type="text" id="partInput3" placeholder="재질">
+                <datalist id="materiallist">
+                    <option value="SS400"></option>
+                    <option value="SC45C"></option>
+                    <option value="SVS304"></option>
+                    <option value="SVS316"></option>
+                </datalist>
                 <input type="text" id="partInput4" placeholder="수량" style="flex-grow: 0.5;">
                 <input type="text" id="partInput5" placeholder="가공길이">
                 <button id="addPartButton">등록</button>
                 <button id="searchPartButton">조회</button>
+                <button id="copyPartButton">복사</button>
+                <button id="deletePartButton">삭제</button>
             </div>
         `;
         const datalist = document.getElementById('materialSpecList');
@@ -1124,10 +1070,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const 수량 = document.getElementById('partInput4').value;
             const 가공길이 = document.getElementById('partInput5').value;
             const 전체길이 = 가공길이;
-            const 중량 = parseFloat(document.getElementById('partInput2').getAttribute('data-selected-weight'));
+            const 중량 = parseFloat((document.getElementById('partInput2').getAttribute('data-selected-weight') * (가공길이 / 1000))).toFixed(1);
             
-
+            const materialList = Array.from(document.querySelectorAll('#materiallist option')).map(option => option.value);
             const materialSpecList = Array.from(document.querySelectorAll('#materialSpecList option')).map(option => option.value);
+            if (!materialList.includes(재질)) {
+                alert('존재하지 않는 재질입니다.');
+                return;
+            }
             if (!materialSpecList.includes(자재종류)) {
                 alert('존재하지 않는 자재입니다.');
                 return;
@@ -1219,6 +1169,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <div class="macro-button-group">
                 <button class="macro-button2" id="addMacroButton">등록</button>
                 <button class="macro-button2" id="updateMacroButton">수정</button>
+                <button class="macro-button2" id="deleteMacroButton">삭제</button>
+                <button class="macro-button2" id="BackButton">뒤로가기</button>
             </div>
         `;
         window.requestAnimationFrame(() => {
@@ -1259,7 +1211,6 @@ document.addEventListener('DOMContentLoaded', function() {
             macroOptions.forEach(function(macro) {
                 const option = document.createElement('option');
                 option.value = macro;
-                console.log('Creating option:', option); // 디버깅용 로그 추가
                 macroList.appendChild(option);
             });
 
@@ -1388,6 +1339,75 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedMacroInfo = null; // 수정 완료 후 선택된 매크로 초기화
             } else {
                 alert('수정할 매크로를 선택해주세요.');
+            }
+        });
+        document.getElementById('deleteMacroButton').addEventListener('click', function() {
+            if (confirm('선택된 매크로를 삭제하시겠습니까?')) {
+                const checkedBoxes = document.querySelectorAll('#content2Body input[type="checkbox"]:checked');
+                const rowsToDelete = Array.from(checkedBoxes).map(checkbox => checkbox.parentElement.parentElement);
+    
+                rowsToDelete.forEach(row => {
+                    const partID = row.cells[2].textContent;
+                    const 가공위치 = row.cells[3].textContent;
+                    const 매크로 = row.cells[4].textContent;
+                    const 파라미터 = row.cells[5].textContent.split(','); // 파라미터를 배열로 변환
+                    const partedid = selectedPartInfo.partedid;
+
+                    console.log('삭제할 매크로:', {
+                        partID: partID,
+                        가공위치: 가공위치,
+                        매크로: 매크로,
+                        파라미터: 파라미터,
+                        partedid: partedid
+                    });
+
+                    // 매크로 데이터에서 해당 조건에 맞는 매크로 항목들을 필터링
+                    const matchingMacros = macroData.filter(macro => 
+                        macro.partID === partID && 
+                        macro.가공위치 === 가공위치 && 
+                        macro.매크로 === 매크로 && 
+                        macro.partedid === partedid
+                    );
+
+                    console.log('매칭된 매크로들:', matchingMacros);
+
+                    // 매칭된 매크로 항목들 중에서 삭제할 항목 선택
+                    matchingMacros.forEach(matchingMacro => {
+                        macroData = macroData.filter(macro => macro.id !== matchingMacro.id);
+                    });
+
+                    // 테이블에서 행 삭제
+                    row.remove();
+                });
+    
+                localStorage.setItem('macroData', JSON.stringify(macroData));
+                updateMacroTable(macroData);
+
+                redrawCanvasForPart(selectedPartInfo.partedid);
+
+                // 클릭된 부재 정보로 부재 테이블 업데이트
+                if (selectedPartInfo.PartID && selectedPartInfo.partedid) {
+                    const filteredMacroData = macroData.filter(macro => 
+                        macro.partID === selectedPartInfo.PartID &&
+                        macro.partedid === selectedPartInfo.partedid
+                    );
+                    updateMacroTable(filteredMacroData);
+                }
+            }
+        });
+        document.getElementById('BackButton').addEventListener('click', function() {
+            if (selectedDrawingInfo) {
+                // Filter partData based on last selected drawing information
+                const materialType = selectedPartInfo.자재종류;
+                filteredPartData = partData.filter(part => 
+                    part.drawedid === selectedDrawingInfo.drawid
+                );
+                console.log("뒤로가기 실행")
+                updatePartTable(filteredPartData);
+                updatePartInputForm();
+                hideImageContainer()
+                clearCanvas(materialType)
+                selectedPartInfo = {}
             }
         });
     }
@@ -1521,18 +1541,5 @@ document.addEventListener('DOMContentLoaded', function() {
             updatePartTable(filteredPartData);
         }
     }
-    document.getElementById('checkAllDrawings').addEventListener('change', function() {
-        const checkboxes = document.querySelectorAll('#content1Body input[type="checkbox"]');
-        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-    });
-    
-    document.getElementById('checkAllParts').addEventListener('change', function() {
-        const checkboxes = document.querySelectorAll('#content2Body input[type="checkbox"]');
-        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-    });
 
-    document.getElementById('checkAllDrawings').addEventListener('change', function() {
-        const checkboxes = document.querySelectorAll('#content1Body input[type="checkbox"]');
-        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
-    });
 });

@@ -87,38 +87,6 @@ header {
 .login button:hover {
     background-color: #0056b3;
 }
-.macro-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.macro-button {
-    flex: 0 0 5%; /* 절반 크기 설정 */
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    cursor: pointer;
-}
-.text-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    flex: 1; /* 나머지 공간 차지 */
-}
-.text-box {
-    padding: 10px 15px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 5px;
-    flex: 1;
-    text-align: center;
-    min-width: 100px; /* 최소 너비 설정 */
-}
 .container {
     display: flex;
     flex-direction: column;
@@ -136,16 +104,17 @@ footer {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: auto;
+    height: 150px;
 }
 canvas {
     width: 100%;
-    height: 200px;
+    height: 150px;
     background : #fff;
     border: 1px solid #ccc;
 }
 .main-content {
     display: flex;
+    width : 80%;
     flex-direction: row;
     flex: 1;
     overflow-x: hidden;
@@ -197,8 +166,8 @@ canvas {
     border: none;
     color: #007bff;
     cursor: pointer;
-    font-size: 14px;
-    padding: 5px 10px;
+    font-size: 10px;
+    padding: 2px 7px;
 }
 .content-title .content-button:hover {
     background-color: #0d6efd;
@@ -220,6 +189,8 @@ canvas {
     height: 40vh;
     overflow-y: auto;
 }
+
+
 .table1-container, .table2-container {
     max-height: 800px;
     max-width: 1000px;
@@ -227,12 +198,8 @@ canvas {
     overflow-x: auto;
     position: relative; /* 부모 요소에 위치 속성 추가 */
 }
-.table1 thead, .table2 thead {
-    position: sticky;
-    top: 0;
-    background: #e0e0e0; /* 테이블 헤더 배경색 */
-    z-index: 1;
-}
+
+
 table {
     margin-top: 0;
     width: 100%;
@@ -240,27 +207,43 @@ table {
     padding-right: 10px;
     border-collapse: separate;
 }
+
 /* 기존 스타일 정의 */
 .table1 th, .table1 td, .table2 th, .table2 td {
     background-color: #e0e0e0;
     border: 1px solid #ccc;
-    padding: 8px;
+    font-size: 10px;
+    padding: 3px;
     text-align: center;
     vertical-align: middle;
     white-space: nowrap;
+    text-decoration: none; /* 밑줄 제거 */
+    color: inherit; /* 링크 색상을 기본 텍스트 색상으로 설정 */
+    cursor: pointer; /* 클릭할 수 있는 포인터 커서 */
 }
+.table1 tbody tr:hover td {
+    background-color: #f1f1f1 !important; /* 마우스를 올렸을 때 배경색 변경 */
+    color: inherit !important; /* 텍스트 색상 유지 */
+}
+.table2 tbody tr:hover td {
+    background-color: #f1f1f1 !important; /* 마우스를 올렸을 때 배경색 변경 */
+    color: inherit !important; /* 텍스트 색상 유지 */
+}
+
+.table1 tbody tr.selected-row td {
+    background-color: #2B9EB0 !important; /* 진한 회색 배경색 */
+    color: #ffffff !important; /* 하얀색 텍스트 */
+}
+.table2 tbody tr.selected-row td {
+    background-color: #2B9EB0 !important; /* 진한 회색 배경색 */
+    color: #ffffff !important; /* 하얀색 텍스트 */
+}
+
 /* 숨길 컬럼에 대한 스타일 추가 */
 .hide-column {
     display: none;
 }
-.clickable {
-    cursor: pointer;
-    color: #007bff;
-    text-decoration: underline;
-}
-.clickable:hover {
-    color: #0056b3;
-}
+
 .content-input {
     display: flex;
     justify-content: space-between;
@@ -294,7 +277,7 @@ table {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 9px;
     flex: 1;
     min-width: 0;
     box-sizing: border-box;
@@ -305,13 +288,13 @@ table {
 .macro-button2 {
     gap: 5px;
     margin-top: 5px;
-    padding: 10px; /* 버튼의 크기를 늘림 */
+    padding: 5px; /* 버튼의 크기를 늘림 */
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 10px;
     transition: background-color 0.3s;
     justify-content: flex-end;
 }
@@ -344,7 +327,7 @@ table {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: 9px;
     flex: 1;
     min-width: 0;
     box-sizing: border-box;
@@ -353,24 +336,17 @@ table {
     flex: 0 0 60px; /* 수량 input의 크기를 줄임 */
 }
 .input-group button {
-    padding: 10px 15px; /* 버튼의 크기를 늘림 */
+    padding: 5px 10px; /* 버튼의 크기를 늘림 */
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 10px;
     transition: background-color 0.3s;
 }
 .form-container {
-    padding: 5px;
-    background: #f9f9f9;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    transition: all 0.3s ease; /* Smooth transition */
-}
-.info-container{
-    padding: 5px;
+    padding: 3px;
     background: #f9f9f9;
     border: 1px solid #ccc;
     margin-bottom: 10px;
@@ -421,7 +397,11 @@ table {
     display: contents; /* 각 행을 개별적으로 처리 */
 }
 
-
+.image-label {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #000;
+}
 .separator-text {
     font-weight: bold;
     text-align: center;
@@ -440,6 +420,7 @@ table {
     text-align: center;
 }
 
+
 .macro-svg img {
     max-width: 100%;
     max-height: 100%;
@@ -452,6 +433,7 @@ table {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    height: calc(100% - 40px);
 }
 .macro-button {
     padding: 10px 15px;
@@ -462,23 +444,57 @@ table {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
     cursor: pointer;
+    
 }
+.info-container {
+    padding: 5px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    transition: all 0.3s ease; /* 부드러운 전환 */
+    height: 8%; /* 원하는 높이로 설정 */
+}
+
+.text-box {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    text-align: center;
+    flex: 1;
+}
+
+.text-content {
+    line-height: 20px;
+    background-color: #e9ecef;
+    height: 20px;
+    font-size: 10px;
+    border: solid 1px #959495;
+    border-radius: 5px 0 0 5px;
+    text-align: center;
+    padding: 0 10px; /* 텍스트 좌우 여백 */
+    box-sizing: border-box;
+    display: inline-block;
+}
+
+.text-space {
+    line-height: 20px;
+    flex: 1; /* 가변적인 너비 설정 */
+    height: 20px;
+    font-size: 10px;
+    border: solid 1px #959495;
+    margin: 0 -1px 0 0;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 0 5px 5px 0;
+    padding: 0 5px;
+    box-sizing: border-box;
+}
+
 .text-group {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     flex: 1;
-}
-.text-box {
-    padding: 10px 15px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 5px;
-    flex: 1;
-    text-align: center;
-    min-width: 100px;
-    transition: all 0.3s ease;
 }
 .resizable-bar {
     width: 10px;
@@ -505,55 +521,60 @@ table {
     overflow-x: auto;
 }
 
-.canvas-text-EA, .canvas-text-CH, .canvas-text-HB, .canvas-text-PI, .canvas-text-IB, .canvas-text-UA {
+.canvas-text-EA, .canvas-text-CH, .canvas-text-HB, .canvas-text-PI, .canvas-text-IB, .canvas-text-UA,.canvas-text-SP {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-right: 10px; /* 텍스트 컨테이너와 캔버스 사이의 공간 추가 */
+    height: 100%; /* 부모 컨테이너의 높이에 맞춤 */
 }
 
-.canvas-text-box-EA, .canvas-text-box-CH, .canvas-text-box-HB, .canvas-text-box-PI, .canvas-text-box-IB, .canvas-text-box-UA{
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px; /* 텍스트 박스의 최소 너비 */
-    box-sizing: border-box;
+.canvas-text-box-EA, .canvas-text-box-CH, .canvas-text-box-HB, .canvas-text-box-PI, .canvas-text-box-IB, .canvas-text-box-UA,.canvas-text-box-SP  {
     background-color: #d3d3d3; /* 원하는 배경색 */
-}
-.canvas-text-SP {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-right: 10px; /* 텍스트 컨테이너와 캔버스 사이의 공간 추가 */
-}
-
-.canvas-text-box-SP {
-    background-color: #d3d3d3;
-    border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 0; /* 각지게 변경 */
+    box-shadow: none; /* 그림자 제거 */
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
+    width: 40px; /* 텍스트 박스의 최소 너비 */
+    height: 40px; /* 원하는 높이 설정 */
     box-sizing: border-box;
+    border: 1px solid #959495; /* 테두리 추가 */
+    margin: 5px 0; /* 상하 여백 추가 */
 }
+
+
 .canvas-container {
     overflow-x: auto; /* 가로 스크롤바 추가 */
     overflow-y: hidden; /* 세로 스크롤바 제거 */
     width: 100%; /* 부모 요소의 너비를 차지 */
     height: 200px; /* 캔버스의 높이를 유지 */
 }
+tr.clickable {
+    cursor: pointer; /* 행에 커서가 있을 때 포인터 표시 */
+}
+
+tr.clickable:hover {
+    background-color: #f1f1f1; /* 행에 마우스를 올렸을 때 배경색 */
+}
+
+tr.selected-row {
+    background-color: #d1e7dd; /* 선택된 행의 배경색 */
+}
+
 @media (max-width: 768px) {
+    .text-content {
+        font-size: 12px; /* 모바일 화면에서 폰트 크기 조정 */
+        line-height: 25px; /* 모바일 화면에서 라인 높이 조정 */
+        padding: 0 0px; /* 모바일 화면에서 텍스트 좌우 여백 조정 */
+    }
     #myCanvas {
         width: 100%;
         height: auto;
     }
     .main-content {
+        width : 100%;
         flex-direction: column;
     }
     .input-container {
@@ -597,12 +618,6 @@ table {
     }
     .text-group {
         gap: 5px;
-    }
-    .text-box {
-        padding: 8px 12px;
-        font-size: 12px; /* Reduce font size */
-        margin: 2px;
-        min-width: 80px; /* Reduce minimum width */
     }
     .input-group input,
     .input-group button {

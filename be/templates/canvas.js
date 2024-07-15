@@ -37,12 +37,15 @@ function Info_EA() {
     context.lineWidth = 1; // Line width
     context.stroke();
 
-    // Adjust the height of the text boxes
     var textBoxes = document.querySelectorAll('.canvas-text-box-EA');
-    var sectionHeight = canvas.height / 2;
+    var sectionHeight = (canvas.height - 10) / 2; // Adjust for margin (5px top and bottom)
     textBoxes.forEach(function(box) {
         box.style.height = sectionHeight + 'px';
     });
+
+    // Set the container height to match the canvas height
+    var container = document.querySelector('.canvas-text-EA');
+    container.style.height = canvas.height + 'px';
 }
 
 function Info_CH() {
@@ -80,9 +83,18 @@ function Info_CH() {
 
     // Adjust the height of the text boxes
     var textBoxes = document.querySelectorAll('.canvas-text-box-CH');
-    textBoxes[0].style.height = topSectionHeight + 'px';
-    textBoxes[1].style.height = middleSectionHeight + 'px';
-    textBoxes[2].style.height = bottomSectionHeight + 'px';
+    var numTextBoxes = textBoxes.length;
+    var totalHeight = canvas.height;
+    
+    // Placeholder values for lines. You need to determine these values
+    var lineHeights = [canvas.height * 0.33, canvas.height * 0.67]; // Example lines at 1/3 and 2/3 height
+
+    textBoxes[0].style.height = lineHeights[0] + 'px';
+    textBoxes[1].style.height =lineHeights[1]  + 'px';
+    textBoxes[2].style.height = lineHeights[0]  + 'px';
+    // Set the container height to match the canvas height
+    var container = document.querySelector('.canvas-text-CH');
+    container.style.height = canvas.height + 'px';
 }
 
 function Info_HB() {
@@ -128,11 +140,15 @@ function Info_HB() {
     context.lineTo(canvas.width, sectionHeight * 2);
     context.stroke();
 
-    // Adjust the height of the text boxes
     var textBoxes = document.querySelectorAll('.canvas-text-box-HB');
+    var sectionHeight = (canvas.height - 10) / 2; // Adjust for margin (5px top and bottom)
     textBoxes.forEach(function(box) {
         box.style.height = sectionHeight + 'px';
     });
+
+    // Set the container height to match the canvas height
+    var container = document.querySelector('.canvas-text-HB');
+    container.style.height = canvas.height + 'px';
 }
 
 function Info_PI() {
@@ -234,9 +250,19 @@ function Info_IB() {
 
     // Adjust the height of the text boxes
     var textBoxes = document.querySelectorAll('.canvas-text-box-IB');
-    textBoxes[0].style.height = otherSectionHeight + 'px';
-    textBoxes[1].style.height = middleSectionHeight + 'px';
-    textBoxes[2].style.height = otherSectionHeight + 'px';
+    var numTextBoxes = textBoxes.length;
+    var totalHeight = canvas.height;
+    
+    // Placeholder values for lines. You need to determine these values
+    var lineHeights = [canvas.height * 0.33, canvas.height * 0.67]; // Example lines at 1/3 and 2/3 height
+
+    textBoxes[0].style.height = lineHeights[0] + 'px';
+    textBoxes[1].style.height = (lineHeights[1] - lineHeights[0]) + 'px';
+    textBoxes[2].style.height = (totalHeight - lineHeights[1]) + 'px';
+
+    // Set the container height to match the canvas height
+    var container = document.querySelector('.canvas-text-IB');
+    container.style.height = canvas.height + 'px';
 }
 function Info_UA() {
     // Show the UA text boxes and hide the others
@@ -263,8 +289,14 @@ function Info_UA() {
 
     // Adjust the height of the text boxes
     var textBoxes = document.querySelectorAll('.canvas-text-box-UA');
-    textBoxes[0].style.height = upperSectionHeight + 'px';
-    textBoxes[1].style.height = lowerSectionHeight + 'px';
+    if (textBoxes.length === 2) {
+        textBoxes[0].style.height = (upperSectionHeight - 5) + 'px'; // 상단 박스 높이
+        textBoxes[1].style.height = (lowerSectionHeight - 5) + 'px'; // 하단 박스 높이
+    }
+
+    // Set the container height to match the canvas height
+    var container = document.querySelector('.canvas-text-UA');
+    container.style.height = canvas.height + 'px';
 }
 function Info_SP() {
     // Show the SP text boxes and hide the others
@@ -309,11 +341,15 @@ function Info_SP() {
 
     // Adjust the height of the text boxes
     var textBoxes = document.querySelectorAll('.canvas-text-box-SP');
-    textBoxes[0].style.height = smallSectionHeight + 'px'; // 하1
-    textBoxes[1].style.height = largeSectionHeight + 'px'; // 우
-    textBoxes[2].style.height = largeSectionHeight + 'px'; // 상
-    textBoxes[3].style.height = largeSectionHeight + 'px'; // 좌
-    textBoxes[4].style.height = smallSectionHeight + 'px'; // 하2
+    textBoxes[0].style.height = (smallSectionHeight - 5) + 'px'; // 하1
+    textBoxes[1].style.height = (largeSectionHeight - 5) + 'px'; // 우
+    textBoxes[2].style.height = (largeSectionHeight - 5) + 'px'; // 상
+    textBoxes[3].style.height = (largeSectionHeight - 5) + 'px'; // 좌
+    textBoxes[4].style.height = (smallSectionHeight - 5) + 'px'; // 하2
+
+    // Set the container height to match the canvas height
+    var container = document.querySelector('.canvas-text-SP');
+    container.style.height = canvas.height + 'px';
 }
 
 // 매크로 그리기 시작
