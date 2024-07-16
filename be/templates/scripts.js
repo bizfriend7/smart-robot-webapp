@@ -41,11 +41,13 @@ document.addEventListener('DOMContentLoaded', function() {
     let partData = JSON.parse(localStorage.getItem('partData'));
     let macroData = JSON.parse(localStorage.getItem('macroData'));
 
-    function generateUniqueId(dataArray) {
-        return dataArray.length > 0 ? Math.max(...dataArray.map(item => item.id)) + 1 : 1;
-    }
+
     function calculateMacroCount(partID) {
-        return macroData.filter(macro => macro.partID === partID).length;
+        console.log(partID)
+        return macroData.filter(macro => macro.partedid === partID).length;
+    }
+    function generateUniqueId() {
+        return uuid.v4(); // 새로운 UUID를 생성합니다
     }
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
@@ -134,10 +136,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    partData = partData.map(part => {
-        const 가공수 = calculateMacroCount(part["Part ID"]);
-        return { ...part, 가공수 };
-    });
 
     const toggleButton = document.getElementById('toggle-button');
     const content1 = document.getElementById('content1');
@@ -251,7 +249,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             const newDrawing = {
-                id: generateUniqueId(drawingData),
+                id: generateUniqueId(),
                 호선: lineNumber,
                 POR: por,
                 SEQ: seq,
@@ -461,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         const newData = selectedData.map(d => {
-            const newId = generateUniqueId(drawingData);
+            const newId = generateUniqueId();
             return {
                 ...d,
                 호선: newLine || d.호선,
@@ -489,7 +487,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 SEQ: newSeq || p.SEQ,
                 PIECS: newPiecs || p.PIECS,
                 drawedid: newDrawedId,
-                id: generateUniqueId(partData)
+                id: generateUniqueId()
             };
         });
         partData.push(...newPartData);
@@ -505,7 +503,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 POR: newPor || m.POR,
                 SEQ: newSeq || m.SEQ,
                 PIECS: newPiecs || m.PIECS,
-                id: generateUniqueId(macroData)
+                id: generateUniqueId()
             };
         });
         macroData.push(...newMacroData);
@@ -513,7 +511,13 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('drawingData', JSON.stringify(drawingData));
         localStorage.setItem('partData', JSON.stringify(partData));
         localStorage.setItem('macroData', JSON.stringify(macroData));
-    
+        console.log(newLine)
+       
+        filtereddrawingData = drawingData.filter(draw => 
+            draw.호선 === newLine
+            );
+        console.log(filtereddrawingData)
+        updateDrawingTable(filtereddrawingData);
         // 팝업창 숨기기 및 입력 필드 초기화
         const popup = document.getElementById('copyPopup');
         popup.style.display = 'none';
@@ -643,14 +647,101 @@ document.addEventListener('DOMContentLoaded', function() {
     
                 localStorage.setItem('partData', JSON.stringify(partData));
                 localStorage.setItem('macroData', JSON.stringify(macroData));
-                updateMacroTable(macroData);
-                updatePartTable(partData);
-    
+                if (selectedDrawingInfo.drawid) {
+                    filteredPartData = partData.filter(part => 
+                        part.drawedid === selectedDrawingInfo.drawid
+                    );
+                }
+                console.log(filteredPartData);
+                updatePartTable(filteredPartData);
+      
                 // 현재 클릭된 도면 정보로 테이블 업데이트
-                updateTablesWithSelectedDrawingInfo();
+        
             }
         }
     });
+    document.getElementById('content2').addEventListener('click', function(event) {
+        if (event.target && event.target.id === 'copyPartButton'){
+            const checkedBoxes = document.querySelectorAll('#content2Body input[type="checkbox"]:checked');
+            if (checkedBoxes.length !== 1) {
+                alert('하나의 부재만 선택해주세요.');
+                return;
+            }
+
+            const selectedRow = checkedBoxes[0].parentElement.parentElement;
+            const partID = selectedRow.cells[2].textContent;
+            const 자재종류 = selectedRow.cells[3].textContent;
+            const 재질 = selectedRow.cells[4].textContent;
+            const 수량 = selectedRow.cells[5].textContent;
+            const 가공길이 = selectedRow.cells[6].textContent;
+            const 전체길이 = selectedRow.cells[7].textContent;
+            const 중량 = selectedRow.cells[8].textContent;
+            const 가공수 = selectedRow.cells[9].textContent;
+            const selectedPart = partData.find(part => 
+                part["Part ID"] === partID &&
+                part.drawedid === selectedDrawingInfo.drawid
+            );
+
+            console.log(selectedPart)
+            const newPartID = prompt('새로운 PART ID를 입력하세요:');
+            if (!newPartID) {
+                alert('PART ID를 입력해야 합니다.');
+                return;
+            }
+
+            const isDuplicate = partData.some(part => 
+                part["Part ID"] === newPartID && part.drawedid === selectedDrawingInfo.drawid
+            );
+
+            if (isDuplicate) {
+                alert('중복된 데이터입니다.');
+                return;
+            }
+
+            const newPart = {
+                id: generateUniqueId(),
+                "Part ID": newPartID,
+                자재종류,
+                재질,
+                수량: parseInt(수량),
+                가공길이: parseInt(가공길이),
+                전체길이: parseInt(전체길이),
+                중량: parseFloat(중량),
+                가공수: parseInt(가공수),
+                drawedid: selectedDrawingInfo.drawid
+            };
+            partData.push(newPart);
+
+            if (selectedPart) {
+                const selectedPartID = selectedPart.id;
+                const newPartID = newPart.id;
+
+                const selectedMacroData = macroData.filter(macro => macro.partedid === selectedPartID);
+                const newMacroData = selectedMacroData.map(macro => ({
+                    ...macro,
+                    partedid: newPartID,
+                    id: generateUniqueId()
+                }));
+                macroData.push(...newMacroData);
+                const canvasData = localStorage.getItem(`canvasData_${selectedPartID}`);
+                if (canvasData) {
+                    localStorage.setItem(`canvasData_${newPartID}`, canvasData);
+                }
+            }
+
+            localStorage.setItem('partData', JSON.stringify(partData));
+            localStorage.setItem('macroData', JSON.stringify(macroData));
+            updateMacroTable(macroData);
+
+            filteredPartData = partData.filter(part => 
+                part.drawedid === selectedDrawingInfo.drawid
+            );
+            updatePartInputForm();
+            updatePartTable(filteredPartData);
+
+        }
+    });
+    
 
     
     function updateDrawingTable(data) {
@@ -757,6 +848,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data.forEach((rowData, index) => {
             const tr = document.createElement('tr');
             tr.classList.add('clickable');
+            tr.dataset.partId = rowData.id;
             tr.addEventListener('click', function(event) {
                 if (event.target.type === 'checkbox') {
                     return;
@@ -868,80 +960,7 @@ document.addEventListener('DOMContentLoaded', function() {
         partIdHeader.addEventListener('click', () => sortPartTable(data, 'Part ID'));
         materialHeader.addEventListener('click', () => sortPartTable(data, '자재종류'));
     
-        const copyPartButton = document.getElementById('copyPartButton');
-        if (copyPartButton) {
-            copyPartButton.addEventListener('click', function() {
-                const checkedBoxes = document.querySelectorAll('#content2Body input[type="checkbox"]:checked');
-                if (checkedBoxes.length !== 1) {
-                    alert('하나의 부재만 선택해주세요.');
-                    return;
-                }
-    
-                const selectedRow = checkedBoxes[0].parentElement.parentElement;
-                const partID = selectedRow.cells[2].textContent;
-                const 자재종류 = selectedRow.cells[3].textContent;
-                const 재질 = selectedRow.cells[4].textContent;
-                const 수량 = selectedRow.cells[5].textContent;
-                const 가공길이 = selectedRow.cells[6].textContent;
-                const 전체길이 = selectedRow.cells[7].textContent;
-                const 중량 = selectedRow.cells[8].textContent;
-                const 가공수 = selectedRow.cells[9].textContent;
-                const selectedPart = partData.find(part => part["Part ID"] === partID);
-    
-                const newPartID = prompt('새로운 PART ID를 입력하세요:');
-                if (!newPartID) {
-                    alert('PART ID를 입력해야 합니다.');
-                    return;
-                }
-    
-                const isDuplicate = partData.some(part => 
-                    part["Part ID"] === newPartID && part.drawedid === selectedPart.drawedid
-                );
-    
-                if (isDuplicate) {
-                    alert('중복된 데이터입니다.');
-                    return;
-                }
-    
-                const newPart = {
-                    id: generateUniqueId(partData),
-                    "Part ID": newPartID,
-                    자재종류,
-                    재질,
-                    수량: parseInt(수량),
-                    가공길이: parseInt(가공길이),
-                    전체길이: parseInt(전체길이),
-                    중량: parseFloat(중량),
-                    가공수: parseInt(가공수),
-                    drawedid: selectedPart.drawedid
-                };
-                partData.push(newPart);
-    
-                if (selectedPart) {
-                    const selectedPartID = selectedPart.id;
-                    const newPartID = newPart.id;
-    
-                    const selectedMacroData = macroData.filter(macro => macro.partedid === selectedPartID);
-                    const newMacroData = selectedMacroData.map(macro => ({
-                        ...macro,
-                        partedid: newPartID,
-                        id: generateUniqueId(macroData)
-                    }));
-                    macroData.push(...newMacroData);
-                }
-    
-                localStorage.setItem('partData', JSON.stringify(partData));
-                localStorage.setItem('macroData', JSON.stringify(macroData));
-                updateMacroTable(macroData);
-                updatePartTable(partData);
-    
-                filteredPartData = partData.filter(part => 
-                    part.drawedid === selectedDrawingInfo.drawid
-                );
-                updatePartTable(filteredPartData);
-                updatePartInputForm();
-            });
-        }
+        
     }
     
 
@@ -1026,12 +1045,11 @@ document.addEventListener('DOMContentLoaded', function() {
     function updatePartInputForm() {
         const partFormContainer = document.getElementById('partFormContainer');
         partFormContainer.innerHTML = `
-            <h5>부재 정보 등록</h5>
             <div class="input-group" id="partInputGroup">
                 <input type="text" id="partInput1" placeholder="Part ID">
                 <input type="text" id="partInput2" placeholder="자재규격" list="materialSpecList" style="flex-grow: 2;">
                 <datalist id="materialSpecList"></datalist>
-                <input type="text" id="partInput3" placeholder="재질">
+                <input type="text" id="partInput3" placeholder="재질" list="materiallist" style="flex-grow: 2;">
                 <datalist id="materiallist">
                     <option value="SS400"></option>
                     <option value="SC45C"></option>
@@ -1045,6 +1063,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <button id="copyPartButton">복사</button>
                 <button id="deletePartButton">삭제</button>
             </div>
+            <h5>부재 정보 등록</h5>
         `;
         const datalist = document.getElementById('materialSpecList');
         if (datalist) {
@@ -1103,9 +1122,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 가공길이: parseInt(가공길이),
                 전체길이: parseInt(전체길이),
                 중량,
-                가공수: calculateMacroCount(partID),
+                가공수: calculateMacroCount(partData.id),
                 drawedid : selectedDrawingInfo.drawid,
-                id : generateUniqueId(partData),
+                id : generateUniqueId(),
 
             };
     
@@ -1154,7 +1173,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateMacroInputForm() {
         const partFormContainer = document.getElementById('partFormContainer');
         partFormContainer.innerHTML = `
-            <h5>매크로 정보 등록</h5>
             <div class="macro-input-group">
                 <input type="text" id="macroInput2" placeholder="가공위치">
                 <input type="text" id="macroInput3" placeholder="매크로" list="macroList" style="flex-grow: 2;">
@@ -1167,11 +1185,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 <input type="text" id="macroInputF" placeholder="F">
             </div>
             <div class="macro-button-group">
-                <button class="macro-button2" id="addMacroButton">등록</button>
-                <button class="macro-button2" id="updateMacroButton">수정</button>
-                <button class="macro-button2" id="deleteMacroButton">삭제</button>
-                <button class="macro-button2" id="BackButton">뒤로가기</button>
+                <div class="macro-button-group-left">
+                    <h5>매크로 정보 등록</h5>
+                </div>
+                <div class="macro-button-group-right">
+                    <button class="macro-button2" id="addMacroButton">등록</button>
+                    <button class="macro-button2" id="updateMacroButton">수정</button>
+                    <button class="macro-button2" id="deleteMacroButton">삭제</button>
+                    <button class="macro-button2" id="BackButton">뒤로가기</button>
+                </div>
             </div>
+            
         `;
         window.requestAnimationFrame(() => {
             const macroList = document.getElementById('macroList');
@@ -1250,7 +1274,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 가공위치,
                 매크로,
                 파라미터,
-                id: generateUniqueId(macroData),
+                id: generateUniqueId(),
                 가공길이
             };
     
@@ -1279,10 +1303,14 @@ document.addEventListener('DOMContentLoaded', function() {
             saveCanvasDataForPart(selectedPartInfo.partedid);
             macroData.push(newMacro);
             localStorage.setItem('macroData', JSON.stringify(macroData));
-            const filteredMacroData = macroData.filter(macro => macro.partID === partID);
+            const filteredMacroData = macroData.filter(macro => macro.partedid === partedid);
             partData = partData.map(part => {
-                const 가공수 = calculateMacroCount(part["Part ID"]);
-                return { ...part, 가공수 };
+                if (part.id === macroData.partedid) {
+                    const 가공수 = calculateMacroCount(part.id);
+                    return { ...part, 가공수 };
+                } else {
+                    return part;
+                }
             });
     
             updateMacroTable(filteredMacroData);
@@ -1302,7 +1330,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const POR = selectedMacroInfo.POR;
             const SEQ = selectedMacroInfo.SEQ;
             const PIECS = selectedMacroInfo.PIECS;
-            const PART난수 = selectedMacroInfo.PART난수;  // 난수data 추가
             const 가공위치 = document.getElementById('macroInput2').value;
             const 매크로 = document.getElementById('macroInput3').value;
             const A = document.getElementById('macroInputA').value.trim() || '0';
@@ -1318,7 +1345,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
     
-            const macroIndex = macroData.findIndex(macro => macro.partID === partID && macro.호선 === 호선 && macro.POR === POR && macro.SEQ === SEQ && macro.PIECS === PIECS && macro.가공위치 === selectedMacroInfo.가공위치 && macro.PART난수 === PART난수);
+            const macroIndex = macroData.findIndex(macro => macro.partID === partID && macro.호선 === 호선 && macro.POR === POR && macro.SEQ === SEQ && macro.PIECS === PIECS && macro.가공위치 === selectedMacroInfo.가공위치);
             if (macroIndex !== -1) {
                 macroData[macroIndex] = {
                     ...macroData[macroIndex],
@@ -1328,15 +1355,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 };
     
                 localStorage.setItem('macroData', JSON.stringify(macroData));
-                const filteredMacroData = macroData.filter(macro => macro.partID === partID && macro.PART난수 === PART난수);
+                const filteredMacroData = macroData.filter(macro => macro.partedid === selectedPartInfo.partedid);
                 partData = partData.map(part => {
-                    const 가공수 = calculateMacroCount(part["Part ID"]);
+                    const 가공수 = calculateMacroCount(partData.id);
                     return { ...part, 가공수 };
                 });
     
                 updateMacroTable(filteredMacroData);
                 clearMacroInputs();
                 selectedMacroInfo = null; // 수정 완료 후 선택된 매크로 초기화
+                redrawCanvasForPart(selectedPartInfo.partedid) 
             } else {
                 alert('수정할 매크로를 선택해주세요.');
             }
@@ -1347,11 +1375,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const rowsToDelete = Array.from(checkedBoxes).map(checkbox => checkbox.parentElement.parentElement);
     
                 rowsToDelete.forEach(row => {
+                    const no = row.cells[1].textContent;
                     const partID = row.cells[2].textContent;
                     const 가공위치 = row.cells[3].textContent;
                     const 매크로 = row.cells[4].textContent;
                     const 파라미터 = row.cells[5].textContent.split(','); // 파라미터를 배열로 변환
                     const partedid = selectedPartInfo.partedid;
+                    
+        
 
                     console.log('삭제할 매크로:', {
                         partID: partID,
@@ -1360,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         파라미터: 파라미터,
                         partedid: partedid
                     });
-
+                    
                     // 매크로 데이터에서 해당 조건에 맞는 매크로 항목들을 필터링
                     const matchingMacros = macroData.filter(macro => 
                         macro.partID === partID && 
@@ -1529,17 +1560,5 @@ document.addEventListener('DOMContentLoaded', function() {
     
         return sortedData;
     }
-    function updateTablesWithSelectedDrawingInfo() {
-        const { 호선, POR, SEQ, PIECS } = selectedDrawingInfo;
-        if (호선 && POR && SEQ && PIECS) {
-            filteredPartData = partData.filter(part => 
-                part.호선 === 호선 && 
-                part.POR === POR && 
-                part.SEQ === SEQ && 
-                part.PIECS === PIECS
-            );
-            updatePartTable(filteredPartData);
-        }
-    }
-
+  
 });

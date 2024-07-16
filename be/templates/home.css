@@ -89,6 +89,7 @@ header {
 }
 .container {
     display: flex;
+    
     flex-direction: column;
     flex: 1;
 }
@@ -115,10 +116,12 @@ canvas {
 .main-content {
     display: flex;
     width : 80%;
+    justify-content: center;
     flex-direction: row;
     flex: 1;
     overflow-x: hidden;
     position: relative;
+    transform: translate(10%, 0%);
 }
 .input-container {
     background: #f9f9f9;
@@ -130,6 +133,7 @@ canvas {
 .content-container {
     background: #fff;
     padding: 20px;
+    justify-content: center; /* 내부 콘텐츠 중앙 정렬 */
     box-sizing: border-box;
     text-align: center;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -300,8 +304,18 @@ table {
 }
 .macro-button-group {
     display: flex;
-    justify-content: flex-end;
-    gap: 10px; /* Add some space between the buttons if needed */
+    justify-content: space-between;
+    align-items: center; /* 세로로 중앙 정렬 */
+    gap: 10px; /* 필요에 따라 간격 추가 */
+}
+
+.macro-button-group-left {
+    flex: 1;
+}
+
+.macro-button-group-right {
+    display: flex;
+    gap: 10px; /* 버튼 사이 간격 */
 }
 #addDisplayContentButton {
     padding: 5px 10px;
@@ -352,6 +366,10 @@ table {
     margin-bottom: 10px;
     transition: all 0.3s ease; /* Smooth transition */
 }
+.content-container h5 {
+    padding: 3px;
+    text-align: left;
+}
 .checkbox-container {
     display: block;
     margin-top: 10px; /* 버튼과 체크박스 사이에 여백 추가 */
@@ -397,21 +415,83 @@ table {
     display: contents; /* 각 행을 개별적으로 처리 */
 }
 
-.image-label {
-    margin-top: 5px;
-    font-size: 12px;
+.image-label-left {
+    position: absolute;
+    top: 50%;
+    left: 70%;
+    transform: translateX(-50%);
+    padding: 2px 5px;
+    font-size: 7px;
     color: #000;
+    z-index: 1;
+    margin-top: 5px; /* 추가 마진 */
 }
+.image-label-mid {
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    transform: translateX(-50%);
+    padding: 2px 5px;
+    font-size: 7px;
+    color: #000;
+    z-index: 1;
+    margin-top: 5px; /* 추가 마진 */
+}
+.image-label-right {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    transform: translateX(-50%);
+    padding: 2px 5px;
+    font-size: 7px;
+    color: #000;
+    z-index: 1;
+    margin-top: 5px; /* 추가 마진 */
+}
+.image-label-right-down {
+    position: absolute;
+    top: -10%;
+    left: 30%;
+    transform: translateX(-50%);
+    padding: 2px 5px;
+    font-size: 7px;
+    color: #000;
+    z-index: 1;
+    margin-top: 5px;
+} 
+.image-label-left-down {
+    position: absolute;
+    top: -10%;
+    left: 70%;
+    transform: translateX(-50%);
+    padding: 2px 5px;
+    font-size: 7px;
+    color: #000;
+    z-index: 1;
+    margin-top: 5px;
+}
+.image-label-mid-down {
+    position: absolute;
+    top: -10%;
+    left: 60%;
+    transform: translateX(-50%);
+    padding: 2px 5px;
+    font-size: 7px;
+    color: #000;
+    z-index: 1;
+    margin-top: 5px;
+}  
 .separator-text {
     font-weight: bold;
     text-align: center;
-    font-size : 10px;
+    font-size: 10px;
     writing-mode: vertical-rl; /* 세로 쓰기 모드 */
     text-orientation: upright; /* 텍스트의 방향을 올바르게 설정 */
     white-space: nowrap; /* 텍스트 줄바꿈 방지 */
 }
 
 .macro-svg {
+    position: relative; /* 텍스트를 겹치기 위해 추가 */
     width: 60px; /* 이미지 너비 */
     height: 60px; /* 이미지 높이 */
     border: 1px solid #ccc;
@@ -419,7 +499,6 @@ table {
     transition: transform 0.3s;
     text-align: center;
 }
-
 
 .macro-svg img {
     max-width: 100%;
@@ -527,6 +606,7 @@ table {
     justify-content: space-between;
     margin-right: 10px; /* 텍스트 컨테이너와 캔버스 사이의 공간 추가 */
     height: 100%; /* 부모 컨테이너의 높이에 맞춤 */
+    font-size : 10px;
 }
 
 .canvas-text-box-EA, .canvas-text-box-CH, .canvas-text-box-HB, .canvas-text-box-PI, .canvas-text-box-IB, .canvas-text-box-UA,.canvas-text-box-SP  {
