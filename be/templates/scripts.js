@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let partData = JSON.parse(localStorage.getItem('partData'));
     let macroData = JSON.parse(localStorage.getItem('macroData'));
 
-
+    
     function calculateMacroCount(partID) {
         console.log(partID)
         return macroData.filter(macro => macro.partedid === partID).length;
@@ -163,6 +163,17 @@ document.addEventListener('DOMContentLoaded', function() {
             isCollapsed = true;
         }
     }
+    function filterDrawingDataByDateRange(data, startDate, endDate) {
+        console.log(startDate)
+        console.log(endDate)
+        if (startDate) {
+            data = data.filter(row => new Date(row.등록일자) >= new Date(startDate));
+        }
+        if (endDate) {
+            data = data.filter(row => new Date(row.등록일자) <= new Date(endDate));
+        }
+        return data;
+    }
 
     const content1Body = document.getElementById('content1Body');
     if (content1Body) {
@@ -207,17 +218,31 @@ document.addEventListener('DOMContentLoaded', function() {
             const por = document.getElementById('drawingInput2').value;
             const seq = document.getElementById('drawingInput3').value;
             const piecs = document.getElementById('drawingInput4').value;
+            const startDate = document.getElementById('startDate').value; // 시작일자 입력 값 추가
+            const endDate = document.getElementById('endDate').value; // 종료일자 입력 값 추가
 
-            lastSearchParams = { lineNumber, por, seq, piecs };
-            filteredDrawingData = filterDrawingData(lineNumber, por, seq, piecs);
+            lastSearchParams = { lineNumber, por, seq, piecs, startDate, endDate };
 
-            if (filteredDrawingData.length > 0) {
-                updateDrawingTable(filteredDrawingData);
-
-            } else {
-                document.getElementById('content1Body').innerHTML = '<tr><td colspan="6">데이터 없음</td></tr>';
-              
+            if (!lineNumber && !por && !seq && !piecs && !startDate && !endDate) {
+                // 입력 값이 모두 비어 있을 때, 최근 20개의 항목을 가져옵니다.
+                const recentData = drawingData.slice(-20).reverse();
+                updateDrawingTable(recentData);
+            } 
+            else if(lineNumber || por || seq || piecs){
+                let filteredDrawingData = filterDrawingData(lineNumber, por, seq, piecs);
+                if (startDate || endDate){
+                    filteredDrawingData = filterDrawingDataByDateRange(filteredDrawingData, startDate, endDate);
+                }
+                updateDrawingTable(filteredDrawingData)
             }
+            else if(startDate || endDate){
+                filteredDrawingData = filterDrawingDataByDateRange(drawingData, startDate, endDate);
+                updateDrawingTable(filteredDrawingData)
+            }
+            else{
+                document.getElementById('content1Body').innerHTML = '<tr><td colspan="6">데이터 없음</td></tr>'; 
+            }
+            
         });
     }
     
@@ -281,7 +306,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return filteredData;
     }
 
-   
     const copyButton = document.getElementById('copyDrawingButton');
     if (copyButton) {
         copyButton.addEventListener('click', function() {
@@ -471,7 +495,7 @@ document.addEventListener('DOMContentLoaded', function() {
             };
         });
         drawingData.push(...newData);
-    
+        
         // 새로운 도면의 ID 목록
         const newIds = newData.map(d => d.id);
     
@@ -513,11 +537,9 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('macroData', JSON.stringify(macroData));
         console.log(newLine)
        
-        filtereddrawingData = drawingData.filter(draw => 
-            draw.호선 === newLine
-            );
-        console.log(filtereddrawingData)
-        updateDrawingTable(filtereddrawingData);
+        const filteredDrawingData = drawingData.filter(drawing => newIds.includes(drawing.id));
+        updateDrawingTable(filteredDrawingData);
+
         // 팝업창 숨기기 및 입력 필드 초기화
         const popup = document.getElementById('copyPopup');
         popup.style.display = 'none';
@@ -1000,7 +1022,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('macroInputE').value = params[4];
                 document.getElementById('macroInputF').value = params[5];
     
-            
+                const selectedImageContainer = document.getElementById('selectedImageContainer');
+                let selectedImage = document.getElementById('selectedImage');
+                if (!selectedImage) {
+                    console.log("이미지 확인")
+                    selectedImage = document.createElement('img');
+                    selectedImage.id = 'selectedImage';
+                    selectedImage.style.width = '300px';
+                    selectedImage.style.height = '300px';
+                    selectedImageContainer.appendChild(selectedImage);
+                    console.log(selectedImage)
+                }
+                console.log(rowData['매크로'])
+                selectedImage.src = `img/svg/${rowData['매크로']}.svg`;
+                selectedImageContainer.style.display = 'block'; // 이미지 컨테이너 보이게 하기
+                //document.querySelector('.selectedImageContainer').classList.remove('hidden');
                 document.querySelectorAll('#content2 tbody tr').forEach(row => {
                     row.classList.remove('selected-row');
                 });
@@ -1058,12 +1094,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 </datalist>
                 <input type="text" id="partInput4" placeholder="수량" style="flex-grow: 0.5;">
                 <input type="text" id="partInput5" placeholder="가공길이">
-                <button id="addPartButton">등록</button>
-                <button id="searchPartButton">조회</button>
-                <button id="copyPartButton">복사</button>
-                <button id="deletePartButton">삭제</button>
             </div>
-            <h5>부재 정보 등록</h5>
+            <div class="macro-button-group">
+                <div class="macro-button-group-left">
+                    <h5>부재 정보 등록</h5>
+                </div>
+                <div class="macro-button-group-right">   
+                    <button class="macro-button2" id="addPartButton">등록</button>
+                    <button class="macro-button2" id="searchPartButton">조회</button>
+                    <button class="macro-button2" id="copyPartButton">복사</button>
+                    <button class="macro-button2" id="deletePartButton">삭제</button>
+                    </div>
+            </div>
         `;
         const datalist = document.getElementById('materialSpecList');
         if (datalist) {
@@ -1146,12 +1188,9 @@ document.addEventListener('DOMContentLoaded', function() {
             const 재질 = document.getElementById('partInput3').value;
             
             let filteredData = partData.filter(part => 
-                part.호선 === selectedDrawingInfo.호선 && 
-                part.POR === selectedDrawingInfo.POR && 
-                part.SEQ === selectedDrawingInfo.SEQ && 
-                part.PIECS === selectedDrawingInfo.PIECS
+                selectedDrawingInfo.drawid === part.drawedid
             );
-            
+            console.log(filteredData)
             if (partID) {
                 filteredData = filteredData.filter(part => part["Part ID"].includes(partID));
             }
@@ -1449,6 +1488,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 // 클릭된 이미지의 ID를 매크로 입력 필드에 자동으로 넣기
                 const macroId = this.id;
                 document.getElementById('macroInput3').value = macroId;
+            // Assuming the macro value is stored in the id attribute of the SVG
+                adjustInputsBasedOnMacro(macroId);
 
                 // 클릭된 이미지를 왼쪽에 표시하기
                 const selectedImageContainer = document.getElementById('selectedImageContainer');
@@ -1462,6 +1503,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 selectedImage.src = `img/svg/${macroId}.svg`;
                 selectedImageContainer.style.display = 'block'; // 이미지 컨테이너 보이게 하기
+                document.querySelector('header').classList.remove('hidden');
+                document.querySelector('.macroinfo-container').classList.add('hidden');
+                document.querySelector('.info-container').classList.remove('hidden');
+                document.getElementById('MacroInfoButton').classList.remove('hidden');
             }
             else {
                 alert('부재정보가 선택되지 않았습니다.');

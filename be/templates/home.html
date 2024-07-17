@@ -487,14 +487,23 @@
                         <input type="text" id="drawingInput3" placeholder="SEQ">
                         <input type="text" id="drawingInput4" placeholder="PIECS">
                         <input type="number" id="drawingInput5" placeholder="수량">
-                        <button id="addDrawingButton">등록</button>
-                        <button id="searchButton">조회</button>
-                        <button id="copyDrawingButton">복사</button>
-                        <button id="deleteDrawingButton">삭제</button>
+                        <input type="date" id="startDate" placeholder="시작일자"> <!-- 시작일자 입력 필드 추가 -->
+                        <input type="date" id="endDate" placeholder="종료일자">
                     </div>
-                    <h5>도면정보 등록 및 조회</h5>
+                    <div class="macro-button-group">
+                        <div class="macro-button-group-left">
+                            <h5>도면 정보 등록</h5>
+                        </div>
+                        <div class="macro-button-group-right">   
+                            <button class="macro-button2" id="addDrawingButton">등록</button>
+                            <button class="macro-button2" id="searchButton">조회</button>
+                            <button class="macro-button2" id="copyDrawingButton">복사</button>
+                            <button class="macro-button2" id="deleteDrawingButton">삭제</button>
+                            
+                        </div>
+                    </div>
                 </div>
-                <div id="selectedImageContainer" style="position: absolute; left: 10px; top: 10px; display: none; z-index: 1000;"></div>
+                <div id="selectedImageContainer" class="image-container hidden"></div>
                 <div id="drawingTableContainer" class="table1-container">
                     <table class="table1">
                         <thead>
