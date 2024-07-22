@@ -1503,7 +1503,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 selectedImage.src = `img/svg/${macroId}.svg`;
                 selectedImageContainer.style.display = 'block'; // 이미지 컨테이너 보이게 하기
-                document.querySelector('header').classList.remove('hidden');
+                //document.querySelector('header').classList.remove('hidden');
                 document.querySelector('.macroinfo-container').classList.add('hidden');
                 document.querySelector('.info-container').classList.remove('hidden');
                 document.getElementById('MacroInfoButton').classList.remove('hidden');

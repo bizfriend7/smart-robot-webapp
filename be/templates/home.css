@@ -499,7 +499,7 @@ table {
 .macro-svg {
     position: relative; /* 텍스트를 겹치기 위해 추가 */
     width: 60px; /* 이미지 너비 */
-    height: 60px; /* 이미지 높이 */
+    height: 50px; /* 이미지 높이 */
     border: 1px solid #ccc;
     border-radius: 4px;
     transition: transform 0.3s;
@@ -513,6 +513,17 @@ table {
 
 .macro-svg img:hover {
     transform: scale(1.05);
+}
+.blank-svg {
+    position: relative; /* 텍스트를 겹치기 위해 추가 */
+    width: 60px; /* 이미지 너비 */
+    height: 50px; /* 이미지 높이 */
+    transition: transform 0.3s;
+    text-align: center;
+}
+.blank-svg img {
+    max-width: 100%;
+    max-height: 100%;
 }
 .macro-group {
     display: flex;
