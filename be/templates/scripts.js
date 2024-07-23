@@ -4,6 +4,7 @@ let selectedPartInfo = {};
 let selectedMacroInfo = null;
 let lastSearchParams = {};
 document.addEventListener('DOMContentLoaded', function() {
+    let tempMacroData = [];
     //localStorage.clear()
     let currentSort = {
         key: '',
@@ -29,12 +30,14 @@ document.addEventListener('DOMContentLoaded', function() {
         ];
         localStorage.setItem('macroData', JSON.stringify(initialMacroData));
     }
+
     const script = document.createElement('script');
     script.src = 'specList.js';
     script.onload = function() {
         // partFormContainer를 업데이트하는 함수 호출
         updatePartInputForm();
     };
+
     document.head.appendChild(script);
     // 로컬스토리지에서 데이터 불러오기
     let drawingData = JSON.parse(localStorage.getItem('drawingData'));
@@ -46,9 +49,11 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(partID)
         return macroData.filter(macro => macro.partedid === partID).length;
     }
+
     function generateUniqueId() {
         return uuid.v4(); // 새로운 UUID를 생성합니다
     }
+
     const canvas = document.getElementById('myCanvas');
     const ctx = canvas.getContext('2d');
 
@@ -70,6 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             img.src = canvasData;
         }
     }
+
     function redrawCanvasForPart(partedid) {
         // 캔버스를 초기화
         const materialType = selectedPartInfo.자재종류;
@@ -89,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 캔버스 데이터를 저장
         saveCanvasDataForPart(partedid);
     }
+
     function clearCanvas(materialType){
         if (materialType.startsWith("EA")){ 
             Info_EA()
@@ -163,17 +170,6 @@ document.addEventListener('DOMContentLoaded', function() {
             isCollapsed = true;
         }
     }
-    function filterDrawingDataByDateRange(data, startDate, endDate) {
-        console.log(startDate)
-        console.log(endDate)
-        if (startDate) {
-            data = data.filter(row => new Date(row.등록일자) >= new Date(startDate));
-        }
-        if (endDate) {
-            data = data.filter(row => new Date(row.등록일자) <= new Date(endDate));
-        }
-        return data;
-    }
 
     const content1Body = document.getElementById('content1Body');
     if (content1Body) {
@@ -210,6 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelector('.info-container').classList.add('hidden');
         }
     });
+
     // macro-svg 이미지 클릭 이벤트 추가
     const searchButton = document.getElementById('searchButton');
     if (searchButton) {
@@ -218,25 +215,16 @@ document.addEventListener('DOMContentLoaded', function() {
             const por = document.getElementById('drawingInput2').value;
             const seq = document.getElementById('drawingInput3').value;
             const piecs = document.getElementById('drawingInput4').value;
-            const startDate = document.getElementById('startDate').value; // 시작일자 입력 값 추가
-            const endDate = document.getElementById('endDate').value; // 종료일자 입력 값 추가
 
-            lastSearchParams = { lineNumber, por, seq, piecs, startDate, endDate };
+            lastSearchParams = { lineNumber, por, seq, piecs};
 
-            if (!lineNumber && !por && !seq && !piecs && !startDate && !endDate) {
+            if (!lineNumber && !por && !seq && !piecs) {
                 // 입력 값이 모두 비어 있을 때, 최근 20개의 항목을 가져옵니다.
                 const recentData = drawingData.slice(-20).reverse();
                 updateDrawingTable(recentData);
             } 
             else if(lineNumber || por || seq || piecs){
                 let filteredDrawingData = filterDrawingData(lineNumber, por, seq, piecs);
-                if (startDate || endDate){
-                    filteredDrawingData = filterDrawingDataByDateRange(filteredDrawingData, startDate, endDate);
-                }
-                updateDrawingTable(filteredDrawingData)
-            }
-            else if(startDate || endDate){
-                filteredDrawingData = filterDrawingDataByDateRange(drawingData, startDate, endDate);
                 updateDrawingTable(filteredDrawingData)
             }
             else{
@@ -567,6 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('macroData:', JSON.parse(localStorage.getItem('macroData')));
         }
     });
+
     const deleteDrawingButton = document.getElementById('deleteDrawingButton');
     if (deleteDrawingButton) {
         deleteDrawingButton.addEventListener('click', function() {
@@ -682,6 +671,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
     document.getElementById('content2').addEventListener('click', function(event) {
         if (event.target && event.target.id === 'copyPartButton'){
             const checkedBoxes = document.querySelectorAll('#content2Body input[type="checkbox"]:checked');
@@ -791,6 +781,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.querySelectorAll('#content1 tbody tr').forEach(row => {
                     row.classList.remove('selected-row');
                 });
+
                 tr.classList.add('selected-row');
                 filteredPartData = partData.filter(part => 
                     rowData.id === part.drawedid
@@ -800,6 +791,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 updatePartInputForm();
                 selectedPartInfo = {};
                 hideImageContainer();
+                tempMacroData = [];
             });
 
     
@@ -860,14 +852,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 <th>가공수</th>
             </tr>
         `;
+
         document.getElementById('checkAllParts').addEventListener('change', function() {
             const checkboxes = document.querySelectorAll('#content2Body input[type="checkbox"]');
             checkboxes.forEach(checkbox => checkbox.checked = this.checked);
         });
+
         const tbody = document.getElementById('content2Body');
         tbody.innerHTML = '';
     
         data.forEach((rowData, index) => {
+            macroData = JSON.parse(localStorage.getItem('macroData')) || [];
             const tr = document.createElement('tr');
             tr.classList.add('clickable');
             tr.dataset.partId = rowData.id;
@@ -883,15 +878,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     가공길이 : rowData.가공길이
                 };
     
-                console.log(`부재정보 클릭됨: 호선=${selectedPartInfo.호선}, POR=${selectedPartInfo.POR}, SEQ=${selectedPartInfo.SEQ}, PIECS=${selectedPartInfo.PIECS}, PartID=${selectedPartInfo.PartID}, 난수data=${selectedPartInfo.난수data}`);
+                console.log(`부재정보 클릭됨: 호선=${selectedPartInfo.호선}, POR=${selectedPartInfo.POR}, SEQ=${selectedPartInfo.SEQ}, PIECS=${selectedPartInfo.PIECS}, PartID=${selectedPartInfo.PartID}`);
     
-                const filteredMacroData = macroData.filter(macro =>
+                filterMacroData = macroData.filter(macro =>
                     macro.partedid === selectedPartInfo.partedid
                 );
-                updateMacroTable(filteredMacroData);
+                updateMacroTable(filterMacroData);
                 updateMacroInputForm();
                 window.onMacroInputFormUpdated();
-                //updateMacroList();
                 document.getElementById('lineText').textContent = selectedDrawingInfo.호선 || '';
                 document.getElementById('porText').textContent = selectedDrawingInfo.POR || '';
                 document.getElementById('seqText').textContent = selectedDrawingInfo.SEQ || '';
@@ -1231,6 +1225,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <button class="macro-button2" id="addMacroButton">등록</button>
                     <button class="macro-button2" id="updateMacroButton">수정</button>
                     <button class="macro-button2" id="deleteMacroButton">삭제</button>
+                    <button class="macro-button2" id="saveMacroButton">매크로 저장</button> 
                     <button class="macro-button2" id="BackButton">뒤로가기</button>
                 </div>
             </div>
@@ -1280,6 +1275,44 @@ document.addEventListener('DOMContentLoaded', function() {
             // datalist 요소가 추가되었는지 확인
             console.log('Updated datalist:', macroList.innerHTML); // datalist 내부 확인
             });
+
+
+
+        document.getElementById('saveMacroButton').addEventListener('click', function() {
+            // 기존 메인 매크로 데이터를 가져옴
+            let macroData = JSON.parse(localStorage.getItem('macroData')) || [];
+
+            // tempMacroData 배열을 순회하면서 추가, 수정, 삭제 작업 수행
+            tempMacroData.forEach(item => {
+                const { action, data } = item;
+                const index = macroData.findIndex(macro => macro.id === data.id);
+
+                if (action === 'add') {
+                    if (index === -1) {
+                        macroData.push(data);
+                    }
+                } else if (action === 'update') {
+                    if (index !== -1) {
+                        macroData[index] = data;
+                    }
+                } else if (action === 'delete') {
+                    if (index !== -1) {
+                        macroData.splice(index, 1);
+                    }
+                }
+            });
+
+            // 업데이트된 매크로 데이터를 로컬스토리지에 저장
+            localStorage.setItem('macroData', JSON.stringify(macroData));
+
+            // 현재 캔버스 데이터를 저장
+            saveCanvasDataForPart(selectedPartInfo.partedid);
+
+            // 일시적인 배열 초기화
+            tempMacroData = [];
+
+            alert('매크로가 저장되었습니다.');
+        });
 
         document.getElementById('addMacroButton').addEventListener('click', function() {
             const partID = selectedPartInfo.PartID;
@@ -1339,10 +1372,7 @@ document.addEventListener('DOMContentLoaded', function() {
             else if (materialType.startsWith("IB")){ 
                 macroIB(매크로, A, B, C, D, E, F, parseFloat(가공위치), 가공길이,materialType);
             }
-            saveCanvasDataForPart(selectedPartInfo.partedid);
-            macroData.push(newMacro);
-            localStorage.setItem('macroData', JSON.stringify(macroData));
-            const filteredMacroData = macroData.filter(macro => macro.partedid === partedid);
+            tempMacroData.push({ action: 'add', data: newMacro });
             partData = partData.map(part => {
                 if (part.id === macroData.partedid) {
                     const 가공수 = calculateMacroCount(part.id);
@@ -1351,8 +1381,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     return part;
                 }
             });
-    
-            updateMacroTable(filteredMacroData);
+
+            filterMacroData = macroData.filter(macro =>
+                macro.partedid === selectedPartInfo.partedid
+            );
+            filterMacroData.push(tempMacroData.data)
+            updateMacroTable(filterMacroData);
             clearMacroInputs();
             hideImageContainer()
             
@@ -1393,14 +1427,12 @@ document.addEventListener('DOMContentLoaded', function() {
                     파라미터
                 };
     
-                localStorage.setItem('macroData', JSON.stringify(macroData));
-                const filteredMacroData = macroData.filter(macro => macro.partedid === selectedPartInfo.partedid);
+                tempMacroData.push({ action: 'update', data: updatedMacro });
                 partData = partData.map(part => {
                     const 가공수 = calculateMacroCount(partData.id);
                     return { ...part, 가공수 };
                 });
-    
-                updateMacroTable(filteredMacroData);
+
                 clearMacroInputs();
                 selectedMacroInfo = null; // 수정 완료 후 선택된 매크로 초기화
                 redrawCanvasForPart(selectedPartInfo.partedid) 
@@ -1450,19 +1482,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     row.remove();
                 });
     
-                localStorage.setItem('macroData', JSON.stringify(macroData));
-                updateMacroTable(macroData);
-
+                tempMacroData.push({ action: 'delete', data: selectedMacroInfo });
                 redrawCanvasForPart(selectedPartInfo.partedid);
-
-                // 클릭된 부재 정보로 부재 테이블 업데이트
-                if (selectedPartInfo.PartID && selectedPartInfo.partedid) {
-                    const filteredMacroData = macroData.filter(macro => 
-                        macro.partID === selectedPartInfo.PartID &&
-                        macro.partedid === selectedPartInfo.partedid
-                    );
-                    updateMacroTable(filteredMacroData);
-                }
             }
         });
         document.getElementById('BackButton').addEventListener('click', function() {
@@ -1478,6 +1499,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideImageContainer()
                 clearCanvas(materialType)
                 selectedPartInfo = {}
+                tempMacroData = [];
             }
         });
     }
